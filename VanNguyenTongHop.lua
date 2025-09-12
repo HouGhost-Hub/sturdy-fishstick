@@ -205,23 +205,23 @@ Tabs.Main7:AddButton({Title="SolixHub",Callback=function()
 end})
 
 Tabs.Main8:AddButton({Title="Full Moon",Callback=function()
-    game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "7ba77e93-9ad6-4816-b15a-eddcb1c1dd2a")
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "7ba77e93-9ad6-4816-b15a-eddcb1c1dd2a", game.Players.LocalPlayer)
 end})
 
 Tabs.Main8:AddButton({Title="Sword Lengend",Callback=function()
-game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "cd8e01a2-4c76-4143-b59c-7583ed2681e7")
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "cd8e01a2-4c76-4143-b59c-7583ed2681e7", game.Players.LocalPlayer)
 end})
 
 Tabs.Main8:AddButton({Title="Boss",Callback=function()
-game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "74993948-ffb2-435d-9bd5-c2635479bfcc")
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "74993948-ffb2-435d-9bd5-c2635479bfcc", game.Players.LocalPlayer)
 end})
 
 Tabs.Main8:AddButton({Title="Haki CoLors",Callback=function()
-game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "3bfb1abb-55b1-4dbe-a597-6d8f2354aa7e")
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "3bfb1abb-55b1-4dbe-a597-6d8f2354aa7e", game.Players.LocalPlayer)
 end})
 
 Tabs.Main8:AddButton({Title="Mirage",Callback=function()
-game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "385e4e0b-4896-4a15-9419-713cf50e215b")
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "385e4e0b-4896-4a15-9419-713cf50e215b", game.Players.LocalPlayer)
 end})
 
 Tabs.Main8:AddButton({Title="King Lengend",Callback=function()
@@ -229,7 +229,7 @@ game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "05a307
 end})
 
 Tabs.Main8:AddButton({Title="Prehistoric",Callback=function()
-game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "50e5cb14-84c8-4ab8-8f48-98600e55cd01")
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "50e5cb14-84c8-4ab8-8f48-98600e55cd01", game.Players.LocalPlayer)
 end})
 
 Tabs.Main10:AddButton({Title="Van Nguyen Farm Bounty",Callback=function()
