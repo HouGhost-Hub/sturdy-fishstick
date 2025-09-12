@@ -96,7 +96,7 @@ local Window = Fluent:CreateWindow({
     TabWidth=157,
     Size=UDim2.fromOffset(450,300),
     Acrylic=true,
-    Theme="Dark",
+    Theme="Darker",
     MinimizeKey=Enum.KeyCode.End
 })
 
@@ -204,6 +204,34 @@ Tabs.Main7:AddButton({Title="SolixHub",Callback=function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
 end})
 
+Tabs.Main8:AddButton({Title="Full Moon",Callback=function()
+    game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "7ba77e93-9ad6-4816-b15a-eddcb1c1dd2a")
+end})
+
+Tabs.Main8:AddButton({Title="Sword Lengend",Callback=function()
+game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "cd8e01a2-4c76-4143-b59c-7583ed2681e7")
+end})
+
+Tabs.Main8:AddButton({Title="Boss",Callback=function()
+game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "74993948-ffb2-435d-9bd5-c2635479bfcc")
+end})
+
+Tabs.Main8:AddButton({Title="Haki CoLors",Callback=function()
+game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "3bfb1abb-55b1-4dbe-a597-6d8f2354aa7e")
+end})
+
+Tabs.Main8:AddButton({Title="Mirage",Callback=function()
+game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "385e4e0b-4896-4a15-9419-713cf50e215b")
+end})
+
+Tabs.Main8:AddButton({Title="King Lengend",Callback=function()
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "05a30735-664b-478b-a7db-01200695f9d9", game.Players.LocalPlayer)
+end})
+
+Tabs.Main8:AddButton({Title="Prehistoric",Callback=function()
+game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "50e5cb14-84c8-4ab8-8f48-98600e55cd01")
+end})
+
 Tabs.Main10:AddButton({Title="Van Nguyen Farm Bounty",Callback=function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/GsiPeh/refs/heads/main/VANNGUYEN-T%E1%BA%A1o-Scripts.lua"))()
 end})
@@ -221,6 +249,13 @@ Tabs.Main11:AddButton({Title="Maru Hub Premium",Callback=function()
 getgenv().id = "1377267119451934830"
 getgenv().BetaTestRelease = true
 loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
+end})
+
+Tabs.Main11:AddButton({Title="Banana Cat Hub Premium",Callback=function()
+    repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+getgenv().Key = "887b508e0464a08e0ea0fb14" 
+getgenv().NewUI = true
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()
 end})
 
 Tabs.Main11:AddButton({Title="Kaitun Banana Hub",Callback=function()
