@@ -251,6 +251,13 @@ getgenv().BetaTestRelease = true
 loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
 end})
 
+Tabs.Main11:AddButton({Title="Maru Hub Kaitun Premium",Callback=function()
+    getgenv().Key = "MARU-WN6LS-OPOW-B2MX-778PW-0US1J"
+getgenv().id = "1377267119451934830"
+getgenv().Script_Mode = "Kaitun_Script"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
+end})
+
 Tabs.Main11:AddButton({Title="Banana Cat Hub Premium",Callback=function()
     repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
 getgenv().Key = "887b508e0464a08e0ea0fb14" 
