@@ -3,27 +3,28 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       
        local Window = MakeWindow({
          Hub = {
-         Title = "Blox Fruit Buy ench_iiby",
-         Animation = "Youtube: Menk-Fanclub"
+         Title = "Blox Fruit Buy Van Nguyen",
+         Animation = "Youtube: Văn Nguyên"
          },
         Key = {
         KeySystem = true,
-        Title = "Buy [ FREE ] ench_iiby",
-        Description = "ench_iiby",
-        KeyLink = "https://discord.gg/FsQ9FqcU",
-        Keys = {"VAN-NGUYEN-F97-J98-QL9-123"},
+        KeySystem = false,
+        Title = "Blox Fruit Hub Buy Van Nguyen",
+        Description = "Blox Fruit",
+        KeyLink = "https://discord.gg/AjDHA3mz",
+        Keys = {"VANNGUYEN-F97-J98-QL9-123"},
         Notifi = {
         Notifications = true,
-        CorrectKey = "Key Working Successfull ✅",
-       Incorrectkey = "Key Working No Key ❌",
+        CorSuccessfull "Wrong Key Thành công ✅",
+       Incorrectkey = "Wrong Key Không hợp lệ ❌",
        CopyKeyLink = "https://discord.gg/FsQ9FqcU"
       }
     }
   })
 
        MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=118299750128201",
-       Size = {60, 60},
+       Image = "http://www.roblox.com/asset/?id=80196398184635",
+       Size = {50, 50},
        Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
        Stroke = false,
@@ -31,8 +32,8 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       })
       
 ------ Tab
-     local Tab2o = MakeTab({Name = "Script Grow A Garden"})
      local Tab1o = MakeTab({Name = "Script Blox Fruits"})
+     local Tab2o = MakeTab({Name = "Script Grow A Garden"})
      local Tab3o = MakeTab({Name = "Support all game"})
      local Tab4o = MakeTab({Name = "Script Premium"})
      local Tab5o = MakeTab({Name = "Kaitun Blox Fruits"})
@@ -78,6 +79,36 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "cba5dc00-a9eb-411a-a708-2ceecfe33fb7", game.Players.LocalPlayer)
   end
   })
+  AddButton(Tab9o, {
+     Name = "Hop Rip Indra",
+    Callback = function() 
+       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "4946b5f2-4a2c-44e8-947e-f336caebde29", game.Players.LocalPlayer)
+  end
+  })
+  AddButton(Tab9o, {
+     Name = "Hop Dough King",
+    Callback = function() 
+       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "d2f3855d-9b92-4515-8740-c0eb7ffcd781", game.Players.LocalPlayer)
+  end
+  })
+  AddButton(Tab9o, {
+     Name = "Hop Tyrant",
+    Callback = function() 
+       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "f12d49ac-05c5-49b4-865f-afc7b227ef60", game.Players.LocalPlayer)
+  end
+  })
+  AddButton(Tab9o, {
+     Name = "Mirage island",
+    Callback = function() 
+       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "f12d49ac-05c5-49b4-865f-afc7b227ef60", game.Players.LocalPlayer)
+  end
+  })
+  AddButton(Tab9o, {
+     Name = "Hop Dark Beard",
+    Callback = function() 
+       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "b19eab3f-5da2-41f9-8d57-8822163b7219", game.Players.LocalPlayer)
+  end
+  })
   AddButton(Tab2o, {
      Name = "Redz Hub",
     Callback = function() 
@@ -120,36 +151,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Loader/main/
      Name = "Shade ",
     Callback = function()
        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-Shader-37434"))()
-  end
-  })
-  AddButton(Tab1o, {
-     Name = "Hop Rip Indra",
-    Callback = function() 
-       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "4946b5f2-4a2c-44e8-947e-f336caebde29", game.Players.LocalPlayer)
-  end
-  })
-  AddButton(Tab1o, {
-     Name = "Hop Dough King",
-    Callback = function() 
-       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "d2f3855d-9b92-4515-8740-c0eb7ffcd781", game.Players.LocalPlayer)
-  end
-  })
-  AddButton(Tab1o, {
-     Name = "Hop Tyrant",
-    Callback = function() 
-       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "f12d49ac-05c5-49b4-865f-afc7b227ef60", game.Players.LocalPlayer)
-  end
-  })
-  AddButton(Tab1o, {
-     Name = "Mirage island",
-    Callback = function() 
-       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "f12d49ac-05c5-49b4-865f-afc7b227ef60", game.Players.LocalPlayer)
-  end
-  })
-  AddButton(Tab1o, {
-     Name = "Hop Dark Beard",
-    Callback = function() 
-       game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "b19eab3f-5da2-41f9-8d57-8822163b7219", game.Players.LocalPlayer)
   end
   })
   AddButton(Tab2o, {
@@ -249,7 +250,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/AkGaming
        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "42079b6f-5d1d-41e9-8e09-730c0b1dbcda", game.Players.LocalPlayer)
   end
   })
-  AddButton(Tab9o, {
+  AddButton(Tab1o, {
      Name = "Vxeze Hub (Hỗ Trợ 2 game)",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Dex-Bear/Vxezehub/refs/heads/main/VxezeHubMain"))()    
@@ -298,6 +299,99 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/AkGaming
 }
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TrashLua/BloxFruits/main/KaitunBeta.RiseEvo"))()
+  end
+  })
+  AddButton(Tab5o, {
+     Name = "Banana Kaitun hub",
+    Callback = function()
+       repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Key = "887b508e0464a08e0ea0fb14"
+    getgenv().SettingFarm ={
+        ["Hide UI"] = false,
+        ["Reset Teleport"] = {
+            ["Enabled"] = false,
+            ["Delay Reset"] = 3,
+            ["Item Dont Reset"] = {
+                ["Fruit"] = {
+                    ["Enabled"] = true,
+                    ["All Fruit"] = true, 
+                    ["Select Fruit"] = {
+                        ["Enabled"] = false,
+                        ["Fruit"] = {},
+                    },
+                },
+            },
+        },
+        ["White Screen"] = false,
+        ["Lock Fps"] = {
+            ["Enabled"] = false,
+            ["FPS"] = 20,
+        },
+        ["Get Items"] = {
+            ["Saber"] = true,
+            ["Godhuman"] =  true,
+            ["Skull Guitar"] = true,
+            ["Mirror Fractal"] = true,
+            ["Cursed Dual Katana"] = true,
+            ["Upgrade Race V2-V3"] = true,
+            ["Auto Pull Lever"] = true,
+            ["Shark Anchor"] = true, --- if have cdk,sg,godhuman
+        },
+        ["Get Rare Items"] = {
+            ["Rengoku"] = false,
+            ["Dragon Trident"] = false, 
+            ["Pole (1st Form)"] = false,
+            ["Gravity Blade"]  = false,
+        },
+        ["Farm Fragments"] = {
+            ["Enabled"]  = false,
+            ["Fragment"] = 50000,
+        },
+        ["Auto Chat"] = {
+            ["Enabled"] = false,
+            ["Text"] = "",
+        },
+        ["Auto Summon Rip Indra"] = true, --- auto buy haki and craft haki legendary 
+        ["Select Hop"] = { -- 70% will have it
+            ["Hop Server If Have Player Near"] = false, 
+            ["Hop Find Rip Indra Get Valkyrie Helm or Get Tushita"] = true, 
+            ["Hop Find Dough King Get Mirror Fractal"] = false,
+            ["Hop Find Raids Castle [CDK]"] = true,
+            ["Hop Find Cake Queen [CDK]"] = true,
+            ["Hop Find Soul Reaper [CDK]"] = true,
+            ["Hop Find Darkbeard [SG]"] = true,
+            ["Hop Find Mirage [ Pull Lever ]"] = false,
+        },
+        ["Farm Mastery"] = {
+            ["Melee"] = false,
+            ["Sword"] = false,
+        },
+        ["Buy Haki"] = {
+            ["Enhancement"] = false,
+            ["Skyjump"] = true,
+            ["Flash Step"] = true,
+            ["Observation"] = true,
+        },
+        ["Sniper Fruit Shop"] = {
+            ["Enabled"] = true, -- Auto Buy Fruit in Shop Mirage and Normal
+            ["Fruit"] = {"Leopard-Leopard","Kitsune-Kitsune","Dragon-Dragon","Yeti-Yeti","Gas-Gas"},
+        },
+        ["Lock Fruit"] = {},
+        ["Webhook"] = {
+            ["Enabled"] = false,
+            ["WebhookUrl"] = "",
+        }
+    }
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()
+  end
+  })
+  AddButton(Tab5o, {
+     Name = "Maru Hub Kaitun",
+    Callback = function()
+       getgenv().Key = "MARU-WN6LS-OPOW-B2MX-778PW-0US1J"
+getgenv().id = "1377267119451934830"
+getgenv().Script_Mode = "Kaitun_Script"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
   end
   })
  AddButton(Tab2o, {
