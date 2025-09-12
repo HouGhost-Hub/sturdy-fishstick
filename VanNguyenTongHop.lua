@@ -14,8 +14,8 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
         Keys = {"VANNGUYEN-F97-J98-QL9-123"},
         Notifi = {
         Notifications = true,
-        CorSuccessfull "Wrong Key Thành công ✅",
-       Incorrectkey = "Wrong Key Không hợp lệ ❌",
+        CorSuccessfull "Wrong Key Successfully ✅",
+       Incorrectkey = "Wrong Key No Key ❌",
        CopyKeyLink = "https://discord.gg/FsQ9FqcU"
       }
     }
@@ -31,8 +31,9 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       })
       
 ------ Tab
-     local Tab1o = MakeTab({Name = "Script Blox Fruits"})
+
      local Tab2o = MakeTab({Name = "Script Grow A Garden"})
+     local Tab1o = MakeTab({Name = "Script Blox Fruits"})
      local Tab3o = MakeTab({Name = "Support all game"})
      local Tab4o = MakeTab({Name = "Script Premium"})
      local Tab5o = MakeTab({Name = "Kaitun Blox Fruits"})
