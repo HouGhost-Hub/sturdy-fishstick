@@ -23,7 +23,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        MinimizeButton({
        Image = "http://www.roblox.com/asset/?id=80196398184635",
-       Size = {50, 50},
+       Size = {60, 60},
        Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
        Stroke = false,
@@ -716,7 +716,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiH
   end
   })
   AddButton(Tab3o, {
-     Name = "menk9999 FixLag",
+     Name = "Van Nguyen FixLag",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/trongnguyenhubbloxfruit/TrongnguyenFixLag/refs/heads/main/SkidCondimemay.txt"))()
   end
