@@ -175,20 +175,20 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Loader/main/
        loadstring(game:HttpGet("https://raw.githubusercontent.com/kimprobloxdz/Banana-Free/refs/heads/main/Protected_5609200582002947.lua.txt"))()
   end
   })
-  AddButton(Tab9o, {
+  AddButton(Tab1o, {
      Name = "Speeds hub",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
   end
   })
-  AddButton(Tab9o, {
+  AddButton(Tab1o, {
      Name = "Thunder Hub",
     Callback = function()
        loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Min/refs/heads/main/MinThRz"))()    
   end
   })
-  AddButton(Tab2o, {
-     Name = "Zinner Hub",
+  AddButton(Tab1o, {
+     Name = "Zinner Hub Blox Fruit",
     Callback = function() 
       getgenv().Team = "Pirates"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangNguyenk8/Roblox/refs/heads/main/BF-Main.luau"))()
@@ -237,13 +237,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/AkGaming
     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "cba5dc00-a9eb-411a-a708-2ceecfe33fb7", game.Players.LocalPlayer)
   end
   })
-  AddButton(Tab1o, {
+  AddButton(Tab9o, {
      Name = "Hop Soul Reaper",
     Callback = function() 
        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "42079b6f-5d1d-41e9-8e09-730c0b1dbcda", game.Players.LocalPlayer)
   end
   })
-  AddButton(Tab9o, {
+  AddButton(Tab1o, {
      Name = "Vxeze Hub (Hỗ Trợ 2 game)",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Dex-Bear/Vxezehub/refs/heads/main/VxezeHubMain"))()    
@@ -535,8 +535,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fakekuri/BlueXHub/ref
        loadstring(game:HttpGet("https://raw.githubusercontent.com/Overgustx2/Main/refs/heads/main/BloxFruits_25.html"))()
   end
   })
-  AddButton(Tab9o, {
-     Name = "Zinner Hub",
+  AddButton(Tab2o, {
+     Name = "Zinner Hub Grow a garden",
     Callback = function()
        loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangNguyenk8/Roblox/refs/heads/main/GrowAGarden.luau"))()    
   end
