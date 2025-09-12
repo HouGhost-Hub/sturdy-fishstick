@@ -96,7 +96,7 @@ local Window = Fluent:CreateWindow({
     TabWidth=157,
     Size=UDim2.fromOffset(450,300),
     Acrylic=true,
-    Theme="Darker",
+    Theme="Dark",
     MinimizeKey=Enum.KeyCode.End
 })
 
@@ -116,11 +116,11 @@ local Tabs = {
 }
 
 -- Tab 0
-Tabs.Main0:AddButton({Title="Discord",Description="Văn Nguyên Community",Callback=function() setclipboard("https://discord.gg/DjQCdc8j") end})
-Tabs.Main0:AddButton({Title="Youtuber",Description="Van Nguyen Community",Callback=function() setclipboard("https://www.youtube.com/@VanNguyen-80") end})
-Tabs.Main0:AddButton({Title="Tik Tok",Description="Ngọc Nguyên Community",Callback=function() setclipboard("tiktok.com/@vannguyen_173") end})
-Tabs.Main0:AddButton({Title="Facebook",Description="Van Nguyen Community",Callback=function() setclipboard("https://www.facebook.com/share/16rw4PyFBR/") end})
-Tabs.Main0:AddButton({Title="Zalo",Description="Văn Nguyên Community",Callback=function() setclipboard("https://zalo.me/g/vekjuk480") end})
+Tabs.Main0:AddButton({Title="Discord",Description="VanNguyen Community",Callback=function() setclipboard("https://discord.gg/DjQCdc8j") end})
+Tabs.Main0:AddButton({Title="Youtuber",Description="VanNguyen Community",Callback=function() setclipboard("https://www.youtube.com/@VanNguyen-80") end})
+Tabs.Main0:AddButton({Title="Tik Tok",Description="VanNguyen Community",Callback=function() setclipboard("tiktok.com/@vannguyen_173") end})
+Tabs.Main0:AddButton({Title="Facebook",Description="VanNguyen Community",Callback=function() setclipboard("https://www.facebook.com/share/16rw4PyFBR/") end})
+Tabs.Main0:AddButton({Title="Zalo",Description="VanNguyen Community",Callback=function() setclipboard("https://zalo.me/g/vekjuk480") end})
 
 -- Tab 1
 Tabs.Main1:AddButton({Title="Redz Hub",Callback=function()
@@ -204,34 +204,6 @@ Tabs.Main7:AddButton({Title="SolixHub",Callback=function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
 end})
 
-Tabs.Main8:AddButton({Title="Full Moon",Callback=function()
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "7ba77e93-9ad6-4816-b15a-eddcb1c1dd2a", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="Sword Lengend",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "cd8e01a2-4c76-4143-b59c-7583ed2681e7", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="Boss",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "74993948-ffb2-435d-9bd5-c2635479bfcc", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="Haki CoLors",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "3bfb1abb-55b1-4dbe-a597-6d8f2354aa7e", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="Mirage",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "385e4e0b-4896-4a15-9419-713cf50e215b", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="King Lengend",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "05a30735-664b-478b-a7db-01200695f9d9", game.Players.LocalPlayer)
-end})
-
-Tabs.Main8:AddButton({Title="Prehistoric",Callback=function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "50e5cb14-84c8-4ab8-8f48-98600e55cd01", game.Players.LocalPlayer)
-end})
-
 Tabs.Main10:AddButton({Title="Van Nguyen Farm Bounty",Callback=function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/GsiPeh/refs/heads/main/VANNGUYEN-T%E1%BA%A1o-Scripts.lua"))()
 end})
@@ -249,20 +221,6 @@ Tabs.Main11:AddButton({Title="Maru Hub Premium",Callback=function()
 getgenv().id = "1377267119451934830"
 getgenv().BetaTestRelease = true
 loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
-end})
-
-Tabs.Main11:AddButton({Title="Maru Hub Kaitun Premium",Callback=function()
-    getgenv().Key = "MARU-WN6LS-OPOW-B2MX-778PW-0US1J"
-getgenv().id = "1377267119451934830"
-getgenv().Script_Mode = "Kaitun_Script"
-loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
-end})
-
-Tabs.Main11:AddButton({Title="Banana Cat Hub Premium",Callback=function()
-    repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
-getgenv().Key = "887b508e0464a08e0ea0fb14" 
-getgenv().NewUI = true
-loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()
 end})
 
 Tabs.Main11:AddButton({Title="Kaitun Banana Hub",Callback=function()
