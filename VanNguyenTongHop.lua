@@ -116,11 +116,11 @@ local Tabs = {
 }
 
 -- Tab 0
-Tabs.Main0:AddButton({Title="Discord",Description="VanNguyen Community",Callback=function() setclipboard("https://discord.gg/DjQCdc8j") end})
-Tabs.Main0:AddButton({Title="Youtuber",Description="VanNguyen Community",Callback=function() setclipboard("https://www.youtube.com/@VanNguyen-80") end})
-Tabs.Main0:AddButton({Title="Tik Tok",Description="VanNguyen Community",Callback=function() setclipboard("tiktok.com/@vannguyen_173") end})
-Tabs.Main0:AddButton({Title="Facebook",Description="VanNguyen Community",Callback=function() setclipboard("https://www.facebook.com/share/16rw4PyFBR/") end})
-Tabs.Main0:AddButton({Title="Zalo",Description="VanNguyen Community",Callback=function() setclipboard("https://zalo.me/g/vekjuk480") end})
+Tabs.Main0:AddButton({Title="Discord",Description="Văn Nguyên Community",Callback=function() setclipboard("https://discord.gg/DjQCdc8j") end})
+Tabs.Main0:AddButton({Title="Youtuber",Description="Van Nguyen Community",Callback=function() setclipboard("https://www.youtube.com/@VanNguyen-80") end})
+Tabs.Main0:AddButton({Title="Tik Tok",Description="Ngọc Nguyên Community",Callback=function() setclipboard("tiktok.com/@vannguyen_173") end})
+Tabs.Main0:AddButton({Title="Facebook",Description="Van Nguyen Community",Callback=function() setclipboard("https://www.facebook.com/share/16rw4PyFBR/") end})
+Tabs.Main0:AddButton({Title="Zalo",Description="Văn Nguyên Community",Callback=function() setclipboard("https://zalo.me/g/vekjuk480") end})
 
 -- Tab 1
 Tabs.Main1:AddButton({Title="Redz Hub",Callback=function()
