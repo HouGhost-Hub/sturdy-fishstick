@@ -1,0 +1,122 @@
+-- 🌕 Auto Hop + Full Moon Webhook Notification (kèm System Message + Join Script)
+-- By Van Nguyen Hub
+
+local IMAGE_URL = "https://cdn.discordapp.com/attachments/1418177192822706186/1419281892750131291/anh-27-meme-dang-yeu-didongmy.jpg"
+local WEBHOOK = "https://discord.com/api/webhooks/1418185423691186277/pKYBfM_UlZVMDjgICvDa-hjR9vCV6B_8jj2gAQ9gTlz7Jsr9BVqV2RFaaCfTXgkixeP2"
+
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local Lighting = game:GetService("Lighting")
+local PLACE_ID = game.PlaceId
+
+-- Gửi thông báo vào chat Roblox
+local function systemNotify(msg)
+    StarterGui:SetCore("ChatMakeSystemMessage", {
+        Text = "[🌕 Full Moon Hub] " .. msg,
+        Color = Color3.fromRGB(255, 255, 0),
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 18
+    })
+end
+
+-- Gửi embed lên Discord
+local function sendEmbed(timeToEnd, timeInServer, players, jobId)
+    local normalJobId = "```"..tostring(jobId).."```"
+    local mobileJobId = "```"..HttpService:Base64Encode(tostring(jobId)).."```"
+
+    -- Script join server trực tiếp
+    local joinScript = string.format(
+        "game:GetService(\"ReplicatedStorage\").__ServerBrowser:InvokeServer(\"teleport\", \"%s\")",
+        jobId
+    )
+
+    local joinLink = string.format("roblox://placeId=%s&gameInstanceId=%s", PLACE_ID, jobId)
+
+    local data = {
+        embeds = {{
+            title = "🌕 Full Moon Found!",
+            color = 16776960,
+            thumbnail = { url = IMAGE_URL },
+            fields = {
+                {name = "Time To End ☀️", value = timeToEnd, inline = false},
+                {name = "Time in Server:", value = timeInServer, inline = false},
+                {name = "Players:", value = players, inline = false},
+                {name = "JobId:", value = normalJobId, inline = false},
+                {name = "JobId (Mobile):", value = mobileJobId, inline = false},
+                {name = "⚡ Join Script:", value = "```lua\n"..joinScript.."\n```", inline = false},
+            },
+            footer = { text = "Van Nguyen Hub | "..os.date("Hôm nay lúc %H:%M") }
+        }},
+        components = {{
+            type = 1,
+            components = {{
+                type = 2,
+                style = 5,
+                label = "🚀 Join Server",
+                url = joinLink
+            }}
+        }}
+    }
+
+    local body = HttpService:JSONEncode(data)
+    local req = syn and syn.request or request or http_request
+    if req then
+        req({
+            Url = WEBHOOK,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = body
+        })
+    end
+end
+
+-- Kiểm tra trăng tròn
+local function isFullMoon()
+    local sky = Lighting:FindFirstChildOfClass("Sky")
+    if not sky then return false end
+    local moonId = tostring(sky.MoonTextureId or "")
+    return moonId:find("9709149431") ~= nil
+end
+
+-- Thời gian còn lại
+local function getTimeToEnd()
+    local clock = Lighting.ClockTime
+    local minutes = math.floor((6 - clock) * 60 / 1)
+    if minutes < 0 then minutes = minutes + 720 end
+    return tostring(minutes).." Minute(s)"
+end
+
+-- Thời gian trong server
+local function getTimeInServer()
+    local seconds = math.floor(workspace.DistributedGameTime)
+    local h = string.format("%02i", math.floor(seconds/3600))
+    local m = string.format("%02i", math.floor((seconds%3600)/60))
+    local s = string.format("%02i", seconds%60)
+    return h..":"..m..":"..s
+end
+
+-- Auto hop loop
+local function hopServer()
+    while task.wait(5) do
+        if isFullMoon() then
+            local timeToEnd = getTimeToEnd()
+            local timeInServer = getTimeInServer()
+            local players = #Players:GetPlayers().."/"..Players.MaxPlayers
+            local jobId = game.JobId
+
+            systemNotify("⚡ Full Moon detected! Đang gửi webhook...")
+            sendEmbed(timeToEnd, timeInServer, players, jobId)
+            systemNotify("✅ Webhook đã gửi thành công! Copy JobId để join server ngay.")
+
+            break
+        else
+            systemNotify("⏳ Không có Full Moon... hopping tiếp")
+            TeleportService:Teleport(PLACE_ID, Players.LocalPlayer)
+        end
+    end
+end
+
+-- Start
+hopServer()
