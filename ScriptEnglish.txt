@@ -2405,15 +2405,67 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode="Super Fast Attack"
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
+_G.Fast_Delay = 0
+
 spawn(function()
-    while wait() do
+    while task.wait() do
         if _G.FastAttackVxeze_Mode then
             pcall(function()
-                if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=200
+                if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                    _G.Fast_Delay = 0.0000000000001
+                elseif _G.FastAttackVxeze_Mode == "Normal" then
+                    _G.Fast_Delay = 0.2
                 end
             end)
+        end
+    end
+end)
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+
+local Net = ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Net")
+local RE = Net:WaitForChild("RE")
+local RegisterAttack = RE:WaitForChild("RegisterAttack")
+local RegisterHit = RE:WaitForChild("RegisterHit")
+
+local function isAlive(model)
+    local h = model and model:FindFirstChild("Humanoid")
+    return h and h.Health > 0
+end
+
+local function getNearestMob()
+    local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if not root then return nil end
+    local nearest, dist = nil, math.huge
+    for _, mob in ipairs(workspace:WaitForChild("Enemies"):GetChildren()) do
+        if isAlive(mob) then
+            local head = mob:FindFirstChild("Head") or mob:FindFirstChild("HumanoidRootPart")
+            if head then
+                local d = (head.Position - root.Position).Magnitude
+                if d < dist and d <= 150 then
+                    dist = d
+                    nearest = head
+                end
+            end
+        end
+    end
+    return nearest
+end
+
+spawn(function()
+    while task.wait(_G.Fast_Delay or 0) do
+        local target = getNearestMob()
+        if target then
+            pcall(function()
+                RegisterAttack:FireServer(_G.Fast_Delay)
+                RegisterHit:FireServer(target, {target})
+            end)
+            print("[FastAttack] Attacking mob:", target.Parent.Name)
+        else
+            print("[FastAttack] No mob found in range")
         end
     end
 end)
