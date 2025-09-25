@@ -31,7 +31,7 @@ if _G.FastAttack then
     local Player = Players.LocalPlayer
 
     if not Player then
-        warn("KhĂƒÂƒĂ‚Â´ng tĂƒÂƒĂ‚Â¬m thĂƒÂ¡Ă‚ÂºĂ‚Â¥y ngĂƒÂ†Ă‚Â°ĂƒÂ¡Ă‚Â»Ă‚Âi chĂƒÂ†Ă‚Â¡i cĂƒÂ¡Ă‚Â»Ă‚Â¥c bĂƒÂ¡Ă‚Â»Ă‚Â™.")
+        warn("TeleportService")
         return
     end
 
@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 0,
+        ClickDelay = 100,
         local MaxDistance = 150
     }
 
@@ -2364,22 +2364,8 @@ Tabs.Info:AddButton({
             setclipboard(tostring("https://discord.gg/tenhub")) 
         end
 })
-Tabs.Info:AddButton({
-    Title="Ten Nguoi Lam",
-    Description="Youtube",
-    Callback=function()
-        setclipboard(tostring("https://www.youtube.com/"))
-    end
-})
-Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
-    Description="Facebook",
-    Callback=function()
-        setclipboard(tostring("https://www.facebook.com/"))
-    end
-})
 Tabs.Info:AddParagraph({
-    Title="Nguoi Lam",
+    Title="Admiral",
     Content="Credits"
 })
 local executorName
@@ -2407,16 +2393,16 @@ Tabs.Info:AddParagraph({
     Content=""
 })
 _G.FastAttackVxeze_Mode = "Super Fast Attack"
-_G.Fast_Delay = 0
+_G.Fast_Delay = 100
 
 spawn(function()
     while task.wait() do
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                    _G.Fast_Delay = 0.0000000000001
+                    _G.Fast_Delay = 0.1
                 elseif _G.FastAttackVxeze_Mode == "Normal" then
-                    _G.Fast_Delay = 0.2
+                    _G.Fast_Delay = 0.1
                 end
             end)
         end
@@ -2470,7 +2456,7 @@ spawn(function()
         end
     end
 end)
-local AutoFram = Tabs.Main:AddSection("Auto Fram")
+local AutoFram = Tabs.Main:AddSection("Auto Farm")
 local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
     Title = "Select Weapon",
     Description = "",
@@ -2514,7 +2500,7 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-        Title="Auto Fram Level",
+        Title="Auto Farm Level",
         Description="",
         Default=false })
     ToggleLevel:OnChanged(function(Value)
@@ -2615,7 +2601,7 @@ end)
         end
         end
       end)
-local AutoFram = Tabs.Main1:AddSection("CastleRaid")
+local AutoFarm = Tabs.Main1:AddSection("CastleRaid")
     local ToggleCastleRaid = Tabs.Main1:AddToggle("ToggleCastleRaid", {
         Title="Auto Castle Raid",
         Description="", 
@@ -2767,7 +2753,7 @@ spawn(function()
                 local CFrameTarget = CFrame.new(BushPosition)
                 Tween2(CFrameTarget)
                 Fluent:Notify({
-                    Title = "Ten Hub",
+                    Title = "Van-Nguyen",
                     Content = "Find Berry: " .. tostring(BerryName),
                     Duration = 10
                 })
@@ -2777,7 +2763,7 @@ spawn(function()
         end
     end
 end)
-local Mastery = Tabs.Main:AddSection("Auto Fram Mastery")
+local Mastery = Tabs.Main:AddSection("Auto Farm Mastery")
 local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
     Title = "Select Fram",
     Description = "",
@@ -2790,7 +2776,7 @@ DropdownMastery:OnChanged(function(Value)
     TypeMastery = Value
 end)
 local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {
-    Title = "Auto Fram Fruit",
+    Title = "Auto Farm Fruit",
     Description = "",
     Default = false
 })
@@ -2799,7 +2785,7 @@ ToggleMasteryFruit:OnChanged(function(Value)
 end)
 Options.ToggleMasteryFruit:SetValue(false)
 local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {
-    Title = "Auto Fram Gun",
+    Title = "Auto Farm Gun",
     Description = "",
     Default = false
 })
