@@ -1,6 +1,6 @@
 local UiMakeLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Msunehub/Uilm/refs/heads/main/UiMat1.lua"))()
 local Notify = UiMakeLib:MakeNotify({
-	["Title"] = "Văn Nguyên Hub",
+	["Title"] = "Van Nguyen Hub",
 	["Description"] = "Notification",
 	["Color"] = Color3.fromRGB(151, 207, 23),
 	["Content"] = "Welcome to Fluriore UI",
@@ -8,7 +8,7 @@ local Notify = UiMakeLib:MakeNotify({
 	["Delay"] = 10
 })
 local Window = UiMakeLib:MakeGui({
-	["NameHub"] = "Zing Mod Hack",
+	["NameHub"] = "Van Nguyen Hack",
 	["Description"] = "Phiên Bản V1 đời đầu",
 	["Color"] = Color3.fromRGB(151, 207, 23),
 	["Logo Player"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..game:GetService("Players").LocalPlayer.UserId .."&width=420&height=420&format=png",
