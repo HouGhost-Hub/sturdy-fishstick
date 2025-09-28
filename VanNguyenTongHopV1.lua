@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/vinh12eqweaws/zingmods/refs/heads/main/zingpro')))()
 
-local Window = OrionLib:MakeWindow({Name = "ZingMod", HidePremium = false, SaveConfig = true, ConfigFolder = "dxl_bf"})
+local Window = OrionLib:MakeWindow({Name = "Văn Nguyên Hub Tổng Hợp Freemium", HidePremium = false, SaveConfig = true, ConfigFolder = "dxl_bf"})
 
 local Tab1 = Window:MakeTab({
 	Name = "Scripts Mới",
@@ -39,49 +39,42 @@ end
 Tab5:AddButton({
 	Name = "Hop Fulll Moon Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "eb1b1f1c-ff9a-4d09-9dd5-602129cfe613")
 end
 })
 Tab5:AddButton({
 	Name = "Hop Sword Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "6224c87b-6fec-41a3-8f7d-3ae76cddd2cc")
 end
 })
 Tab5:AddButton({
 	Name = "Hop Boss Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "34605faa-4210-4cd8-9099-3b6c3e95ea55")
 end
 })
 Tab5:AddButton({
 	Name = "Hop King Legacy Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "edd760f6-2a2b-49ce-b3a4-a99990793af5", game.Players.LocalPlayer)
 end
 })
 Tab5:AddButton({
 	Name = "Hop Haki Color Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "b68c23f7-fd7b-41cd-a5f3-81363d932ab2")
 end
 })
 Tab5:AddButton({
 	Name = "Hop Prehistoric Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "f850aa84-4c10-46a9-bc6f-89bed183bc83")
 end
 })
 Tab5:AddButton({
 	Name = "Hop Mirage Notify",
 	Callback = function()
-        repeat wait(5) until game:IsLoaded()
         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", "1649ed01-a83e-4a5c-b5b2-1b17e7d00202")
 end
 })
@@ -149,26 +142,26 @@ Tab2:AddButton({
 end
 })
 
-Tab:AddButton({
+Tab1:AddButton({
 	Name = "NEW: Alchemy",
 	Callback = function()
        loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
   	end    
 })
-Tab:AddButton({
+Tab1:AddButton({
 	Name = "NEW: Banana",
 	Callback = function()
      loadstring(game:HttpGet("https://raw.githubusercontent.com/ScriptRUs/BananaHub/main/BananaHub.lua"))()
   	end    
 })
-Tab:AddButton({
+Tab1:AddButton({
 	Name = "NEW: BLUE X",
 	Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/EN.lua"))()
   	end    
 })
 
-Tab:AddButton({
+Tab1:AddButton({
 	Name = "Chests Farm",
 	Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/NickelHUBB/SonicTuru/main/ChestFarmOp"))()
