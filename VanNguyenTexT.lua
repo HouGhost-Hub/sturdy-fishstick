@@ -11,7 +11,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
         Title = "Blox Fruit [ Beta ] Tổng Hợp Van Nguyen",
         Description = "Blox Fruit TongHop",
         KeyLink = "https://discord.gg/hNjWyVcF",
-        Keys = {"VANNGUYEN-DTR9-H45-TSP-S863"},
+        Keys = {"vannguyen"},
         Notifi = {
         Notifications = true,
         CorrectKey = "Wrong Key Successfull ✅",
@@ -31,7 +31,9 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       })
       
 ------ Tab
-     local Tab1o = MakeTab({Name = "Script Blox Fruits"})
+     local Tab1o = MakeTab({Name = "Click"})
+     local Tab1o = MakeTab({Name = "Bấm"})
+     local Tab1o = MakeTab({Name = "Thử"})
      
 ------TOGGLE
 Toggle = AddToggle(Tablo, {
