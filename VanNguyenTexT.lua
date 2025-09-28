@@ -32,11 +32,11 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       
 ------ Tab
      local Tab1o = MakeTab({Name = "Click"})
-     local Tab1o = MakeTab({Name = "Bấm"})
-     local Tab1o = MakeTab({Name = "Thử"})
+     local Tab2o = MakeTab({Name = "Bấm"})
+     local Tab3o = MakeTab({Name = "Thử"})
      
 ------TOGGLE
-Toggle = AddToggle(Tablo, {
+Toggle = AddToggle(Tab1o, {
     Name = "Click",
     Default = false,
     Callback = function()
@@ -44,14 +44,14 @@ Toggle = AddToggle(Tablo, {
 })
 
 ------ BUTTON
-AddButton(Tablo, {
+AddButton(Tab2o, {
     Name = "Bấm",
     Callback = function()
     end
 })
 
 ------ Dropdown
-Dropdown = AddDropdown(Tablo, {
+Dropdown = AddDropdown(Tab3o, {
     Name = "thử",
     Options = {"Test 1", "Test 2", "Test 3", "Test 4"},
     Default = "Melee",
