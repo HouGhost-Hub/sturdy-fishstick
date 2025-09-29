@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 0.0001,
+        ClickDelay = 0,
     }
 
     local Module = {}
@@ -75,7 +75,7 @@ if _G.FastAttack then
         end
 
         local FastAttack = {
-            Distance = 50,
+            Distance = 100,
             attackMobs = true,
             attackPlayers = true,
             Equipped = nil
@@ -2230,10 +2230,10 @@ function AttackNoCoolDown()
             local attackEvent = storage:WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterAttack")
             local hitEvent = storage:WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterHit")
             if #targets > 0 then
-                attackEvent:FireServer(0.0000000000001)
+                attackEvent:FireServer(0.0001)
                 hitEvent:FireServer(mainTarget, targets)
             else
-                task.wait(0.0000000000001)
+                task.wait(0.0001)
             end
         end)
     end
@@ -2418,7 +2418,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0005
+                    _G.Fast_Delay=0.0001
                 end
             end)
         end
@@ -4116,7 +4116,7 @@ local function createToggle(title, toggleKey, islands, islandName, notification)
             _G[toggleKey] = false
             if not notified then
                 Fluent:Notify({
-                    Title = "Ten Hub",
+                    Title = "Van Nguyen Hub",
                     Content = notification,
                     Duration = 10
                 })
@@ -6557,9 +6557,9 @@ spawn(function()
 pcall(function()
     while wait() do
         if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
-            FrozenIsland:SetDesc('âœ…')
+            FrozenIsland:SetDesc('✅')
         else
-            FrozenIsland:SetDesc('âŒ')
+            FrozenIsland:SetDesc('❎')
         end
     end
 end)
