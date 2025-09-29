@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 0.0005,
+        ClickDelay = 0.0001,
     }
 
     local Module = {}
@@ -2418,7 +2418,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00005
+                    _G.Fast_Delay=0.0005
                 end
             end)
         end
