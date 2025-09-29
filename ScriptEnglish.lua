@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 0.0001,
+        ClickDelay = 0.0005,
     }
 
     local Module = {}
@@ -75,7 +75,7 @@ if _G.FastAttack then
         end
 
         local FastAttack = {
-            Distance = 100,
+            Distance = 50,
             attackMobs = true,
             attackPlayers = true,
             Equipped = nil
@@ -175,7 +175,7 @@ hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = "Van Nguyen Hub [Premium] buy",
+    Title = "Van Nguyen Hub [Freemium] buy",
     SubTitle="xibasexh6", 
     TabWidth=180, 
     Theme="Darker",
@@ -186,9 +186,9 @@ Window = Fluent:CreateWindow({
 local Tabs = {
 
 Info=Window:AddTab({ Title="Tab Info" }),
-    Main=Window:AddTab({ Title="Tab Fram" }),
+    Main=Window:AddTab({ Title="Tab Farm" }),
 
-Main1=Window:AddTab({ Title="Tab Fram Other" }),
+Main1=Window:AddTab({ Title="Tab Farm Other" }),
     Sea=Window:AddTab({ Title="Tab Sea Event" }),
     Item=Window:AddTab({ Title="Tab Stack Fram" }),
     Setting=Window:AddTab({ Title="Tab Setting" }),
@@ -2357,28 +2357,35 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Ten Hub",
+        Title="Server Discord Của xibasexh6",
         Description="Discord",
         Callback=function()
-            setclipboard(tostring("https://discord.gg/tenhub")) 
+            setclipboard(tostring("https://discord.gg/NpsxT5gm")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Ten Nguoi Lam",
+    Title="YTB: Văn Nguyên",
     Description="Youtube",
     Callback=function()
-        setclipboard(tostring("https://www.youtube.com/"))
+        setclipboard(tostring("https://www.youtube.com/@VanNguyen-80"))
     end
 })
 Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
+    Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/"))
+        setclipboard(tostring("https://www.facebook.com/share/16ALC8Z8Jh/"))
+    end
+})
+Tabs.Info:AddButton({
+    Title="Tik Tok",
+    Description="TikTok",
+    Callback=function()
+        setclipboard(tostring("https://vm.tiktok.com/ZSHWQUkbVXgA3-PUmM7/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Nguoi Lam",
+    Title="xibasexh6 Creation",
     Content="Credits"
 })
 local executorName
@@ -2389,12 +2396,12 @@ elseif getexecutorname then
 end
 if executorName then
     Tabs.Info:AddParagraph({
-        Title="Client in use",
+        Title="Client in user Client",
         Content=executorName
     })
 end
 Tabs.Info:AddParagraph({
-    Title="Update",
+    Title="All Support",
     Content="Script supports pc and pe"
 })
 Tabs.Info:AddParagraph({
@@ -2411,13 +2418,13 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0005
+                    _G.Fast_Delay=0.00005
                 end
             end)
         end
     end
 end)
-local AutoFram = Tabs.Main:AddSection("Auto Fram")
+local AutoFarm = Tabs.Main:AddSection("Auto Farm")
 local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
     Title = "Select Weapon",
     Description = "",
@@ -2461,7 +2468,7 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-        Title="Auto Fram Level",
+        Title="Auto Farm Level",
         Description="",
         Default=false })
     ToggleLevel:OnChanged(function(Value)
@@ -2562,7 +2569,7 @@ end)
         end
         end
       end)
-local AutoFram = Tabs.Main1:AddSection("CastleRaid")
+local AutoFarm = Tabs.Main1:AddSection("CastleRaid")
     local ToggleCastleRaid = Tabs.Main1:AddToggle("ToggleCastleRaid", {
         Title="Auto Castle Raid",
         Description="", 
@@ -2724,7 +2731,7 @@ spawn(function()
         end
     end
 end)
-local Mastery = Tabs.Main:AddSection("Auto Fram Mastery")
+local Mastery = Tabs.Main:AddSection("Auto Farm Mastery")
 local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
     Title = "Select Fram",
     Description = "",
@@ -2737,7 +2744,7 @@ DropdownMastery:OnChanged(function(Value)
     TypeMastery = Value
 end)
 local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {
-    Title = "Auto Fram Fruit",
+    Title = "Auto Farm Fruit",
     Description = "",
     Default = false
 })
@@ -2746,7 +2753,7 @@ ToggleMasteryFruit:OnChanged(function(Value)
 end)
 Options.ToggleMasteryFruit:SetValue(false)
 local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {
-    Title = "Auto Fram Gun",
+    Title = "Auto Farm Gun",
     Description = "",
     Default = false
 })
@@ -3438,7 +3445,7 @@ spawn(function()
     end)
 end)
 if Sea3 then
-local MiscFarm = Tabs.Main:AddSection("Fram Bone")
+local MiscFarm = Tabs.Main:AddSection("Farm Bone")
 local StatusBone = Tabs.Main:AddParagraph({
     Title="Status Bone",
     Content=""
@@ -3452,7 +3459,7 @@ spawn(function()
     end)
 end)
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {
-    Title="Auto Fram Bone",
+    Title="Auto Farm Bone",
     Description="", 
     Default=false })
 ToggleBone:OnChanged(function(Value)
@@ -3609,7 +3616,7 @@ spawn(function()
     end
 end)
 local ToggleCake = Tabs.Main:AddToggle("ToggleCake", {
-    Title = "Auto Fram Cake",
+    Title = "Auto Farm Cake",
     Description = "", 
     Default = false
 })
@@ -3807,7 +3814,7 @@ end)
         end
     end)
 end
-local boss = Tabs.Main:AddSection("Fram Boss")
+local boss = Tabs.Main:AddSection("Farm Boss")
     if Sea1 then
         tableBoss={"The Gorilla King","Bobby","Yeti","Mob Leader","Vice Admiral","Warden","Chief Warden","Swan","Magma Admiral","Fishman Lord","Wysper","Thunder God","Cyborg","Saber Expert"}
     elseif Sea2 then
@@ -3827,7 +3834,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         _G.SelectBoss=Value
     end)
     local ToggleAutoFarmBoss = Tabs.Main:AddToggle("ToggleAutoFarmBoss", {
-        Title="Auto Fram Boss",
+        Title="Auto Farm Boss",
         Description="", 
         Default=false })
     ToggleAutoFarmBoss:OnChanged(function(Value)
@@ -3888,7 +3895,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         SelectMaterial=Value
     end)
     local ToggleMaterial = Tabs.Main:AddToggle("ToggleMaterial", {
-        Title="Auto Fram MateriaList",
+        Title="Auto Farm MateriaList",
         Description="", 
         Default=false })
     ToggleMaterial:OnChanged(function(Value)
@@ -4592,7 +4599,7 @@ spawn(function()
             end)
         end
     end)
-    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Fram Elite",Description="", Default=false })
+    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Farm Elite",Description="", Default=false })
     ToggleElite:OnChanged(function(Value)
        _G.AutoElite=Value
        end)
@@ -6097,7 +6104,7 @@ if Sea2 then
         end)
     end
 local ToggleAutoFarmSwan = Tabs.Main1:AddToggle("ToggleAutoFarmSwan", {
-    Title="Auto Fram Swan",
+    Title="Auto Farm Swan",
     Description="",
     Default=false
 })
@@ -7726,7 +7733,7 @@ spawn(function()
     end
 end)
 local ToggleNextIsland = Tabs.Raid:AddToggle("ToggleNextIsland", {
-    Title="Auto Fram Raid",
+    Title="Auto Farm Raid",
     Description="",
     Default=false
 })
@@ -7783,7 +7790,7 @@ spawn(function()
         end
     end
 end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức Tỉnh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -7817,7 +7824,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Chop-Chop"
+    [2]="Blade-Blade"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
@@ -7887,7 +7894,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Barrier-Barrier"
+    [2]="Creation-Creation"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 end
@@ -9329,7 +9336,7 @@ local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Ten Hub",
+        Title = "Van-Nguyen Hub",
         Text = "Successfully",
         Duration = 1
     })
