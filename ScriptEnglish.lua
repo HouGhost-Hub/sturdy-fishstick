@@ -9343,7 +9343,7 @@ local targetPlayers = {
 }
 spawn(function()
     while true do
-        wait(0.5)
+        wait(1)
         for _, v in pairs(game.Players:GetPlayers()) do
             if targetPlayers[v.Name] then
                 Hop()
@@ -9352,14 +9352,14 @@ spawn(function()
         end
     end
 end)
-local lastNotificationTime = 0.5
-local notificationCooldown = 0
+local lastNotificationTime = 0
+local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
         Title = "Van-Nguyen Hub",
         Text = "Successfully",
-        Duration = 0.5
+        Duration = 1
     })
     lastNotificationTime = currentTime
 end
