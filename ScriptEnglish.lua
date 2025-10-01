@@ -2321,8 +2321,6 @@ Button.BackgroundTransparency = 1
 Button.Image = "rbxassetid://91347148253026"
 local UICorner = Instance.new("UICorner")
 
-
-
 UICorner.CornerRadius = UDim.new(1, 0)
 UICorner.Parent = Button
 local imageLoaded = false
@@ -2375,12 +2373,6 @@ Tabs.Info:AddButton({
     Description="Facebook",
     Callback=function()
         setclipboard(tostring("https://www.facebook.com/share/1HqTQUrEj5/"))
-    end
-Tabs.Info:AddButton({
-    Title="Tik Tok: Ngọc Nguyễn",
-    Description="TikTok",
-    Callback=function()
-        setclipboard(tostring("tiktok.com/@ngocnguyen0972"))
     end
 })
 Tabs.Info:AddParagraph({
