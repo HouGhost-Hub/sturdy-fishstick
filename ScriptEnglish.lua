@@ -2309,64 +2309,18 @@ local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 local existingGui = playerGui:FindFirstChild("CustomScreenGui")
 if existingGui then
     existingGui:Destroy()
-end
--- Lấy PlayerGui của người chơi
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
--- Tạo ScreenGui
-local ScreenGui = Instance.new("ScreenGui")
+endlocal ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "CustomScreenGui"
 ScreenGui.Parent = playerGui
-
--- Tạo nút vuông
 local Button = Instance.new("ImageButton")
-Button.Name = "CustomSquareButton"
+Button.Name = "CustomButton"
 Button.Parent = ScreenGui
-Button.Size = UDim2.new(0, 70, 0, 70) -- 70x70 pixel vuông
-Button.Position = UDim2.new(0.02, 0, 0.02, 20)
-Button.BackgroundTransparency = 0
-Button.BackgroundColor3 = Color3.fromRGB(245, 245, 245) -- màu nền nhẹ
-Button.Image = "rbxassetid://91347148253026" -- ID ảnh
-
--- Bo góc nhẹ (vẫn vuông nhưng mềm mại)
+Button.Size = UDim2.new(0, 50, 0, 50)
+Button.Position = UDim2.new(0.015, 0, 0.02, 20)
+Button.BackgroundTransparency = 1
+Button.Image = "rbxassetid://91347148253026"
 local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 6) -- 6px bo góc
-UICorner.Parent = Button
 
--- Thêm viền nhẹ
-local UIStroke = Instance.new("UIStroke")
-UIStroke.Thickness = 2
-UIStroke.Color = Color3.fromRGB(200, 200, 200)
-UIStroke.Parent = Button
-
--- Gradient tạo cảm giác “nổi tấm”
-local UIGradient = Instance.new("UIGradient")
-UIGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(220, 220, 220))
-}
-UIGradient.Rotation = 45
-UIGradient.Parent = Button
-
--- Hiệu ứng hover
-Button.MouseEnter:Connect(function()
-    UIGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 200)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(240, 240, 180))
-    }
-end)
-Button.MouseLeave:Connect(function()
-    UIGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(220, 220, 220))
-    }
-end)
-
--- Click event
-Button.MouseButton1Click:Connect(function()
-    print("Bạn đã bấm nút vuông nổi!")
-end)
 
 
 UICorner.CornerRadius = UDim.new(1, 0)
