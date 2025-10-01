@@ -184,23 +184,23 @@ Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.LeftControl
 })local Tabs = {
 
-    Info     = Window:AddTab({ Title="📖 Info", Icon = "info" }),
-    Main     = Window:AddTab({ Title="⚡ Main Farm", Icon = "home" }),
+    Info     = Window:AddTab({ Title="Info", Icon = "info" }),
+    Main     = Window:AddTab({ Title="Main Farm", Icon = "home" }),
     
-    Main1    = Window:AddTab({ Title="🌾 Farm Other", Icon = "tree" }),
-    Sea      = Window:AddTab({ Title="🌊 Sea Event", Icon = "anchor" }),
-    Item     = Window:AddTab({ Title="🎒 Stack Farm", Icon = "box" }),
-    Setting  = Window:AddTab({ Title="⚙️ Settings", Icon = "settings" }),
-    Status   = Window:AddTab({ Title="📊 Status", Icon = "bar-chart" }),
-    Stats    = Window:AddTab({ Title="💪 Stats", Icon = "activity" }),
-    Player   = Window:AddTab({ Title="🧑 Player", Icon = "user" }),
-    Teleport = Window:AddTab({ Title="🌀 Teleport", Icon = "map" }),
-    Visual   = Window:AddTab({ Title="🎨 Visual", Icon = "eye" }),
-    Fruit    = Window:AddTab({ Title="🍎 Fruit", Icon = "apple" }),
-    Raid     = Window:AddTab({ Title="🔥 Raid", Icon = "sword" }),
-    Race     = Window:AddTab({ Title="🏁 Race", Icon = "flag" }),
-    Shop     = Window:AddTab({ Title="🏪 Shop", Icon = "shopping-cart" }),
-    Misc     = Window:AddTab({ Title="✨ Misc", Icon = "star" }),
+    Main1    = Window:AddTab({ Title="Farm Other", Icon = "Green" }),
+    Sea      = Window:AddTab({ Title="Sea Event", Icon = "anchor" }),
+    Item     = Window:AddTab({ Title="Stack Farm", Icon = "box" }),
+    Setting  = Window:AddTab({ Title="Settings", Icon = "settings" }),
+    Status   = Window:AddTab({ Title="Server", Icon = "bar-chart" }),
+    Stats    = Window:AddTab({ Title="Stats", Icon = "activity" }),
+    Player   = Window:AddTab({ Title="Player", Icon = "user" }),
+    Teleport = Window:AddTab({ Title="Teleport", Icon = "map" }),
+    Visual   = Window:AddTab({ Title="Visual", Icon = "eye" }),
+    Fruit    = Window:AddTab({ Title="Fruit", Icon = "apple" }),
+    Raid     = Window:AddTab({ Title="Raid", Icon = "sword" }),
+    Race     = Window:AddTab({ Title="Race", Icon = "flag" }),
+    Shop     = Window:AddTab({ Title="Shop", Icon = "shopping-cart" }),
+    Misc     = Window:AddTab({ Title="Misc", Icon = "star" }),
 }
 
 local Options = Fluent.Options
@@ -2418,7 +2418,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0001
+                    _G.Fast_Delay=0.00005
                 end
             end)
         end
@@ -6406,7 +6406,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6417,7 +6417,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
@@ -7665,7 +7665,7 @@ function UpdateIslandMirageEsp()
         end)
     end
 end
-local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Rumble","Magma","Buddha","Sand","Phoenix","Dough"}
+local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Magma","Buddha","Sand","Phoenix","Dough"}
 local DropdownRaid = Tabs.Raid:AddDropdown("DropdownRaid", {
     Title="Select Chip",
     Description="",
