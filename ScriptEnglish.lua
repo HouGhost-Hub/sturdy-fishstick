@@ -182,27 +182,27 @@ Window = Fluent:CreateWindow({
     Acrylic=false,
     Size=UDim2.fromOffset(500, 400), 
     MinimizeKey = Enum.KeyCode.LeftControl
-})
-local Tabs = {
+})local Tabs = {
 
-Info=Window:AddTab({ Title="Tab Info" }),
-    Main = Window:AddTab({ Title = "Main Farm", Icon = "home" }),
-
-Main1=Window:AddTab({ Title="Tab Farm Other" }),
-    Sea=Window:AddTab({ Title="Tab Sea Event" }),
-    Item=Window:AddTab({ Title="Tab Stack Fram" }),
-    Setting=Window:AddTab({ Title="Tab Setting" }),
-    Status=Window:AddTab({ Title="Tab Status" }),
-    Stats=Window:AddTab({ Title="Tab Stats" }),
-    Player=Window:AddTab({ Title="Tab Player" }),
-    Teleport=Window:AddTab({ Title="Tab Teleport" }),
-    Visual=Window:AddTab({ Title="Tab Visual" }),
-    Fruit=Window:AddTab({ Title="Tab Fruit" }),
-    Raid=Window:AddTab({ Title="Tab Raid" }),
-    Race=Window:AddTab({ Title="Tab Race" }),
-    Shop=Window:AddTab({ Title="Tab Shop" }),
-    Misc=Window:AddTab({ Title="Tab Misc" }),
+    Info     = Window:AddTab({ Title="📖 Info", Icon = "info" }),
+    Main     = Window:AddTab({ Title="⚡ Main Farm", Icon = "home" }),
+    
+    Main1    = Window:AddTab({ Title="🌾 Farm Other", Icon = "tree" }),
+    Sea      = Window:AddTab({ Title="🌊 Sea Event", Icon = "anchor" }),
+    Item     = Window:AddTab({ Title="🎒 Stack Farm", Icon = "box" }),
+    Setting  = Window:AddTab({ Title="⚙️ Settings", Icon = "settings" }),
+    Status   = Window:AddTab({ Title="📊 Status", Icon = "bar-chart" }),
+    Stats    = Window:AddTab({ Title="💪 Stats", Icon = "activity" }),
+    Player   = Window:AddTab({ Title="🧑 Player", Icon = "user" }),
+    Teleport = Window:AddTab({ Title="🌀 Teleport", Icon = "map" }),
+    Visual   = Window:AddTab({ Title="🎨 Visual", Icon = "eye" }),
+    Fruit    = Window:AddTab({ Title="🍎 Fruit", Icon = "apple" }),
+    Raid     = Window:AddTab({ Title="🔥 Raid", Icon = "sword" }),
+    Race     = Window:AddTab({ Title="🏁 Race", Icon = "flag" }),
+    Shop     = Window:AddTab({ Title="🏪 Shop", Icon = "shopping-cart" }),
+    Misc     = Window:AddTab({ Title="✨ Misc", Icon = "star" }),
 }
+
 local Options = Fluent.Options
 local id = game.PlaceId
 if id==2753915549 then Sea1=true; elseif id==4442272183 then Sea2=true; elseif id==7449423635 then Sea3=true; else game:Shutdown() end;
