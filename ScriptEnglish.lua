@@ -177,17 +177,17 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 Window = Fluent:CreateWindow({
     Title = "Van-Nguyen Hub",
     SubTitle="Blox Fruits", 
-    TabWidth=155, 
+    TabWidth=180, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 320), 
+    Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })local Tabs = {
 
     Info     = Window:AddTab({ Title="Info", Icon = "info" }),
     Main     = Window:AddTab({ Title="Main Farm", Icon = "home" }),
     
-    Main1    = Window:AddTab({ Title="Farm Other", Icon = "Green" }),
+    Main1    = Window:AddTab({ Title="Farm Other", Icon = "GoldenStar" }),
     Sea      = Window:AddTab({ Title="Sea Event", Icon = "anchor" }),
     Item     = Window:AddTab({ Title="Stack Farm", Icon = "box" }),
     Setting  = Window:AddTab({ Title="Settings", Icon = "settings" }),
@@ -6397,9 +6397,9 @@ spawn(function()
         pcall(function()
             for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                 if _G.BringMob and bringmob then
-                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 50 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6410,7 +6410,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 50 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
