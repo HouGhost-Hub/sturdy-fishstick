@@ -6388,49 +6388,60 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
-ToggleBringMob:OnChanged(function(Value)
-    _G.BringMob = Value
-end)
+local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob", Default=true})
+ToggleBringMob:OnChanged(function(Value) _G.BringMob = Value end)
 Options.ToggleBringMob:SetValue(true)
+
+local maxMobs = 100
+local waitTime = 0.1
+
+local player = game.Players.LocalPlayer
+local hrpPlayer = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+
 spawn(function()
-    while wait() do
-        pcall(function()
-            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if _G.BringMob and bringmob then
-                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                        if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 50 then
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                v.HumanoidRootPart.CFrame = FarmPos
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 50 then
-                                v.HumanoidRootPart.CFrame = FarmPos
-                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                v.HumanoidRootPart.Transparency = 1
-                                v.Humanoid.JumpPower = 0
-                                v.Humanoid.WalkSpeed = 0
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.Humanoid:ChangeState(11)
-                                v.Humanoid:ChangeState(14)
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            end
-                        end
+    while wait(waitTime) do
+        if _G.BringMob and hrpPlayer then
+            pcall(function()
+                local mobs = {}
+                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and (v.Name == MonFarm or v.Name == "Factory Staff") then
+                        table.insert(mobs, v)
                     end
                 end
-            end
-        end)
+
+                table.sort(mobs, function(a,b) 
+                    return (a.HumanoidRootPart.Position-FarmPos.Position).Magnitude < (b.HumanoidRootPart.Position-FarmPos.Position).Magnitude 
+                end)
+
+                for i = 1, math.min(maxMobs, #mobs) do
+                    local mob = mobs[i]
+                    local hrpMob = mob.HumanoidRootPart
+                    local bp = hrpMob:FindFirstChild("BP") or Instance.new("BodyPosition", hrpMob)
+                    bp.Name = "BP"
+                    bp.MaxForce = Vector3.new(1e5,1e5,1e5)
+                    bp.P = 3000
+                    bp.D = 100
+                    bp.Position = FarmPos.Position
+
+                    hrpMob.Size = Vector3.new(60,60,60)
+                    hrpMob.CanCollide = false
+                    mob.Head.CanCollide = false
+                    mob.Humanoid.WalkSpeed = 0
+                    mob.Humanoid.JumpPower = 0
+                    hrpMob.Transparency = 1
+                    if mob.Humanoid:FindFirstChild("Animator") then mob.Humanoid.Animator:Destroy() end
+                    mob.Humanoid:ChangeState(11)
+                    mob.Humanoid:ChangeState(14)
+
+                    -- Auto Attack
+                    if player.Character and player.Character:FindFirstChild("Humanoid") then
+                        player.Character.Humanoid:MoveTo(hrpMob.Position)
+                        firetouchinterest(player.Character.HumanoidRootPart, hrpMob, 0)
+                        firetouchinterest(player.Character.HumanoidRootPart, hrpMob, 1)
+                    end
+                end
+            end)
+        end
     end
 end)
 local ToggleRemoveNotify = Tabs.Setting:AddToggle("ToggleRemoveNotify", {Title="Remove Notify",Description="", Default=false })
