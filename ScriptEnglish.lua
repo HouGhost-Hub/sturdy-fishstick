@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 100,
+        ClickDelay = 0,
     }
 
     local Module = {}
@@ -104,7 +104,7 @@ if _G.FastAttack then
 
         function FastAttack:Attack(BasePart, OthersEnemies)
             if not BasePart or #OthersEnemies == 0 then return end
-            RegisterAttack:FireServer(Settings.ClickDelay or 100)
+            RegisterAttack:FireServer(Settings.ClickDelay or 0)
             RegisterHit:FireServer(BasePart, OthersEnemies)
         end
 
@@ -178,7 +178,7 @@ Window = Fluent:CreateWindow({
     Title = "Văn-Nguyên Hub",
     SubTitle="Blox Fruits", 
     TabWidth=175, 
-    Theme="Sakura",
+    Theme="Darker",
     Acrylic=false,
     Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
