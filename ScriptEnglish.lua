@@ -6495,18 +6495,18 @@ ToggleF:OnChanged(function(Value)
     end)
 Options.ToggleF:SetValue(true)
 local Usser = Tabs.Info:AddParagraph({
-    Title="Status",
-    Content="â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"..
-        "Name : "..game.Players.LocalPlayer.DisplayName.." (@"..game.Players.LocalPlayer.Name..")\n"..
-        "Levels : "..game:GetService("Players").LocalPlayer.Data.Level.Value.."\n"..
-        "Money : "..game:GetService("Players").LocalPlayer.Data.Beli.Value.."\n"..
-        "Point F : "..game:GetService("Players").LocalPlayer.Data.Fragments.Value.."\n"..
-        "Bounty : "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value.."\n"..
-        "Health : "..game.Players.LocalPlayer.Character.Humanoid.Health.."/"..game.Players.LocalPlayer.Character.Humanoid.MaxHealth.."\n"..
-        "Energy : "..game.Players.LocalPlayer.Character.Energy.Value.."/"..game.Players.LocalPlayer.Character.Energy.MaxValue.."\n"..
-        "Race : "..game:GetService("Players").LocalPlayer.Data.Race.Value.."\n"..
-        "Devil Fruit : "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value.."\n"..
-        "â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”"
+    Title = "Status",
+    Content = "──────────────────────────────\n" ..
+        "Name       : " .. game.Players.LocalPlayer.DisplayName .. " (@" .. game.Players.LocalPlayer.Name .. ")\n" ..
+        "Level      : " .. game.Players.LocalPlayer.Data.Level.Value .. "\n" ..
+        "Money      : " .. game.Players.LocalPlayer.Data.Beli.Value .. "\n" ..
+        "Point F    : " .. game.Players.LocalPlayer.Data.Fragments.Value .. "\n" ..
+        "Bounty     : " .. game.Players.LocalPlayer.leaderstats["Bounty/Honor"].Value .. "\n" ..
+        "Health     : " .. game.Players.LocalPlayer.Character.Humanoid.Health .. "/" .. game.Players.LocalPlayer.Character.Humanoid.MaxHealth .. "\n" ..
+        "Energy     : " .. game.Players.LocalPlayer.Character.Energy.Value .. "/" .. game.Players.LocalPlayer.Character.Energy.MaxValue .. "\n" ..
+        "Race       : " .. game.Players.LocalPlayer.Data.Race.Value .. "\n" ..
+        "Devil Fruit: " .. game.Players.LocalPlayer.Data.DevilFruit.Value .. "\n" ..
+        "──────────────────────────────"
 })
 local Time = Tabs.Status:AddParagraph({
     Title="Time",
@@ -6554,18 +6554,19 @@ spawn(function()
     end
 end)
 local FrozenIsland = Tabs.Status:AddParagraph({
-    Title="Leviathan Island",
-    Content=""
+    Title = "Leviathan Island",
+    Content = "Có đảo Levia"
 })
+
 spawn(function()
-pcall(function()
-    while wait() do
-        if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
-            FrozenIsland:SetDesc('âœ…')
-        else
-            FrozenIsland:SetDesc('âŒ')
+    pcall(function()
+        while wait(1) do
+            if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
+                FrozenIsland:SetDesc('✔')
+            else
+                FrozenIsland:SetDesc('✖')
+            end
         end
-    end
 end)
 end)
 local Input = Tabs.Status:AddInput("Input", {
@@ -9094,9 +9095,9 @@ spawn(function()
     pcall(function()
         while wait() do
             if game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland") then
-                Prehistoric:SetDesc("Volcano Island: âœ…ï¸")
+                Prehistoric:SetDesc("Volcano Island: 🟢")
             else
-                Prehistoric:SetDesc("Volcano Island: âŒï¸")
+                Prehistoric:SetDesc("Volcano Island: 🔴")
             end
         end
     end)
