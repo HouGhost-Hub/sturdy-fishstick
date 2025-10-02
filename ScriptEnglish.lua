@@ -2358,14 +2358,14 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Văn Nguyên Hub Community",
+        Title="Văn Nguyên Hub",
         Description="Discord",
         Callback=function()
             setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
+    Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
         setclipboard(tostring("https://www.facebook.com/share/17a7yAdB2h/"))
@@ -2388,8 +2388,8 @@ if executorName then
     })
 end
 Tabs.Info:AddParagraph({
-    Title="All Script supports pc and pe",
-    Content=""
+    Title="Updete",
+    Content="All Script supports pc and pe"
 })
 Tabs.Info:AddParagraph({
     Title="All Clients Android Supported",
@@ -4662,9 +4662,9 @@ if Sea3 then
         while task.wait() do
             pcall(function()
                 if game.Workspace.Map:FindFirstChild("MysticIsland") then
-                    MirageStatus="âœ…ï¸"
+                    MirageStatus="🟢"
                 else
-                    MirageStatus="âŒï¸"
+                    MirageStatus="🔴"
                 end
             end)
         end
@@ -6382,28 +6382,6 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local ToggleKillAura = Tabs.Setting:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
-ToggleKillAura:OnChanged(function(Value)
-    KillAura=Value
-end)
-Options.ToggleKillAura:SetValue(false)
-spawn(function()
-    while wait() do
-        if KillAura then
-            pcall(function()
-                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-                        repeat task.wait()
-                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
-                            v.Humanoid.Health=0
-                            v.HumanoidRootPart.CanCollide=false
-                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
-                    end
-                end
-            end)
-        end
-    end
-end)
 local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
 ToggleBringMob:OnChanged(function(Value)
     _G.BringMob = Value
