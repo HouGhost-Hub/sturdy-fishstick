@@ -173,7 +173,7 @@ repeat
 until player.Team
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
-local Fluent = loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+local Fluent = https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/ScriptEnglish.lua
 Window = Fluent:CreateWindow({
     Title = "Văn-Nguyên Hub",
     SubTitle="Blox Fruits", 
