@@ -1,4 +1,4 @@
-  _G.FastAttack = true
+_G.FastAttack = true
 
 if _G.FastAttack then
     local _ENV = (getgenv or getrenv or getfenv)()
@@ -64,7 +64,7 @@ if _G.FastAttack then
 
     local Settings = {
         AutoClick = true,
-        ClickDelay = 0,
+        ClickDelay = 100,
     }
 
     local Module = {}
@@ -104,7 +104,7 @@ if _G.FastAttack then
 
         function FastAttack:Attack(BasePart, OthersEnemies)
             if not BasePart or #OthersEnemies == 0 then return end
-            RegisterAttack:FireServer(Settings.ClickDelay or 0)
+            RegisterAttack:FireServer(Settings.ClickDelay or 100)
             RegisterHit:FireServer(BasePart, OthersEnemies)
         end
 
@@ -173,36 +173,37 @@ repeat
 until player.Team
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Fluent = loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
 Window = Fluent:CreateWindow({
-    Title = "Van-Nguyen Hub",
+    Title = "Văn-Nguyên Hub",
     SubTitle="Blox Fruits", 
-    TabWidth=155, 
-    Theme="Darker",
+    TabWidth=175, 
+    Theme="Sakura",
     Acrylic=false,
     Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
-
-Info     = Window:AddTab({ Title = "📘 Info", Icon = "book" }),
-Main     = Window:AddTab({ Title = "⚡ Main Farm", Icon = "zap" }),
-
-Main1    = Window:AddTab({ Title = "🌱 Farm Other", Icon = "leaf" }),
-Sea      = Window:AddTab({ Title = "🌊 Sea Event", Icon = "anchor" }),
-Item     = Window:AddTab({ Title = "💎 Stack Farm", Icon = "box" }),
-Setting  = Window:AddTab({ Title = "⚙️ Settings", Icon = "settings" }),
-Server   = Window:AddTab({ Title = "🌐 Server", Icon = "server" }),
-Stats    = Window:AddTab({ Title = "📊 Stats", Icon = "activity" }),
-Player   = Window:AddTab({ Title = "👤 Player", Icon = "user" }),
-Teleport = Window:AddTab({ Title = "🌀 Teleport", Icon = "map" }),
-Visual   = Window:AddTab({ Title = "👁️ Visual", Icon = "eye" }),
-Fruit    = Window:AddTab({ Title = "🍎 Fruit", Icon = "apple" }),
-Raid     = Window:AddTab({ Title = "🔥 Raid", Icon = "sword" }),
-Race     = Window:AddTab({ Title = "🏁 Race", Icon = "flag" }),
-Shop     = Window:AddTab({ Title = "🛒 Shop", Icon = "shopping-cart" }),
-Misc     = Window:AddTab({ Title = "✨ Misc", Icon = "star" }),
+  
+Info     = Window:AddTab({ Title = "Tab Info", Icon = "book" }),
+    Main     = Window:AddTab({ Title = "Tab Farm", Icon = "zap" }),
+    
+Main1    = Window:AddTab({ Title = "Tab Farm Other", Icon = "leaf" }),
+    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "wave" }),
+    Item     = Window:AddTab({ Title = "Tab Stack Farm", Icon = "bag" }),
+    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "settings" }),
+    Status   = Window:AddTab({ Title = "Tab Status", Icon = "chart" }),
+    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "bar-chart" }),
+    Player   = Window:AddTab({ Title = "Tab Player", Icon = "user" }),
+    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "compass" }),
+    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "eye" }),
+    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "apple" }),
+    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "sword" }),
+    Race     = Window:AddTab({ Title = "Tab Race", Icon = "flag" }),
+    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "shop" }),
+    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "tool" }),
 }
+
 local Options = Fluent.Options
 local id = game.PlaceId
 if id==2753915549 then Sea1=true; elseif id==4442272183 then Sea2=true; elseif id==7449423635 then Sea3=true; else game:Shutdown() end;
@@ -2357,28 +2358,21 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Server Van Nguyen Community",
+        Title="Văn Nguyên Hub Community",
         Description="Discord",
         Callback=function()
             setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Youtube Van Nguyen",
-    Description="Youtube",
-    Callback=function()
-        setclipboard(tostring("https://www.youtube.com/@VanNguyen-80"))
-    end
-})
-Tabs.Info:AddButton({
-    Title="Fb Văn Nguyên",
+    Title="Fb Nguoi Lam",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/share/1FX1xD62Ta/"))
+        setclipboard(tostring("https://www.facebook.com/share/17a7yAdB2h/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Anh Van Nguyen",
+    Title="Văn Nguyên",
     Content="Credits"
 })
 local executorName
@@ -2394,8 +2388,8 @@ if executorName then
     })
 end
 Tabs.Info:AddParagraph({
-    Title="Update",
-    Content="Script supports pc and pe"
+    Title="All Script supports pc and pe",
+    Content=""
 })
 Tabs.Info:AddParagraph({
     Title="All Clients Android Supported",
@@ -2411,13 +2405,13 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0005
+                    _G.Fast_Delay=0.0001
                 end
             end)
         end
     end
 end)
-local AutoFram = Tabs.Main:AddSection("Auto Farm")
+local AutoFram = Tabs.Main:AddSection("Auto Fram")
 local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
     Title = "Select Weapon",
     Description = "",
@@ -2461,7 +2455,7 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-        Title="Auto Farm Level",
+        Title="Auto Fram Level",
         Description="",
         Default=false })
     ToggleLevel:OnChanged(function(Value)
@@ -2714,7 +2708,7 @@ spawn(function()
                 local CFrameTarget = CFrame.new(BushPosition)
                 Tween2(CFrameTarget)
                 Fluent:Notify({
-                    Title = "Van-Nguyen Hub",
+                    Title = "Ten Hub",
                     Content = "Find Berry: " .. tostring(BerryName),
                     Duration = 10
                 })
@@ -2724,9 +2718,9 @@ spawn(function()
         end
     end
 end)
-local Mastery = Tabs.Main:AddSection("Auto Farm Mastery")
+local Mastery = Tabs.Main:AddSection("Auto Fram Mastery")
 local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
-    Title = "Select Farm",
+    Title = "Select Fram",
     Description = "",
     Values = {"Level", "Level No Quest", "Near Mob", "Bone", "Cake", "Ecto"},
     Multi = false,
@@ -2737,7 +2731,7 @@ DropdownMastery:OnChanged(function(Value)
     TypeMastery = Value
 end)
 local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {
-    Title = "Auto Farm Fruit",
+    Title = "Auto Fram Fruit",
     Description = "",
     Default = false
 })
@@ -2746,7 +2740,7 @@ ToggleMasteryFruit:OnChanged(function(Value)
 end)
 Options.ToggleMasteryFruit:SetValue(false)
 local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {
-    Title = "Auto Farm Gun",
+    Title = "Auto Fram Gun",
     Description = "",
     Default = false
 })
@@ -3452,7 +3446,7 @@ spawn(function()
     end)
 end)
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {
-    Title="Auto Farm Bone",
+    Title="Auto Fram Bone",
     Description="", 
     Default=false })
 ToggleBone:OnChanged(function(Value)
@@ -3609,7 +3603,7 @@ spawn(function()
     end
 end)
 local ToggleCake = Tabs.Main:AddToggle("ToggleCake", {
-    Title = "Auto Farm Cake",
+    Title = "Auto Fram Cake",
     Description = "", 
     Default = false
 })
@@ -3827,7 +3821,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         _G.SelectBoss=Value
     end)
     local ToggleAutoFarmBoss = Tabs.Main:AddToggle("ToggleAutoFarmBoss", {
-        Title="Auto Farm Boss",
+        Title="Auto Fram Boss",
         Description="", 
         Default=false })
     ToggleAutoFarmBoss:OnChanged(function(Value)
@@ -3888,7 +3882,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         SelectMaterial=Value
     end)
     local ToggleMaterial = Tabs.Main:AddToggle("ToggleMaterial", {
-        Title="Auto Farm MateriaList",
+        Title="Auto Fram MateriaList",
         Description="", 
         Default=false })
     ToggleMaterial:OnChanged(function(Value)
@@ -4592,7 +4586,7 @@ spawn(function()
             end)
         end
     end)
-    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Farm Elite",Description="", Default=false })
+    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Fram Elite",Description="", Default=false })
     ToggleElite:OnChanged(function(Value)
        _G.AutoElite=Value
        end)
@@ -4701,7 +4695,7 @@ if Sea3 then
         end
         for _, v in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
             if v:IsA("MeshPart") then
-                if v.MeshId=="rbxassetid://80196398184635" then
+                if v.MeshId=="rbxassetid://6745037796" then
                     return v
                 end
             end
@@ -6097,7 +6091,7 @@ if Sea2 then
         end)
     end
 local ToggleAutoFarmSwan = Tabs.Main1:AddToggle("ToggleAutoFarmSwan", {
-    Title="Auto Farm Swan",
+    Title="Auto Fram Swan",
     Description="",
     Default=false
 })
@@ -6388,60 +6382,71 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob", Default=true})
-ToggleBringMob:OnChanged(function(Value) _G.BringMob = Value end)
-Options.ToggleBringMob:SetValue(true)
-
-local maxMobs = 100
-local waitTime = 0.1
-
-local player = game.Players.LocalPlayer
-local hrpPlayer = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-
+local ToggleKillAura = Tabs.Setting:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
+ToggleKillAura:OnChanged(function(Value)
+    KillAura=Value
+end)
+Options.ToggleKillAura:SetValue(false)
 spawn(function()
-    while wait(waitTime) do
-        if _G.BringMob and hrpPlayer then
+    while wait() do
+        if KillAura then
             pcall(function()
-                local mobs = {}
-                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and (v.Name == MonFarm or v.Name == "Factory Staff") then
-                        table.insert(mobs, v)
-                    end
-                end
-
-                table.sort(mobs, function(a,b) 
-                    return (a.HumanoidRootPart.Position-FarmPos.Position).Magnitude < (b.HumanoidRootPart.Position-FarmPos.Position).Magnitude 
-                end)
-
-                for i = 1, math.min(maxMobs, #mobs) do
-                    local mob = mobs[i]
-                    local hrpMob = mob.HumanoidRootPart
-                    local bp = hrpMob:FindFirstChild("BP") or Instance.new("BodyPosition", hrpMob)
-                    bp.Name = "BP"
-                    bp.MaxForce = Vector3.new(1e5,1e5,1e5)
-                    bp.P = 3000
-                    bp.D = 100
-                    bp.Position = FarmPos.Position
-
-                    hrpMob.Size = Vector3.new(60,60,60)
-                    hrpMob.CanCollide = false
-                    mob.Head.CanCollide = false
-                    mob.Humanoid.WalkSpeed = 0
-                    mob.Humanoid.JumpPower = 0
-                    hrpMob.Transparency = 1
-                    if mob.Humanoid:FindFirstChild("Animator") then mob.Humanoid.Animator:Destroy() end
-                    mob.Humanoid:ChangeState(11)
-                    mob.Humanoid:ChangeState(14)
-
-                    -- Auto Attack
-                    if player.Character and player.Character:FindFirstChild("Humanoid") then
-                        player.Character.Humanoid:MoveTo(hrpMob.Position)
-                        firetouchinterest(player.Character.HumanoidRootPart, hrpMob, 0)
-                        firetouchinterest(player.Character.HumanoidRootPart, hrpMob, 1)
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
+                        repeat task.wait()
+                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
+                            v.Humanoid.Health=0
+                            v.HumanoidRootPart.CanCollide=false
+                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
                     end
                 end
             end)
         end
+    end
+end)
+local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
+ToggleBringMob:OnChanged(function(Value)
+    _G.BringMob = Value
+end)
+Options.ToggleBringMob:SetValue(true)
+spawn(function()
+    while wait() do
+        pcall(function()
+            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if _G.BringMob and bringmob then
+                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if v.Name == "Factory Staff" then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                v.HumanoidRootPart.CFrame = FarmPos
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        elseif v.Name == MonFarm then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                                v.HumanoidRootPart.CFrame = FarmPos
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                v.HumanoidRootPart.Transparency = 1
+                                v.Humanoid.JumpPower = 0
+                                v.Humanoid.WalkSpeed = 0
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.Humanoid:ChangeState(11)
+                                v.Humanoid:ChangeState(14)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
     end
 end)
 local ToggleRemoveNotify = Tabs.Setting:AddToggle("ToggleRemoveNotify", {Title="Remove Notify",Description="", Default=false })
@@ -6495,18 +6500,18 @@ ToggleF:OnChanged(function(Value)
     end)
 Options.ToggleF:SetValue(true)
 local Usser = Tabs.Info:AddParagraph({
-    Title = "Status",
-    Content = "──────────────────────────────\n" ..
-        "Name       : " .. game.Players.LocalPlayer.DisplayName .. " (@" .. game.Players.LocalPlayer.Name .. ")\n" ..
-        "Level      : " .. game.Players.LocalPlayer.Data.Level.Value .. "\n" ..
-        "Money      : " .. game.Players.LocalPlayer.Data.Beli.Value .. "\n" ..
-        "Point F    : " .. game.Players.LocalPlayer.Data.Fragments.Value .. "\n" ..
-        "Bounty     : " .. game.Players.LocalPlayer.leaderstats["Bounty/Honor"].Value .. "\n" ..
-        "Health     : " .. game.Players.LocalPlayer.Character.Humanoid.Health .. "/" .. game.Players.LocalPlayer.Character.Humanoid.MaxHealth .. "\n" ..
-        "Energy     : " .. game.Players.LocalPlayer.Character.Energy.Value .. "/" .. game.Players.LocalPlayer.Character.Energy.MaxValue .. "\n" ..
-        "Race       : " .. game.Players.LocalPlayer.Data.Race.Value .. "\n" ..
-        "Devil Fruit: " .. game.Players.LocalPlayer.Data.DevilFruit.Value .. "\n" ..
-        "──────────────────────────────"
+    Title="Status",
+    Content="â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"..
+        "Name : "..game.Players.LocalPlayer.DisplayName.." (@"..game.Players.LocalPlayer.Name..")\n"..
+        "Levels : "..game:GetService("Players").LocalPlayer.Data.Level.Value.."\n"..
+        "Money : "..game:GetService("Players").LocalPlayer.Data.Beli.Value.."\n"..
+        "Point F : "..game:GetService("Players").LocalPlayer.Data.Fragments.Value.."\n"..
+        "Bounty : "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value.."\n"..
+        "Health : "..game.Players.LocalPlayer.Character.Humanoid.Health.."/"..game.Players.LocalPlayer.Character.Humanoid.MaxHealth.."\n"..
+        "Energy : "..game.Players.LocalPlayer.Character.Energy.Value.."/"..game.Players.LocalPlayer.Character.Energy.MaxValue.."\n"..
+        "Race : "..game:GetService("Players").LocalPlayer.Data.Race.Value.."\n"..
+        "Devil Fruit : "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value.."\n"..
+        "â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”"
 })
 local Time = Tabs.Status:AddParagraph({
     Title="Time",
@@ -6554,19 +6559,18 @@ spawn(function()
     end
 end)
 local FrozenIsland = Tabs.Status:AddParagraph({
-    Title = "Leviathan Island",
-    Content = "Có đảo Levia"
+    Title="Leviathan Island",
+    Content=""
 })
-
 spawn(function()
-    pcall(function()
-        while wait(1) do
-            if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
-                FrozenIsland:SetDesc('✔')
-            else
-                FrozenIsland:SetDesc('✖')
-            end
+pcall(function()
+    while wait() do
+        if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
+            FrozenIsland:SetDesc('âœ…')
+        else
+            FrozenIsland:SetDesc('âŒ')
         end
+    end
 end)
 end)
 local Input = Tabs.Status:AddInput("Input", {
@@ -7738,7 +7742,7 @@ spawn(function()
     end
 end)
 local ToggleNextIsland = Tabs.Raid:AddToggle("ToggleNextIsland", {
-    Title="Auto Farm Raid",
+    Title="Auto Fram Raid",
     Description="",
     Default=false
 })
@@ -7795,29 +7799,7 @@ spawn(function()
         end
     end
 end)
-local ToggleKillAura = Tabs.Raid:AddToggle("ToggleKillAura", {Title="Auto Kill Raid",Description="", Default=false })
-ToggleKillAura:OnChanged(function(Value)
-    KillAura=Value
-end)
-Options.ToggleKillAura:SetValue(false)
-spawn(function()
-    while wait() do
-        if KillAura then
-            pcall(function()
-                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-                        repeat task.wait()
-                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
-                            v.Humanoid.Health=0
-                            v.HumanoidRootPart.CanCollide=false
-                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
-                    end
-                end
-            end)
-        end
-    end
-end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức Tỉnh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -9095,9 +9077,9 @@ spawn(function()
     pcall(function()
         while wait() do
             if game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland") then
-                Prehistoric:SetDesc("Volcano Island: 🟢")
+                Prehistoric:SetDesc("Volcano Island: âœ…ï¸")
             else
-                Prehistoric:SetDesc("Volcano Island: 🔴")
+                Prehistoric:SetDesc("Volcano Island: âŒï¸")
             end
         end
     end)
@@ -9363,7 +9345,7 @@ local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Van-Nguyen Hub",
+        Title = "Văn-Nguyên Hub",
         Text = "Successfully",
         Duration = 1
     })
