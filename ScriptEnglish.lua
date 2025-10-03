@@ -175,12 +175,12 @@ hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = "Van Nguyen Hub",
+    Title = "Van-Nguyen Hub",
     SubTitle="Blox Fruits", 
     TabWidth=155, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 430), 
+    Size=UDim2.fromOffset(555, 320), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
@@ -2405,13 +2405,13 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode = "Super Fast Attack"
+_G.FastAttackVxeze_Mode="Super Fast Attack"
 spawn(function()
     while wait() do
         if _G.FastAttackVxeze_Mode then
             pcall(function()
-                if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                    _G.Fast_Delay = 0.0001
+                if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
+                    _G.Fast_Delay=0.00001 
                 end
             end)
         end
@@ -2468,110 +2468,75 @@ end)
 
 ToggleLevel:OnChanged(function(Value)
     _G.AutoLevel = Value
+    if not Value then
+        wait()
+        Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        wait()
+    end
 end)
 
 Options.ToggleLevel:SetValue(false)
 
-local SliderSpeed = Tabs.Main:AddSlider("TweenSpeed", {
-    Title = "Tốc độ bay",
-    Min = 1,
-    Max = 10,
-    Default = 2,
-    Format = function(Value) return tostring(Value) end
-})
-SliderSpeed:OnChanged(function(Value)
-    _G.TweenSpeed = Value
-end)
-
-local SliderX = Tabs.Main:AddSlider("MobPointX", {
-    Title = "Điểm gom X",
-    Min = -500,
-    Max = 500,
-    Default = 0
-})
-local SliderY = Tabs.Main:AddSlider("MobPointY", {
-    Title = "Điểm gom Y",
-    Min = 0,
-    Max = 200,
-    Default = 5
-})
-local SliderZ = Tabs.Main:AddSlider("MobPointZ", {
-    Title = "Điểm gom Z",
-    Min = -500,
-    Max = 500,
-    Default = 0
-})
-
-spawn(function()
-    while task.wait(0.2) do
-        _G.MobFarmPoint = CFrame.new(SliderX.Value, SliderY.Value, SliderZ.Value)
-    end
-end)
-
 _G.Fast_Delay = 0.01
-local MobGatherDistance = 50
-
-local function FlyTo(targetCFrame)
-    Tween(targetCFrame, _G.TweenSpeed)
-end
-
-local function GetNearbyMobs()
-    local mobs = {}
-    local PlayerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    for _, mob in pairs(workspace.Enemies:GetChildren()) do
-        if mob.Name == Ms and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-            if (mob.HumanoidRootPart.Position - PlayerPos).Magnitude <= MobGatherDistance then
-                table.insert(mobs, mob)
-            end
-        end
-    end
-    return mobs
-end
-
-local function GatherMobs(mobs)
-    for _, mob in pairs(mobs) do
-        if mob.Parent and mob.Humanoid.Health > 0 then
-            mob.HumanoidRootPart.CFrame = _G.MobFarmPoint
-            mob.HumanoidRootPart.Size = Vector3.new(6,6,6)
-            mob.HumanoidRootPart.Transparency = 0
-            mob.Humanoid.JumpPower = 0
-            mob.Humanoid.WalkSpeed = 0
-            mob.HumanoidRootPart.CanCollide = false
-        end
-    end
-end
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
             pcall(function()
-                CheckLevel()
-                local Player = game.Players.LocalPlayer
-                local PlayerGui = Player:WaitForChild("PlayerGui"):WaitForChild("Main")
-                local QuestVisible = PlayerGui.Quest.Visible
-                local QuestTitle = PlayerGui.Quest.Container.QuestTitle.Title.Text
+                local player = game:GetService("Players").LocalPlayer
+                local character = player.Character
+                if not character then return end
+                local hrp = character:FindFirstChild("HumanoidRootPart")
+                if not hrp then return end
+                local gui = player.PlayerGui.Main.Quest
 
-                if not string.find(QuestTitle, NameMon) or not QuestVisible then
+                CheckLevel()
+
+                if not string.find(gui.Container.QuestTitle.Title.Text, NameMon) or not gui.Visible then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    FlyTo(CFrameQ)
-                    if (CFrameQ.Position - Player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                    Tween(CFrameQ)
+                    if (CFrameQ.Position - hrp.Position).Magnitude <= 5 then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
-                else
-                    local mobs = GetNearbyMobs()
-                    if #mobs == 0 then
-                        task.wait(0.5)
-                        continue
-                    end
-                    GatherMobs(mobs)
-                    FlyTo(_G.MobFarmPoint)
-                    repeat
-                        task.wait(_G.Fast_Delay)
-                        AttackNoCoolDown()
-                        AutoHaki()
-                        EquipTool(SelectWeapon)
-                    until not _G.AutoLevel or not PlayerGui.Quest.Visible or #GetNearbyMobs() == 0
                 end
+
+                for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if mob:FindFirstChild("Humanoid") and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                        if string.find(mob.Name, NameMon) then
+                            spawn(function()
+                                repeat
+                                    if not _G.AutoLevel then break end
+                                    if not mob.Parent or mob.Humanoid.Health <= 0 then break end
+                                    if not gui.Visible then break end
+
+                                    while mob and mob.Parent and mob.Humanoid.Health > 0 do
+                                        AttackNoCoolDown()
+                                        AutoHaki()
+                                        EquipTool(SelectWeapon)
+                                        Tween(mob.HumanoidRootPart.CFrame * Pos)
+                                        mob.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                        mob.HumanoidRootPart.Transparency = 1
+                                        mob.Humanoid.JumpPower = 0
+                                        mob.Humanoid.WalkSpeed = 0
+                                        mob.HumanoidRootPart.CanCollide = false
+                                        FarmPos = mob.HumanoidRootPart.CFrame
+                                        MonFarm = mob.Name
+                                        wait(_G.Fast_Delay)
+                                    end
+                                until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not gui.Visible
+                            end)
+                        end
+                    end
+                end
+
+                for _, spawn in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+                    if string.find(spawn.Name, NameMon) then
+                        if (hrp.Position - spawn.Position).Magnitude >= 10 then
+                            Tween(spawn.CFrame * Pos)
+                        end
+                    end
+                end
+
             end)
         end
     end
@@ -9382,61 +9347,14 @@ spawn(function()
         end
     end
 end)
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 250, 0, 120)
-Frame.Position = UDim2.new(0.5, -125, 0.5, -60)
-Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Frame.BorderSizePixel = 0
-Frame.Parent = ScreenGui
-
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Title.Text = "Van Nguyen Hub"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 16
-Title.Parent = Frame
-
-local Content = Instance.new("TextLabel")
-Content.Size = UDim2.new(1, -20, 0, 40)
-Content.Position = UDim2.new(0, 10, 0, 40)
-Content.BackgroundTransparency = 1
-Content.Text = "Do you want to enable Auto Farm?"
-Content.TextColor3 = Color3.fromRGB(255, 255, 255)
-Content.Font = Enum.Font.Gotham
-Content.TextSize = 14
-Content.Parent = Frame
-
-local YesButton = Instance.new("TextButton")
-YesButton.Size = UDim2.new(0.4, 0, 0, 30)
-YesButton.Position = UDim2.new(0.05, 0, 1, -35)
-YesButton.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
-YesButton.Text = "Yes"
-YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-YesButton.Font = Enum.Font.GothamBold
-YesButton.TextSize = 14
-YesButton.Parent = Frame
-
-local NoButton = Instance.new("TextButton")
-NoButton.Size = UDim2.new(0.4, 0, 0, 30)
-NoButton.Position = UDim2.new(0.55, 0, 1, -35)
-NoButton.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
-NoButton.Text = "No"
-NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoButton.Font = Enum.Font.GothamBold
-NoButton.TextSize = 14
-NoButton.Parent = Frame
-
-YesButton.MouseButton1Click:Connect(function()
-    print("Player chose YES -> Enable Auto Farm")
-    ScreenGui:Destroy()
-end)
-
-NoButton.MouseButton1Click:Connect(function()
-    print("Player chose NO -> Cancel")
-    ScreenGui:Destroy()
-end)
+local lastNotificationTime = 0
+local notificationCooldown = 10
+local currentTime = tick()
+if currentTime - lastNotificationTime >= notificationCooldown then
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Van-Nguyen Hub",
+        Text = "Successfully",
+        Duration = 1
+    })
+    lastNotificationTime = currentTime
+end
