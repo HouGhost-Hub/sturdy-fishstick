@@ -182,27 +182,24 @@ Window = Fluent:CreateWindow({
     Acrylic=false,
     Size=UDim2.fromOffset(555, 320), 
     MinimizeKey = Enum.KeyCode.LeftControl
-})
-local Tabs = {
+})local Tabs = {
 
-    Info     = Window:AddTab({ Title="Tab Info", Color=Color3.fromRGB(255, 165, 0), Rounded=true }),
-    Main     = Window:AddTab({ Title="Tab Farm", Color
-      
-      =Color3.fromRGB(0, 170, 255), Rounded=true }),
-    Main1    = Window:AddTab({ Title="Tab Farm Other", Color=Color3.fromRGB(0, 200, 150), Rounded=true }),
-    Sea      = Window:AddTab({ Title="Tab Sea Event", Color=Color3.fromRGB(75, 0, 130), Rounded=true }),
-    Item     = Window:AddTab({ Title="Tab Stack Farm", Color=Color3.fromRGB(255, 105, 180), Rounded=true }),
-    Setting  = Window:AddTab({ Title="Tab Setting", Color=Color3.fromRGB(128, 128, 128), Rounded=true }),
-    Status   = Window:AddTab({ Title="Tab Status", Color=Color3.fromRGB(255, 215, 0), Rounded=true }),
-    Stats    = Window:AddTab({ Title="Tab Stats", Color=Color3.fromRGB(0, 128, 255), Rounded=true }),
-    Player   = Window:AddTab({ Title="Tab Player", Color=Color3.fromRGB(255, 69, 0), Rounded=true }),
-    Teleport = Window:AddTab({ Title="Tab Teleport", Color=Color3.fromRGB(0, 255, 128), Rounded=true }),
-    Visual   = Window:AddTab({ Title="Tab Visual", Color=Color3.fromRGB(138, 43, 226), Rounded=true }),
-    Fruit    = Window:AddTab({ Title="Tab Fruit", Color=Color3.fromRGB(255, 140, 0), Rounded=true }),
-    Raid     = Window:AddTab({ Title="Tab Raid", Color=Color3.fromRGB(220, 20, 60), Rounded=true }),
-    Race     = Window:AddTab({ Title="Tab Race", Color=Color3.fromRGB(0, 255, 255), Rounded=true }),
-    Shop     = Window:AddTab({ Title="Tab Shop", Color=Color3.fromRGB(255, 20, 147), Rounded=true }),
-    Misc     = Window:AddTab({ Title="Tab Misc", Color=Color3.fromRGB(192, 192, 192), Rounded=true }),
+    Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
+    Main     = Window:AddTab({ Title = "Tab Farm", Icon = "⚡" }),
+    Main1    = Window:AddTab({ Title = "Tab Farm Other", Icon = "🌱" }),
+    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "⚓" }),
+    Item     = Window:AddTab({ Title = "Tab Stack Farm", Icon = "🎒" }),
+    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "⚙️" }),
+    Status   = Window:AddTab({ Title = "Tab Status", Icon = "📊" }),
+    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "📈" }),
+    Player   = Window:AddTab({ Title = "Tab Player", Icon = "👤" }),
+    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "🌀" }),
+    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "🎨" }),
+    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "🍏" }),
+    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "⚔️" }),
+    Race     = Window:AddTab({ Title = "Tab Race", Icon = "🏁" }),
+    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "🛒" }),
+    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "✨" })
 }
 local Options = Fluent.Options
 local id = game.PlaceId
