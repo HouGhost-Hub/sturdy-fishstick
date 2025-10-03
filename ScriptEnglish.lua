@@ -2357,28 +2357,35 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Ten Hub",
+        Title="Văn Nguyên Hub",
         Description="Discord",
         Callback=function()
-            setclipboard(tostring("https://discord.gg/tenhub")) 
+            setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Ten Nguoi Lam",
+    Title="Youtube Văn Nguyên",
     Description="Youtube",
     Callback=function()
         setclipboard(tostring("https://www.youtube.com/"))
     end
 })
 Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
+    Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/"))
+        setclipboard(tostring("https://www.facebook.com/share/1JSutQdtk7/"))
+    end
+})
+Tabs.Info:AddButton({
+    Title="TikTok Văn Nguyên",
+    Description="TikTok",
+    Callback=function()
+        setclipboard(tostring("tiktok.com/@ngocnguyen0972"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Nguoi Lam",
+    Title="Văn Nguyên",
     Content="Credits"
 })
 local executorName
@@ -2483,63 +2490,71 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-        Title="Auto Fram Level",
-        Description="",
-        Default=false })
-    ToggleLevel:OnChanged(function(Value)
-        _G.AutoLevel=Value
-        if Value==false then
-            wait()
-            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-            wait()
-        end
-    end)
-    Options.ToggleLevel:SetValue(false)
-    spawn(function()
-        while task.wait() do
+    Title="Auto Farm Level",
+    Description="",
+    Default=false
+})
+
+ToggleLevel:OnChanged(function(Value)
+    _G.AutoLevel = Value
+end)
+
+Options.ToggleLevel:SetValue(false)
+
+local Pos = CFrame.new(0,0,0)
+_G.Fast_Delay = 0.0001
+local TweenSpeed = 2
+
+spawn(function()
+    while task.wait() do
         if _G.AutoLevel then
-        pcall(function()
-          CheckLevel()
-          if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==false then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-          Tween(CFrameQ)
-          if (CFrameQ.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude<=5 then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
-          end
-          elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==true then
-          for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-          if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-          if v.Name==Ms then
-          repeat wait(_G.Fast_Delay)
-          AttackNoCoolDown()
-          bringmob=true
-          AutoHaki()
-          EquipTool(SelectWeapon)
-          Tween(v.HumanoidRootPart.CFrame*Pos)
-          v.HumanoidRootPart.Size=Vector3.new(60, 60, 60)
-          v.HumanoidRootPart.Transparency=1
-          v.Humanoid.JumpPower=0
-          v.Humanoid.WalkSpeed=0
-          v.HumanoidRootPart.CanCollide=false
-          FarmPos=v.HumanoidRootPart.CFrame
-          MonFarm=v.Name
-          until not _G.AutoLevel or not v.Parent or v.Humanoid.Health<=0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible==false
-          bringmob=false
-        end   
-          end
-          end
-          for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-          if string.find(v.Name,NameMon) then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v.Position).Magnitude>=10 then
-            Tween(v.HumanoidRootPart.CFrame*Pos)
-          end
-          end
-          end
-          end
-          end)
+            pcall(function()
+                CheckLevel()
+                local Player = game.Players.LocalPlayer
+                local PlayerGui = Player.PlayerGui.Main
+                local QuestVisible = PlayerGui.Quest.Visible
+                local QuestTitle = PlayerGui.Quest.Container.QuestTitle.Title.Text
+
+                if not string.find(QuestTitle, NameMon) or not QuestVisible then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    Tween(CFrameQ, TweenSpeed)
+                    if (CFrameQ.Position - Player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    end
+                else
+                    local mobs = {}
+                    for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                        if mob.Name == Ms and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                            table.insert(mobs, mob)
+                        end
+                    end
+
+                    for _, mob in pairs(mobs) do
+                        if mob.Parent and mob.Humanoid.Health > 0 then
+                            Tween(mob.HumanoidRootPart.CFrame * Pos, TweenSpeed)
+                            repeat
+                                task.wait(_G.Fast_Delay)
+                                AttackNoCoolDown()
+                                AutoHaki()
+                                EquipTool(SelectWeapon)
+                                bringmob = true
+
+                                mob.HumanoidRootPart.Size = Vector3.new(6,6,6)
+                                mob.HumanoidRootPart.Transparency = 0
+                                mob.Humanoid.JumpPower = 0
+                                mob.Humanoid.WalkSpeed = 0
+                                mob.HumanoidRootPart.CanCollide = false
+                                FarmPos = mob.HumanoidRootPart.CFrame
+                                MonFarm = mob.Name
+                            until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not PlayerGui.Quest.Visible
+                            bringmob = false
+                        end
+                    end
+                end
+            end)
         end
-        end
-        end)        
+    end
+end)        
     local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {
         Title="Auto Mob Aura",
         Description="",
@@ -9392,61 +9407,14 @@ spawn(function()
         end
     end
 end)
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 250, 0, 120)
-Frame.Position = UDim2.new(0.5, -125, 0.5, -60)
-Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Frame.BorderSizePixel = 0
-Frame.Parent = ScreenGui
-
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Title.Text = "Van Nguyen Hub"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 16
-Title.Parent = Frame
-
-local Content = Instance.new("TextLabel")
-Content.Size = UDim2.new(1, -20, 0, 40)
-Content.Position = UDim2.new(0, 10, 0, 40)
-Content.BackgroundTransparency = 1
-Content.Text = "Do you want to enable Auto Farm?"
-Content.TextColor3 = Color3.fromRGB(255, 255, 255)
-Content.Font = Enum.Font.Gotham
-Content.TextSize = 14
-Content.Parent = Frame
-
-local YesButton = Instance.new("TextButton")
-YesButton.Size = UDim2.new(0.4, 0, 0, 30)
-YesButton.Position = UDim2.new(0.05, 0, 1, -35)
-YesButton.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
-YesButton.Text = "Yes"
-YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-YesButton.Font = Enum.Font.GothamBold
-YesButton.TextSize = 14
-YesButton.Parent = Frame
-
-local NoButton = Instance.new("TextButton")
-NoButton.Size = UDim2.new(0.4, 0, 0, 30)
-NoButton.Position = UDim2.new(0.55, 0, 1, -35)
-NoButton.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
-NoButton.Text = "No"
-NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoButton.Font = Enum.Font.GothamBold
-NoButton.TextSize = 14
-NoButton.Parent = Frame
-
-YesButton.MouseButton1Click:Connect(function()
-    print("Player chose YES -> Enable Auto Farm")
-    ScreenGui:Destroy()
-end)
-
-NoButton.MouseButton1Click:Connect(function()
-    print("Player chose NO -> Cancel")
-    ScreenGui:Destroy()
-end)
+local lastNotificationTime = 0
+local notificationCooldown = 10
+local currentTime = tick()
+if currentTime - lastNotificationTime >= notificationCooldown then
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Van-Nguyen Hub",
+        Text = "Successfully",
+        Duration = 1
+    })
+    lastNotificationTime = currentTime
+end
