@@ -203,7 +203,6 @@ Main1    = Window:AddTab({ Title = "Tab Farm Other", Icon = "leaf" }),
     Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "shop" }),
     Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "tool" }),
 }
-
 local Options = Fluent.Options
 local id = game.PlaceId
 if id==2753915549 then Sea1=true; elseif id==4442272183 then Sea2=true; elseif id==7449423635 then Sea3=true; else game:Shutdown() end;
