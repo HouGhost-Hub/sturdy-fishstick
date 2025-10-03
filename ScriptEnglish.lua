@@ -2411,7 +2411,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00001
+                    _G.Fast_Delay=0.0001
                 end
             end)
         end
@@ -2461,77 +2461,59 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-    Title = "Auto Farm Level",
-    Description = "",
-    Default = false
+    Title="Auto Farm Level",
+    Description="",
+    Default=false
 })
 
 ToggleLevel:OnChanged(function(Value)
     _G.AutoLevel = Value
 end)
+
 Options.ToggleLevel:SetValue(false)
 
-_G.Fast_Delay = 0.05
-_G.BringCount = 4
-local PosOffset = CFrame.new(0,0,0)
+_G.Fast_Delay = 0.01
+local Pos = CFrame.new(0,0,0)
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
             pcall(function()
                 CheckLevel()
-                local player = game.Players.LocalPlayer
-                local plrPos = player.Character.HumanoidRootPart.Position
+                local player = game:GetService("Players").LocalPlayer
                 local questGui = player.PlayerGui.Main.Quest
-
-                if not string.find(questGui.Container.QuestTitle.Title.Text, NameMon) or not questGui.Visible then
-                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
+                if not string.find(questGui.Container.QuestTitle.Title.Text, NameMon) 
+                   or questGui.Visible == false then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                     Tween(CFrameQ)
-                    if (CFrameQ.Position - plrPos).Magnitude <= 5 then
-                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    if (CFrameQ.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
                 else
-                    local mobs = {}
-                    for i,v in pairs(workspace.Enemies:GetChildren()) do
-                        if v.Name == Ms and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") then
-                            table.insert(mobs, v)
+                    for i, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if mob:FindFirstChild("Humanoid") and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                            if mob.Name == Ms then
+                                repeat
+                                    wait(_G.Fast_Delay)
+                                    AttackNoCoolDown()
+                                    AutoHaki()
+                                    EquipTool(SelectWeapon)
+                                    Tween(mob.HumanoidRootPart.CFrame * Pos)
+                                    mob.HumanoidRootPart.Size = Vector3.new(10, 10, 10)
+                                    mob.HumanoidRootPart.Transparency = 1
+                                    mob.Humanoid.JumpPower = 0
+                                    mob.Humanoid.WalkSpeed = 0
+                                    mob.HumanoidRootPart.CanCollide = false
+                                    FarmPos = mob.HumanoidRootPart.CFrame
+                                    MonFarm = mob.Name
+                                until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(mob.Name) or not questGui.Visible
+                            end
                         end
                     end
-
-                    table.sort(mobs, function(a,b)
-                        return (a.HumanoidRootPart.Position - plrPos).Magnitude < (b.HumanoidRootPart.Position - plrPos).Magnitude
-                    end)
-
-                    local brought = 0
-                    for _, mob in pairs(mobs) do
-                        if brought >= _G.BringCount then break end
-                        if mob and mob.Parent and mob:FindFirstChild("Humanoid") and mob:FindFirstChild("HumanoidRootPart") then
-                            bringmob = true
-                            repeat
-                                wait(_G.Fast_Delay)
-                                AttackNoCoolDown()
-                                AutoHaki()
-                                EquipTool(SelectWeapon)
-
-                                local targetCFrame = player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
-                                mob.HumanoidRootPart.CFrame = targetCFrame
-
-                                mob.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                mob.HumanoidRootPart.Transparency = 1
-                                mob.Humanoid.JumpPower = 0
-                                mob.Humanoid.WalkSpeed = 0
-                                mob.HumanoidRootPart.CanCollide = false
-
-                            until mob.Humanoid.Health <= 0 or not _G.AutoLevel or not mob.Parent
-                            brought = brought + 1
-                            bringmob = false
-                        end
-                    end
-
-                    if #mobs == 0 then
-                        for i,v in pairs(workspace["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                            if string.find(v.Name, NameMon) then
-                                Tween(CFrame.new(v.Position) * PosOffset)
+                    for i, spawnPoint in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+                        if string.find(spawnPoint.Name, NameMon) then
+                            if (player.Character.HumanoidRootPart.Position - spawnPoint.Position).Magnitude >= 10 then
+                                Tween(spawnPoint.HumanoidRootPart.CFrame * Pos)
                             end
                         end
                     end
@@ -6422,7 +6404,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6433,7 +6415,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
