@@ -177,29 +177,31 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 Window = Fluent:CreateWindow({
     Title = "Van-Nguyen Hub",
     SubTitle="Blox Fruits", 
-    TabWidth=155, 
+    TabWidth=180, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 320), 
+    Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
-})local Tabs = {
+})
+local Tabs = {
 
-    Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
-    Main     = Window:AddTab({ Title = "Tab Farm", Icon = "⚡" }),
-    Main1    = Window:AddTab({ Title = "Tab Farm Other", Icon = "🌱" }),
-    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "⚓" }),
-    Item     = Window:AddTab({ Title = "Tab Stack Farm", Icon = "🎒" }),
-    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "⚙️" }),
-    Status   = Window:AddTab({ Title = "Tab Status", Icon = "📊" }),
-    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "📈" }),
-    Player   = Window:AddTab({ Title = "Tab Player", Icon = "👤" }),
-    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "🌀" }),
-    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "🎨" }),
-    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "🍏" }),
-    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "⚔️" }),
-    Race     = Window:AddTab({ Title = "Tab Race", Icon = "🏁" }),
-    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "🛒" }),
-    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "✨" })
+Info=Window:AddTab({ Title="Tab Info" }),
+    Main=Window:AddTab({ Title="Tab Farm" }),
+
+Main1=Window:AddTab({ Title="Tab Farm Other" }),
+    Sea=Window:AddTab({ Title="Tab Sea Event" }),
+    Item=Window:AddTab({ Title="Tab Stack Farm" }),
+    Setting=Window:AddTab({ Title="Tab Setting" }),
+    Status=Window:AddTab({ Title="Tab Status" }),
+    Stats=Window:AddTab({ Title="Tab Stats" }),
+    Player=Window:AddTab({ Title="Tab Player" }),
+    Teleport=Window:AddTab({ Title="Tab Teleport" }),
+    Visual=Window:AddTab({ Title="Tab Visual" }),
+    Fruit=Window:AddTab({ Title="Tab Fruit" }),
+    Raid=Window:AddTab({ Title="Tab Raid" }),
+    Race=Window:AddTab({ Title="Tab Race" }),
+    Shop=Window:AddTab({ Title="Tab Shop" }),
+    Misc=Window:AddTab({ Title="Tab Misc" }),
 }
 local Options = Fluent.Options
 local id = game.PlaceId
@@ -2355,21 +2357,21 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Van Nguyen Hub Community",
+        Title="Van Nguyen Hub",
         Description="Discord",
         Callback=function()
             setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Fb Văn Nguyên",
+    Title="Fb Nguoi Lam",
     Description="Facebook",
     Callback=function()
         setclipboard(tostring("https://www.facebook.com/share/19JjttjVaP/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Van-Nguyen",
+    Title="Văn Nguyên Tạo ra",
     Content="Credits"
 })
 local executorName
@@ -2402,13 +2404,13 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00001
+                    _G.Fast_Delay=0.00001 
                 end
             end)
         end
     end
 end)
-local AutoFram = Tabs.Main:AddSection("Auto Fram")
+local AutoFram = Tabs.Main:AddSection("Auto Farm")
 local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
     Title = "Select Weapon",
     Description = "",
@@ -2452,7 +2454,7 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-        Title="Auto Fram Level",
+        Title="Auto Farm Level",
         Description="",
         Default=false })
     ToggleLevel:OnChanged(function(Value)
@@ -2715,9 +2717,9 @@ spawn(function()
         end
     end
 end)
-local Mastery = Tabs.Main:AddSection("Auto Fram Mastery")
+local Mastery = Tabs.Main:AddSection("Auto Farm Mastery")
 local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
-    Title = "Select Fram",
+    Title = "Select Farm",
     Description = "",
     Values = {"Level", "Level No Quest", "Near Mob", "Bone", "Cake", "Ecto"},
     Multi = false,
@@ -2728,7 +2730,7 @@ DropdownMastery:OnChanged(function(Value)
     TypeMastery = Value
 end)
 local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {
-    Title = "Auto Fram Fruit",
+    Title = "Auto Farm Fruit",
     Description = "",
     Default = false
 })
@@ -2737,7 +2739,7 @@ ToggleMasteryFruit:OnChanged(function(Value)
 end)
 Options.ToggleMasteryFruit:SetValue(false)
 local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {
-    Title = "Auto Fram Gun",
+    Title = "Auto Farm Gun",
     Description = "",
     Default = false
 })
@@ -3429,7 +3431,7 @@ spawn(function()
     end)
 end)
 if Sea3 then
-local MiscFarm = Tabs.Main:AddSection("Fram Bone")
+local MiscFarm = Tabs.Main:AddSection("Farm Bone")
 local StatusBone = Tabs.Main:AddParagraph({
     Title="Status Bone",
     Content=""
@@ -3443,7 +3445,7 @@ spawn(function()
     end)
 end)
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {
-    Title="Auto Fram Bone",
+    Title="Auto Farm Bone",
     Description="", 
     Default=false })
 ToggleBone:OnChanged(function(Value)
@@ -3600,7 +3602,7 @@ spawn(function()
     end
 end)
 local ToggleCake = Tabs.Main:AddToggle("ToggleCake", {
-    Title = "Auto Fram Cake",
+    Title = "Auto Farm Cake",
     Description = "", 
     Default = false
 })
@@ -3798,7 +3800,7 @@ end)
         end
     end)
 end
-local boss = Tabs.Main:AddSection("Fram Boss")
+local boss = Tabs.Main:AddSection("Farm Boss")
     if Sea1 then
         tableBoss={"The Gorilla King","Bobby","Yeti","Mob Leader","Vice Admiral","Warden","Chief Warden","Swan","Magma Admiral","Fishman Lord","Wysper","Thunder God","Cyborg","Saber Expert"}
     elseif Sea2 then
@@ -3818,7 +3820,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         _G.SelectBoss=Value
     end)
     local ToggleAutoFarmBoss = Tabs.Main:AddToggle("ToggleAutoFarmBoss", {
-        Title="Auto Fram Boss",
+        Title="Auto Farm Boss",
         Description="", 
         Default=false })
     ToggleAutoFarmBoss:OnChanged(function(Value)
@@ -3879,7 +3881,7 @@ local boss = Tabs.Main:AddSection("Fram Boss")
         SelectMaterial=Value
     end)
     local ToggleMaterial = Tabs.Main:AddToggle("ToggleMaterial", {
-        Title="Auto Fram MateriaList",
+        Title="Auto Farm MateriaList",
         Description="", 
         Default=false })
     ToggleMaterial:OnChanged(function(Value)
@@ -4583,7 +4585,7 @@ spawn(function()
             end)
         end
     end)
-    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Fram Elite",Description="", Default=false })
+    local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title="Auto Farm Elite",Description="", Default=false })
     ToggleElite:OnChanged(function(Value)
        _G.AutoElite=Value
        end)
@@ -6088,7 +6090,7 @@ if Sea2 then
         end)
     end
 local ToggleAutoFarmSwan = Tabs.Main1:AddToggle("ToggleAutoFarmSwan", {
-    Title="Auto Fram Swan",
+    Title="Auto Farm Swan",
     Description="",
     Default=false
 })
@@ -6475,18 +6477,18 @@ ToggleF:OnChanged(function(Value)
     end)
 Options.ToggleF:SetValue(true)
 local Usser = Tabs.Info:AddParagraph({
-    Title = "Status",
-    Content = "━━━━━━━━━━━━━━━━━━━━━\n" ..
-        "Name : " .. game.Players.LocalPlayer.DisplayName .. " (@" .. game.Players.LocalPlayer.Name .. ")\n" ..
-        "Levels : " .. game:GetService("Players").LocalPlayer.Data.Level.Value .. "\n" ..
-        "Money : " .. game:GetService("Players").LocalPlayer.Data.Beli.Value .. "\n" ..
-        "Point F : " .. game:GetService("Players").LocalPlayer.Data.Fragments.Value .. "\n" ..
-        "Bounty : " .. game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value .. "\n" ..
-        "Health : " .. game.Players.LocalPlayer.Character.Humanoid.Health .. "/" .. game.Players.LocalPlayer.Character.Humanoid.MaxHealth .. "\n" ..
-        "Energy : " .. game.Players.LocalPlayer.Character.Energy.Value .. "/" .. game.Players.LocalPlayer.Character.Energy.MaxValue .. "\n" ..
-        "Race : " .. game:GetService("Players").LocalPlayer.Data.Race.Value .. "\n" ..
-        "Devil Fruit : " .. game:GetService("Players").LocalPlayer.Data.DevilFruit.Value .. "\n" ..
-        "━━━━━━━━━━━━━━━━━━━━━"
+    Title="Status",
+    Content="â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"..
+        "Name : "..game.Players.LocalPlayer.DisplayName.." (@"..game.Players.LocalPlayer.Name..")\n"..
+        "Levels : "..game:GetService("Players").LocalPlayer.Data.Level.Value.."\n"..
+        "Money : "..game:GetService("Players").LocalPlayer.Data.Beli.Value.."\n"..
+        "Point F : "..game:GetService("Players").LocalPlayer.Data.Fragments.Value.."\n"..
+        "Bounty : "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value.."\n"..
+        "Health : "..game.Players.LocalPlayer.Character.Humanoid.Health.."/"..game.Players.LocalPlayer.Character.Humanoid.MaxHealth.."\n"..
+        "Energy : "..game.Players.LocalPlayer.Character.Energy.Value.."/"..game.Players.LocalPlayer.Character.Energy.MaxValue.."\n"..
+        "Race : "..game:GetService("Players").LocalPlayer.Data.Race.Value.."\n"..
+        "Devil Fruit : "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value.."\n"..
+        "â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”"
 })
 local Time = Tabs.Status:AddParagraph({
     Title="Time",
@@ -6541,9 +6543,9 @@ spawn(function()
 pcall(function()
     while wait() do
         if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
-            FrozenIsland:SetDesc('✅')
+            FrozenIsland:SetDesc('âœ…')
         else
-            FrozenIsland:SetDesc('❌')
+            FrozenIsland:SetDesc('âŒ')
         end
     end
 end)
@@ -7716,30 +7718,8 @@ spawn(function()
         end)
     end
 end)
-local ToggleKillAura = Tabs.Raid:AddToggle("ToggleKillAura", {Title="Auto Kill+Bật Farm Raid Nó Kill Aura Tất Cả Quái",Description="", Default=false })
-ToggleKillAura:OnChanged(function(Value)
-    KillAura=Value
-end)
-Options.ToggleKillAura:SetValue(false)
-spawn(function()
-    while wait() do
-        if KillAura then
-            pcall(function()
-                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-                        repeat task.wait()
-                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
-                            v.Humanoid.Health=0
-                            v.HumanoidRootPart.CanCollide=false
-                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
-                    end
-                end
-            end)
-        end
-    end
-end)
 local ToggleNextIsland = Tabs.Raid:AddToggle("ToggleNextIsland", {
-    Title="Auto Fram Raid",
+    Title="Auto Farm Raid",
     Description="",
     Default=false
 })
@@ -7796,7 +7776,7 @@ spawn(function()
         end
     end
 end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức Tỉnh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -9074,9 +9054,9 @@ spawn(function()
     pcall(function()
         while wait() do
             if game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland") then
+                Prehistoric:SetDesc("Volcano Island: âœ…ï¸")
             else
-                Prehistoric:SetDesc("Volcano Island: "✅")
-                Prehistoric:SetDesc("Volcano Island: "❌")
+                Prehistoric:SetDesc("Volcano Island: âŒï¸")
             end
         end
     end)
