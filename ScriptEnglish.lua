@@ -173,35 +173,36 @@ repeat
 until player.Team
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
-local Fluent = https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/ScriptEnglish.lua
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = "Văn-Nguyên Hub",
+    Title = "Van-Nguyen Hub",
     SubTitle="Blox Fruits", 
-    TabWidth=175, 
+    TabWidth=155, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 420), 
+    Size=UDim2.fromOffset(555, 320), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
-  
-Info     = Window:AddTab({ Title = "Tab Info", Icon = "book" }),
-    Main     = Window:AddTab({ Title = "Tab Farm", Icon = "zap" }),
-    
-Main1    = Window:AddTab({ Title = "Tab Farm Other", Icon = "leaf" }),
-    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "wave" }),
-    Item     = Window:AddTab({ Title = "Tab Stack Farm", Icon = "bag" }),
-    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "settings" }),
-    Status   = Window:AddTab({ Title = "Tab Status", Icon = "chart" }),
-    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "bar-chart" }),
-    Player   = Window:AddTab({ Title = "Tab Player", Icon = "user" }),
-    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "compass" }),
-    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "eye" }),
-    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "apple" }),
-    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "sword" }),
-    Race     = Window:AddTab({ Title = "Tab Race", Icon = "flag" }),
-    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "shop" }),
-    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "tool" }),
+
+    Info     = Window:AddTab({ Title="Tab Info", Color=Color3.fromRGB(255, 165, 0), Rounded=true }),
+    Main     = Window:AddTab({ Title="Tab Farm", Color
+      
+      =Color3.fromRGB(0, 170, 255), Rounded=true }),
+    Main1    = Window:AddTab({ Title="Tab Farm Other", Color=Color3.fromRGB(0, 200, 150), Rounded=true }),
+    Sea      = Window:AddTab({ Title="Tab Sea Event", Color=Color3.fromRGB(75, 0, 130), Rounded=true }),
+    Item     = Window:AddTab({ Title="Tab Stack Farm", Color=Color3.fromRGB(255, 105, 180), Rounded=true }),
+    Setting  = Window:AddTab({ Title="Tab Setting", Color=Color3.fromRGB(128, 128, 128), Rounded=true }),
+    Status   = Window:AddTab({ Title="Tab Status", Color=Color3.fromRGB(255, 215, 0), Rounded=true }),
+    Stats    = Window:AddTab({ Title="Tab Stats", Color=Color3.fromRGB(0, 128, 255), Rounded=true }),
+    Player   = Window:AddTab({ Title="Tab Player", Color=Color3.fromRGB(255, 69, 0), Rounded=true }),
+    Teleport = Window:AddTab({ Title="Tab Teleport", Color=Color3.fromRGB(0, 255, 128), Rounded=true }),
+    Visual   = Window:AddTab({ Title="Tab Visual", Color=Color3.fromRGB(138, 43, 226), Rounded=true }),
+    Fruit    = Window:AddTab({ Title="Tab Fruit", Color=Color3.fromRGB(255, 140, 0), Rounded=true }),
+    Raid     = Window:AddTab({ Title="Tab Raid", Color=Color3.fromRGB(220, 20, 60), Rounded=true }),
+    Race     = Window:AddTab({ Title="Tab Race", Color=Color3.fromRGB(0, 255, 255), Rounded=true }),
+    Shop     = Window:AddTab({ Title="Tab Shop", Color=Color3.fromRGB(255, 20, 147), Rounded=true }),
+    Misc     = Window:AddTab({ Title="Tab Misc", Color=Color3.fromRGB(192, 192, 192), Rounded=true }),
 }
 local Options = Fluent.Options
 local id = game.PlaceId
@@ -2357,7 +2358,7 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Văn Nguyên Hub",
+        Title="Van Nguyen Hub Community",
         Description="Discord",
         Callback=function()
             setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
@@ -2367,11 +2368,11 @@ Tabs.Info:AddButton({
     Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/share/17a7yAdB2h/"))
+        setclipboard(tostring("https://www.facebook.com/share/19JjttjVaP/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Văn Nguyên",
+    Title="Van-Nguyen",
     Content="Credits"
 })
 local executorName
@@ -2387,8 +2388,8 @@ if executorName then
     })
 end
 Tabs.Info:AddParagraph({
-    Title="Updete",
-    Content="All Script supports pc and pe"
+    Title="Update",
+    Content="Script supports pc and pe"
 })
 Tabs.Info:AddParagraph({
     Title="All Clients Android Supported",
@@ -2404,7 +2405,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0001
+                    _G.Fast_Delay=0.00001
                 end
             end)
         end
@@ -2707,7 +2708,7 @@ spawn(function()
                 local CFrameTarget = CFrame.new(BushPosition)
                 Tween2(CFrameTarget)
                 Fluent:Notify({
-                    Title = "Ten Hub",
+                    Title = "Van-Nguyen Hub",
                     Content = "Find Berry: " .. tostring(BerryName),
                     Duration = 10
                 })
@@ -4102,7 +4103,7 @@ local function createToggle(title, toggleKey, islands, islandName, notification)
             _G[toggleKey] = false
             if not notified then
                 Fluent:Notify({
-                    Title = "Ten Hub",
+                    Title = "Van-Nguyen Hub",
                     Content = notification,
                     Duration = 10
                 })
@@ -4661,9 +4662,9 @@ if Sea3 then
         while task.wait() do
             pcall(function()
                 if game.Workspace.Map:FindFirstChild("MysticIsland") then
-                    MirageStatus="🟢"
+                    MirageStatus="âœ…ï¸"
                 else
-                    MirageStatus="🔴"
+                    MirageStatus="âŒï¸"
                 end
             end)
         end
@@ -6477,18 +6478,18 @@ ToggleF:OnChanged(function(Value)
     end)
 Options.ToggleF:SetValue(true)
 local Usser = Tabs.Info:AddParagraph({
-    Title="Status",
-    Content="â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"..
-        "Name : "..game.Players.LocalPlayer.DisplayName.." (@"..game.Players.LocalPlayer.Name..")\n"..
-        "Levels : "..game:GetService("Players").LocalPlayer.Data.Level.Value.."\n"..
-        "Money : "..game:GetService("Players").LocalPlayer.Data.Beli.Value.."\n"..
-        "Point F : "..game:GetService("Players").LocalPlayer.Data.Fragments.Value.."\n"..
-        "Bounty : "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value.."\n"..
-        "Health : "..game.Players.LocalPlayer.Character.Humanoid.Health.."/"..game.Players.LocalPlayer.Character.Humanoid.MaxHealth.."\n"..
-        "Energy : "..game.Players.LocalPlayer.Character.Energy.Value.."/"..game.Players.LocalPlayer.Character.Energy.MaxValue.."\n"..
-        "Race : "..game:GetService("Players").LocalPlayer.Data.Race.Value.."\n"..
-        "Devil Fruit : "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value.."\n"..
-        "â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”"
+    Title = "Status",
+    Content = "━━━━━━━━━━━━━━━━━━━━━\n" ..
+        "Name : " .. game.Players.LocalPlayer.DisplayName .. " (@" .. game.Players.LocalPlayer.Name .. ")\n" ..
+        "Levels : " .. game:GetService("Players").LocalPlayer.Data.Level.Value .. "\n" ..
+        "Money : " .. game:GetService("Players").LocalPlayer.Data.Beli.Value .. "\n" ..
+        "Point F : " .. game:GetService("Players").LocalPlayer.Data.Fragments.Value .. "\n" ..
+        "Bounty : " .. game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value .. "\n" ..
+        "Health : " .. game.Players.LocalPlayer.Character.Humanoid.Health .. "/" .. game.Players.LocalPlayer.Character.Humanoid.MaxHealth .. "\n" ..
+        "Energy : " .. game.Players.LocalPlayer.Character.Energy.Value .. "/" .. game.Players.LocalPlayer.Character.Energy.MaxValue .. "\n" ..
+        "Race : " .. game:GetService("Players").LocalPlayer.Data.Race.Value .. "\n" ..
+        "Devil Fruit : " .. game:GetService("Players").LocalPlayer.Data.DevilFruit.Value .. "\n" ..
+        "━━━━━━━━━━━━━━━━━━━━━"
 })
 local Time = Tabs.Status:AddParagraph({
     Title="Time",
@@ -6543,9 +6544,9 @@ spawn(function()
 pcall(function()
     while wait() do
         if game:GetService("Workspace").Map:FindFirstChild("FrozenDimension") then
-            FrozenIsland:SetDesc('âœ…')
+            FrozenIsland:SetDesc('✅')
         else
-            FrozenIsland:SetDesc('âŒ')
+            FrozenIsland:SetDesc('❌')
         end
     end
 end)
@@ -7718,6 +7719,28 @@ spawn(function()
         end)
     end
 end)
+local ToggleKillAura = Tabs.Raid:AddToggle("ToggleKillAura", {Title="Auto Kill+Bật Farm Raid Nó Kill Aura Tất Cả Quái",Description="", Default=false })
+ToggleKillAura:OnChanged(function(Value)
+    KillAura=Value
+end)
+Options.ToggleKillAura:SetValue(false)
+spawn(function()
+    while wait() do
+        if KillAura then
+            pcall(function()
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
+                        repeat task.wait()
+                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
+                            v.Humanoid.Health=0
+                            v.HumanoidRootPart.CanCollide=false
+                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
+                    end
+                end
+            end)
+        end
+    end
+end)
 local ToggleNextIsland = Tabs.Raid:AddToggle("ToggleNextIsland", {
     Title="Auto Fram Raid",
     Description="",
@@ -7776,7 +7799,7 @@ spawn(function()
         end
     end
 end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức Tỉnh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -9054,9 +9077,9 @@ spawn(function()
     pcall(function()
         while wait() do
             if game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland") then
-                Prehistoric:SetDesc("Volcano Island: âœ…ï¸")
             else
-                Prehistoric:SetDesc("Volcano Island: âŒï¸")
+                Prehistoric:SetDesc("Volcano Island: "✅")
+                Prehistoric:SetDesc("Volcano Island: "❌")
             end
         end
     end)
@@ -9322,8 +9345,8 @@ local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Văn-Nguyên Hub",
-        Text = "Successfully",
+        Title = "Van-Nguyen Hub",
+        Text = "🟢 Successfully 🟢",
         Duration = 1
     })
     lastNotificationTime = currentTime
