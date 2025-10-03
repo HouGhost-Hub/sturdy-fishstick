@@ -2505,6 +2505,47 @@ local Pos = CFrame.new(0,0,0)
 _G.Fast_Delay = 0.0001
 local TweenSpeed = 2
 
+local Config = {
+    Weapon = SelectWeapon or "YourWeapon",
+    BringSize = Vector3.new(6,6,6),
+    MobOffset = CFrame.new(0,0,0),
+    Quests = {
+        {Name = NameQuest or "QuestA", Level = QuestLv or 1, Mob = Ms or "MobA", Pos = CFrameQ or CFrame.new(0,0,0)}
+    }
+}
+
+local function AliveMobs(name)
+    local t = {}
+    for _, m in pairs(workspace.Enemies:GetChildren()) do
+        if m.Name == name and m:FindFirstChild("Humanoid") and m.Humanoid.Health > 0 then
+            table.insert(t, m)
+        end
+    end
+    return t
+end
+
+local function BringMob(m)
+    m.HumanoidRootPart.Size = Config.BringSize
+    m.HumanoidRootPart.Transparency = 0
+    m.Humanoid.JumpPower = 0
+    m.Humanoid.WalkSpeed = 0
+    m.HumanoidRootPart.CanCollide = false
+end
+
+local function AttackLoop(m)
+    local Player = game.Players.LocalPlayer
+    local PlayerGui = Player.PlayerGui.Main
+    repeat
+        task.wait(_G.Fast_Delay)
+        AttackNoCoolDown()
+        AutoHaki()
+        EquipTool(Config.Weapon)
+        BringMob(m)
+        FarmPos = m.HumanoidRootPart.CFrame
+        MonFarm = m.Name
+    until not _G.AutoLevel or not m.Parent or m.Humanoid.Health <= 0 or not PlayerGui.Quest.Visible
+end
+
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
@@ -2514,40 +2555,20 @@ spawn(function()
                 local PlayerGui = Player.PlayerGui.Main
                 local QuestVisible = PlayerGui.Quest.Visible
                 local QuestTitle = PlayerGui.Quest.Container.QuestTitle.Title.Text
+                local quest = Config.Quests[1]
 
-                if not string.find(QuestTitle, NameMon) or not QuestVisible then
+                if not string.find(QuestTitle, quest.Mob) or not QuestVisible then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    Tween(CFrameQ, TweenSpeed)
-                    if (CFrameQ.Position - Player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    Tween(quest.Pos, TweenSpeed)
+                    if (quest.Pos.Position - Player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", quest.Name, quest.Level)
                     end
                 else
-                    local mobs = {}
-                    for _, mob in pairs(workspace.Enemies:GetChildren()) do
-                        if mob.Name == Ms and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-                            table.insert(mobs, mob)
-                        end
-                    end
-
+                    local mobs = AliveMobs(quest.Mob)
                     for _, mob in pairs(mobs) do
                         if mob.Parent and mob.Humanoid.Health > 0 then
-                            Tween(mob.HumanoidRootPart.CFrame * Pos, TweenSpeed)
-                            repeat
-                                task.wait(_G.Fast_Delay)
-                                AttackNoCoolDown()
-                                AutoHaki()
-                                EquipTool(SelectWeapon)
-                                bringmob = true
-
-                                mob.HumanoidRootPart.Size = Vector3.new(6,6,6)
-                                mob.HumanoidRootPart.Transparency = 0
-                                mob.Humanoid.JumpPower = 0
-                                mob.Humanoid.WalkSpeed = 0
-                                mob.HumanoidRootPart.CanCollide = false
-                                FarmPos = mob.HumanoidRootPart.CFrame
-                                MonFarm = mob.Name
-                            until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not PlayerGui.Quest.Visible
-                            bringmob = false
+                            Tween(mob.HumanoidRootPart.CFrame * Config.MobOffset, TweenSpeed)
+                            AttackLoop(mob)
                         end
                     end
                 end
@@ -6425,11 +6446,6 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local Tabs = {}
-Tabs.Setting = Window:AddTab({Title = "Setting"})
-
-local LP = game:GetService("Players").LocalPlayer
-
 local ToggleBringMob = Tabs.Setting:AddToggle({Title="Bring Mob", Default=true})
 ToggleBringMob:OnChanged(function(Value) _G.BringMob = Value end)
 _G.BringMob = true
