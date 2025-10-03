@@ -177,10 +177,10 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 Window = Fluent:CreateWindow({
     Title = "Van-Nguyen Hub",
     SubTitle="Blox Fruits", 
-    TabWidth=155, 
+    TabWidth=180, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 320), 
+    Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
@@ -2357,28 +2357,28 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Ten Hub",
+        Title="Van-Nguyen Hub",
         Description="Discord",
         Callback=function()
-            setclipboard(tostring("https://discord.gg/tenhub")) 
+            setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Ten Nguoi Lam",
+    Title="Ten Văn Nguyên",
     Description="Youtube",
     Callback=function()
-        setclipboard(tostring("https://www.youtube.com/"))
+        setclipboard(tostring("https://www.youtube.com/@VanNguyen-80"))
     end
 })
 Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
+    Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/"))
+        setclipboard(tostring("https://www.facebook.com/share/19i2q2P7C7/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Nguoi Lam",
+    Title="Van-Nguyen",
     Content="Credits"
 })
 local executorName
@@ -2411,7 +2411,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00001 
+                    _G.Fast_Delay=0.00001
                 end
             end)
         end
@@ -2468,76 +2468,94 @@ end)
 
 ToggleLevel:OnChanged(function(Value)
     _G.AutoLevel = Value
-    if not Value then
-        wait()
-        Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        wait()
-    end
 end)
 
-Options.ToggleLevel:SetValue(false)
+_G.Fast_Delay = 0.0001
+_G.FarmRadius = 50
+_G.FlyHeight = 3
+_G.FlySpeed = 0.2
+_G.RotateSpeed = 0.1
+_G.MoveSpeed = 0.05
+_G.RotateTimes = 3
 
-_G.Fast_Delay = 0.01
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+local InfoLabel = Instance.new("TextLabel", ScreenGui)
+InfoLabel.Position = UDim2.new(0.02,0,0.02,0)
+InfoLabel.Size = UDim2.new(0,250,0,50)
+InfoLabel.BackgroundTransparency = 0.5
+InfoLabel.BackgroundColor3 = Color3.fromRGB(0,0,0)
+InfoLabel.TextColor3 = Color3.fromRGB(255,255,255)
+InfoLabel.TextScaled = true
+InfoLabel.Text = "Quái: 0 | Xoay: 0"
+
+local function getDistance(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function getNearbyMobs()
+    local mobs = {}
+    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    for i, mob in pairs(workspace.Mobs:GetChildren()) do
+        if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+            local dist = getDistance(playerPos, mob.HumanoidRootPart.Position)
+            if dist <= _G.FarmRadius then
+                table.insert(mobs, mob)
+            end
+        end
+    end
+    return mobs
+end
+
+local function smoothMove(part, targetPos, speed)
+    local currentPos = part.Position
+    local direction = (targetPos - currentPos)
+    part.CFrame = CFrame.new(currentPos + direction * speed)
+end
+
+local function smoothLookAtAlternate(part, targetPos, speed, invert)
+    local direction = (targetPos - part.Position).Unit
+    if invert then
+        direction = CFrame.new(Vector3.new(0,0,0), direction.Position).RightVector * -1
+    end
+    local lookCFrame = CFrame.new(part.Position, part.Position + direction)
+    part.CFrame = part.CFrame:Lerp(lookCFrame, speed)
+end
+
+local function getRandomMovePoint()
+    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    return playerPos + Vector3.new(math.random(-10,10),0,math.random(-10,10))
+end
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
-            pcall(function()
-                local player = game:GetService("Players").LocalPlayer
-                local character = player.Character
-                if not character then return end
-                local hrp = character:FindFirstChild("HumanoidRootPart")
-                if not hrp then return end
-                local gui = player.PlayerGui.Main.Quest
-
-                CheckLevel()
-
-                if not string.find(gui.Container.QuestTitle.Title.Text, NameMon) or not gui.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    Tween(CFrameQ)
-                    if (CFrameQ.Position - hrp.Position).Magnitude <= 5 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
-                    end
-                end
-
-                for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if mob:FindFirstChild("Humanoid") and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
-                        if string.find(mob.Name, NameMon) then
-                            spawn(function()
-                                repeat
-                                    if not _G.AutoLevel then break end
-                                    if not mob.Parent or mob.Humanoid.Health <= 0 then break end
-                                    if not gui.Visible then break end
-
-                                    while mob and mob.Parent and mob.Humanoid.Health > 0 do
-                                        AttackNoCoolDown()
-                                        AutoHaki()
-                                        EquipTool(SelectWeapon)
-                                        Tween(mob.HumanoidRootPart.CFrame * Pos)
-                                        mob.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        mob.HumanoidRootPart.Transparency = 1
-                                        mob.Humanoid.JumpPower = 0
-                                        mob.Humanoid.WalkSpeed = 0
-                                        mob.HumanoidRootPart.CanCollide = false
-                                        FarmPos = mob.HumanoidRootPart.CFrame
-                                        MonFarm = mob.Name
-                                        wait(_G.Fast_Delay)
-                                    end
-                                until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not gui.Visible
-                            end)
+            local player = game.Players.LocalPlayer
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local nearbyMobs = getNearbyMobs()
+                
+                if #nearbyMobs > 0 then
+                    for i, mob in pairs(nearbyMobs) do
+                        if mob.Humanoid.Health > 0 then
+                            local targetPos = mob.HumanoidRootPart.Position + Vector3.new(0,_G.FlyHeight,0)
+                            smoothMove(player.Character.HumanoidRootPart, targetPos, _G.FlySpeed)
+                            
+                            for r = 1, _G.RotateTimes do
+                                local invert = r % 2 == 0
+                                smoothLookAtAlternate(player.Character.HumanoidRootPart, mob.HumanoidRootPart.Position, _G.RotateSpeed, invert)
+                                if player.Character:FindFirstChild("Attack") then
+                                    player.Character.Attack:FireServer(mob)
+                                end
+                                InfoLabel.Text = "Quái: "..i.." | Xoay: "..r
+                                task.wait(_G.Fast_Delay)
+                            end
                         end
                     end
+                else
+                    local movePoint = getRandomMovePoint()
+                    smoothMove(player.Character.HumanoidRootPart, movePoint + Vector3.new(0,_G.FlyHeight,0), _G.MoveSpeed)
+                    InfoLabel.Text = "Quái: 0 | Xoay: 0"
                 end
-
-                for _, spawn in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                    if string.find(spawn.Name, NameMon) then
-                        if (hrp.Position - spawn.Position).Magnitude >= 10 then
-                            Tween(spawn.CFrame * Pos)
-                        end
-                    end
-                end
-
-            end)
+            end
         end
     end
 end)        
