@@ -180,7 +180,7 @@ Window = Fluent:CreateWindow({
     TabWidth=155, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 520), 
+    Size=UDim2.fromOffset(555, 430), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
@@ -2357,35 +2357,28 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Văn Nguyên Hub",
+        Title="Ten Hub",
         Description="Discord",
         Callback=function()
-            setclipboard(tostring("https://discord.gg/nX3dEDXQ")) 
+            setclipboard(tostring("https://discord.gg/tenhub")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Youtube Văn Nguyên",
+    Title="Ten Nguoi Lam",
     Description="Youtube",
     Callback=function()
         setclipboard(tostring("https://www.youtube.com/"))
     end
 })
 Tabs.Info:AddButton({
-    Title="Fb Văn Nguyên",
+    Title="Fb Nguoi Lam",
     Description="Facebook",
     Callback=function()
-        setclipboard(tostring("https://www.facebook.com/share/1JSutQdtk7/"))
-    end
-})
-Tabs.Info:AddButton({
-    Title="TikTok Văn Nguyên",
-    Description="TikTok",
-    Callback=function()
-        setclipboard(tostring("tiktok.com/@ngocnguyen0972"))
+        setclipboard(tostring("https://www.facebook.com/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Văn Nguyên",
+    Title="Nguoi Lam",
     Content="Credits"
 })
 local executorName
@@ -2412,35 +2405,13 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttack = true
-_G.Fast_Delay = 0.0001
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local workspaceEnemies = workspace:WaitForChild("Enemies")
-local LP = game:GetService("Players").LocalPlayer
-local HRP = LP.Character and LP.Character:WaitForChild("HumanoidRootPart")
-
-function GetAliveMobs()
-    local mobs = {}
-    for _, mob in pairs(workspaceEnemies:GetChildren()) do
-        if mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-            table.insert(mobs, mob)
-        end
-    end
-    return mobs
-end
-
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
 spawn(function()
-    while task.wait() do
-        if _G.FastAttack then
+    while wait() do
+        if _G.FastAttackVxeze_Mode then
             pcall(function()
-                local mobs = GetAliveMobs()
-                for _, mob in pairs(mobs) do
-                    if mob:FindFirstChild("HumanoidRootPart") then
-                        HRP.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0,5,10)
-                        ReplicatedStorage.Remotes.Combat:FireServer("Attack", mob)
-                        task.wait(_G.Fast_Delay)
-                    end
+                if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                    _G.Fast_Delay = 0.0001
                 end
             end)
         end
@@ -2490,9 +2461,9 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-    Title="Auto Farm Level",
-    Description="",
-    Default=false
+    Title = "Auto Farm Level",
+    Description = "",
+    Default = false
 })
 
 ToggleLevel:OnChanged(function(Value)
@@ -2501,9 +2472,74 @@ end)
 
 Options.ToggleLevel:SetValue(false)
 
-local Pos = CFrame.new(0,0,0)
-_G.Fast_Delay = 0.0001
-local TweenSpeed = 2
+local SliderSpeed = Tabs.Main:AddSlider("TweenSpeed", {
+    Title = "Tốc độ bay",
+    Min = 1,
+    Max = 10,
+    Default = 2,
+    Format = function(Value) return tostring(Value) end
+})
+SliderSpeed:OnChanged(function(Value)
+    _G.TweenSpeed = Value
+end)
+
+local SliderX = Tabs.Main:AddSlider("MobPointX", {
+    Title = "Điểm gom X",
+    Min = -500,
+    Max = 500,
+    Default = 0
+})
+local SliderY = Tabs.Main:AddSlider("MobPointY", {
+    Title = "Điểm gom Y",
+    Min = 0,
+    Max = 200,
+    Default = 5
+})
+local SliderZ = Tabs.Main:AddSlider("MobPointZ", {
+    Title = "Điểm gom Z",
+    Min = -500,
+    Max = 500,
+    Default = 0
+})
+
+spawn(function()
+    while task.wait(0.2) do
+        _G.MobFarmPoint = CFrame.new(SliderX.Value, SliderY.Value, SliderZ.Value)
+    end
+end)
+
+_G.Fast_Delay = 0.01
+local MobGatherDistance = 50
+
+local function FlyTo(targetCFrame)
+    Tween(targetCFrame, _G.TweenSpeed)
+end
+
+local function GetNearbyMobs()
+    local mobs = {}
+    local PlayerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    for _, mob in pairs(workspace.Enemies:GetChildren()) do
+        if mob.Name == Ms and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+            if (mob.HumanoidRootPart.Position - PlayerPos).Magnitude <= MobGatherDistance then
+                table.insert(mobs, mob)
+            end
+        end
+    end
+    return mobs
+end
+
+local function GatherMobs(mobs)
+    for _, mob in pairs(mobs) do
+        if mob.Parent and mob.Humanoid.Health > 0 then
+            mob.HumanoidRootPart.CFrame = _G.MobFarmPoint
+            mob.HumanoidRootPart.Size = Vector3.new(6,6,6)
+            mob.HumanoidRootPart.Transparency = 0
+            mob.Humanoid.JumpPower = 0
+            mob.Humanoid.WalkSpeed = 0
+            mob.HumanoidRootPart.CanCollide = false
+        end
+    end
+end
 
 spawn(function()
     while task.wait() do
@@ -2511,45 +2547,30 @@ spawn(function()
             pcall(function()
                 CheckLevel()
                 local Player = game.Players.LocalPlayer
-                local PlayerGui = Player.PlayerGui.Main
+                local PlayerGui = Player:WaitForChild("PlayerGui"):WaitForChild("Main")
                 local QuestVisible = PlayerGui.Quest.Visible
                 local QuestTitle = PlayerGui.Quest.Container.QuestTitle.Title.Text
 
                 if not string.find(QuestTitle, NameMon) or not QuestVisible then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    Tween(CFrameQ, TweenSpeed)
+                    FlyTo(CFrameQ)
                     if (CFrameQ.Position - Player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
                 else
-                    local mobs = {}
-                    for _, mob in pairs(workspace.Enemies:GetChildren()) do
-                        if mob.Name == Ms and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-                            table.insert(mobs, mob)
-                        end
+                    local mobs = GetNearbyMobs()
+                    if #mobs == 0 then
+                        task.wait(0.5)
+                        continue
                     end
-
-                    for _, mob in pairs(mobs) do
-                        if mob.Parent and mob.Humanoid.Health > 0 then
-                            Tween(mob.HumanoidRootPart.CFrame * Pos, TweenSpeed)
-                            repeat
-                                task.wait(_G.Fast_Delay)
-                                AttackNoCoolDown()
-                                AutoHaki()
-                                EquipTool(SelectWeapon)
-                                bringmob = true
-
-                                mob.HumanoidRootPart.Size = Vector3.new(6,6,6)
-                                mob.HumanoidRootPart.Transparency = 0
-                                mob.Humanoid.JumpPower = 0
-                                mob.Humanoid.WalkSpeed = 0
-                                mob.HumanoidRootPart.CanCollide = false
-                                FarmPos = mob.HumanoidRootPart.CFrame
-                                MonFarm = mob.Name
-                            until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not PlayerGui.Quest.Visible
-                            bringmob = false
-                        end
-                    end
+                    GatherMobs(mobs)
+                    FlyTo(_G.MobFarmPoint)
+                    repeat
+                        task.wait(_G.Fast_Delay)
+                        AttackNoCoolDown()
+                        AutoHaki()
+                        EquipTool(SelectWeapon)
+                    until not _G.AutoLevel or not PlayerGui.Quest.Visible or #GetNearbyMobs() == 0
                 end
             end)
         end
@@ -6425,91 +6446,45 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local Tabs = {}
-Tabs.Setting = Window:AddTab({Title = "Setting"})
-
-local LP = game:GetService("Players").LocalPlayer
-
-local ToggleBringMob = Tabs.Setting:AddToggle({Title="Bring Mob", Default=true})
-ToggleBringMob:OnChanged(function(Value) _G.BringMob = Value end)
-_G.BringMob = true
-
-local ToggleFastAttack = Tabs.Setting:AddToggle({Title="Fast Attack", Default=true})
-ToggleFastAttack:OnChanged(function(Value) _G.FastAttack = Value end)
-_G.FastAttack = true
-_G.Fast_Delay = 0.0001
-
-local FarmPart = workspace:FindFirstChild("FarmPos")
-if not FarmPart then
-    FarmPart = Instance.new("Part", workspace)
-    FarmPart.Name = "FarmPos"
-    FarmPart.Anchored = true
-    FarmPart.Transparency = 1
-    FarmPart.Size = Vector3.new(1,1,1)
-end
-
-local SetFarmPosButton = Tabs.Setting:AddButton({Title="Set Farm Position"})
-SetFarmPosButton:OnClick(function()
-    FarmPart.CFrame = LP.Character.HumanoidRootPart.CFrame
+local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
+ToggleBringMob:OnChanged(function(Value)
+    _G.BringMob = Value
 end)
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local workspaceEnemies = workspace:WaitForChild("Enemies")
-local MonFarm = "YourMobNameHere"
-
-function GetAliveMobs()
-    local mobs = {}
-    for _, mob in pairs(workspaceEnemies:GetChildren()) do
-        if mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-            table.insert(mobs, mob)
-        end
-    end
-    return mobs
-end
-
-function BringMobsToPlayer()
-    local mobs = GetAliveMobs()
-    for _, mob in pairs(mobs) do
-        if mob:FindFirstChild("HumanoidRootPart") then
-            local HRP_mob = mob.HumanoidRootPart
-            local Head = mob:FindFirstChild("Head")
-            if not HRP_mob or not Head then continue end
-
-            local dist = (HRP_mob.Position - FarmPart.Position).Magnitude
-            if mob.Name == "Factory Staff" and dist <= 1e9 then
-                HRP_mob.CFrame = FarmPart.CFrame
-                HRP_mob.Size = Vector3.new(60,60,60)
-                HRP_mob.CanCollide = false
-                Head.CanCollide = false
-                if mob.Humanoid:FindFirstChild("Animator") then mob.Humanoid.Animator:Destroy() end
-                sethiddenproperty(LP, "SimulationRadius", math.huge)
-            elseif mob.Name == MonFarm and dist <= 1e10 then
-                HRP_mob.CFrame = FarmPart.CFrame
-                HRP_mob.Size = Vector3.new(60,60,60)
-                HRP_mob.Transparency = 1
-                HRP_mob.CanCollide = false
-                Head.CanCollide = false
-                mob.Humanoid.JumpPower = 0
-                mob.Humanoid.WalkSpeed = 0
-                if mob.Humanoid:FindFirstChild("Animator") then mob.Humanoid.Animator:Destroy() end
-                mob.Humanoid:ChangeState(11)
-                mob.Humanoid:ChangeState(14)
-                sethiddenproperty(LP, "SimulationRadius", math.huge)
-            end
-        end
-    end
-end
-
+Options.ToggleBringMob:SetValue(true)
 spawn(function()
-    while task.wait() do
+    while wait() do
         pcall(function()
-            if _G.BringMob then BringMobsToPlayer() end
-            if _G.FastAttack then
-                local mobs = GetAliveMobs()
-                for _, mob in pairs(mobs) do
-                    if mob:FindFirstChild("HumanoidRootPart") then
-                        ReplicatedStorage.Remotes.Combat:FireServer("Attack", mob)
-                        task.wait(_G.Fast_Delay)
+            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if _G.BringMob and bringmob then
+                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if v.Name == "Factory Staff" then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                v.HumanoidRootPart.CFrame = FarmPos
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        elseif v.Name == MonFarm then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                                v.HumanoidRootPart.CFrame = FarmPos
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                v.HumanoidRootPart.Transparency = 1
+                                v.Humanoid.JumpPower = 0
+                                v.Humanoid.WalkSpeed = 0
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Head.CanCollide = false
+                                v.Humanoid:ChangeState(11)
+                                v.Humanoid:ChangeState(14)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        end
                     end
                 end
             end
@@ -7742,7 +7717,7 @@ function UpdateIslandMirageEsp()
         end)
     end
 end
-local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Magma","Buddha","Sand","Phoenix","Dough"}
+local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Rumble","Magma","Buddha","Sand","Phoenix","Dough"}
 local DropdownRaid = Tabs.Raid:AddDropdown("DropdownRaid", {
     Title="Select Chip",
     Description="",
@@ -7866,7 +7841,7 @@ spawn(function()
         end
     end
 end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức tỉnh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -7900,7 +7875,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Blade-Blade"
+    [2]="Chop-Chop"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
@@ -7930,7 +7905,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Eagle-Eagle"
+    [2]="Falcon-Falcon"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
@@ -7970,7 +7945,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Creation-Creation"
+    [2]="Barrier-Barrier"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 end
@@ -9407,14 +9382,61 @@ spawn(function()
         end
     end
 end)
-local lastNotificationTime = 0
-local notificationCooldown = 10
-local currentTime = tick()
-if currentTime - lastNotificationTime >= notificationCooldown then
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Van-Nguyen Hub",
-        Text = "Successfully",
-        Duration = 1
-    })
-    lastNotificationTime = currentTime
-end
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 250, 0, 120)
+Frame.Position = UDim2.new(0.5, -125, 0.5, -60)
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Title.Text = "Van Nguyen Hub"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 16
+Title.Parent = Frame
+
+local Content = Instance.new("TextLabel")
+Content.Size = UDim2.new(1, -20, 0, 40)
+Content.Position = UDim2.new(0, 10, 0, 40)
+Content.BackgroundTransparency = 1
+Content.Text = "Do you want to enable Auto Farm?"
+Content.TextColor3 = Color3.fromRGB(255, 255, 255)
+Content.Font = Enum.Font.Gotham
+Content.TextSize = 14
+Content.Parent = Frame
+
+local YesButton = Instance.new("TextButton")
+YesButton.Size = UDim2.new(0.4, 0, 0, 30)
+YesButton.Position = UDim2.new(0.05, 0, 1, -35)
+YesButton.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+YesButton.Text = "Yes"
+YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+YesButton.Font = Enum.Font.GothamBold
+YesButton.TextSize = 14
+YesButton.Parent = Frame
+
+local NoButton = Instance.new("TextButton")
+NoButton.Size = UDim2.new(0.4, 0, 0, 30)
+NoButton.Position = UDim2.new(0.55, 0, 1, -35)
+NoButton.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
+NoButton.Text = "No"
+NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoButton.Font = Enum.Font.GothamBold
+NoButton.TextSize = 14
+NoButton.Parent = Frame
+
+YesButton.MouseButton1Click:Connect(function()
+    print("Player chose YES -> Enable Auto Farm")
+    ScreenGui:Destroy()
+end)
+
+NoButton.MouseButton1Click:Connect(function()
+    print("Player chose NO -> Cancel")
+    ScreenGui:Destroy()
+end)
