@@ -2469,96 +2469,77 @@ end)
 ToggleLevel:OnChanged(function(Value)
     _G.AutoLevel = Value
 end)
+Options.ToggleLevel:SetValue(false)
 
-_G.Fast_Delay = 0.0001
-_G.FarmRadius = 50
-_G.FlyHeight = 3
-_G.FlySpeed = 0.2
-_G.RotateSpeed = 0.1
-_G.MoveSpeed = 0.05
-_G.RotateTimes = 3
-
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-local InfoLabel = Instance.new("TextLabel", ScreenGui)
-InfoLabel.Position = UDim2.new(0.02,0,0.02,0)
-InfoLabel.Size = UDim2.new(0,250,0,50)
-InfoLabel.BackgroundTransparency = 0.5
-InfoLabel.BackgroundColor3 = Color3.fromRGB(0,0,0)
-InfoLabel.TextColor3 = Color3.fromRGB(255,255,255)
-InfoLabel.TextScaled = true
-InfoLabel.Text = "Quái: 0 | Xoay: 0"
-
-local function getDistance(pos1, pos2)
-    return (pos1 - pos2).Magnitude
-end
-
-local function getNearbyMobs()
-    local mobs = {}
-    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    for i, mob in pairs(workspace.Mobs:GetChildren()) do
-        if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
-            local dist = getDistance(playerPos, mob.HumanoidRootPart.Position)
-            if dist <= _G.FarmRadius then
-                table.insert(mobs, mob)
-            end
-        end
-    end
-    return mobs
-end
-
-local function smoothMove(part, targetPos, speed)
-    local currentPos = part.Position
-    local direction = (targetPos - currentPos)
-    part.CFrame = CFrame.new(currentPos + direction * speed)
-end
-
-local function smoothLookAtAlternate(part, targetPos, speed, invert)
-    local direction = (targetPos - part.Position).Unit
-    if invert then
-        direction = CFrame.new(Vector3.new(0,0,0), direction.Position).RightVector * -1
-    end
-    local lookCFrame = CFrame.new(part.Position, part.Position + direction)
-    part.CFrame = part.CFrame:Lerp(lookCFrame, speed)
-end
-
-local function getRandomMovePoint()
-    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    return playerPos + Vector3.new(math.random(-10,10),0,math.random(-10,10))
-end
+_G.Fast_Delay = 0.05
+_G.BringCount = 4
+local PosOffset = CFrame.new(0,0,0)
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
-            local player = game.Players.LocalPlayer
-            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                local nearbyMobs = getNearbyMobs()
-                
-                if #nearbyMobs > 0 then
-                    for i, mob in pairs(nearbyMobs) do
-                        if mob.Humanoid.Health > 0 then
-                            local targetPos = mob.HumanoidRootPart.Position + Vector3.new(0,_G.FlyHeight,0)
-                            smoothMove(player.Character.HumanoidRootPart, targetPos, _G.FlySpeed)
-                            
-                            for r = 1, _G.RotateTimes do
-                                local invert = r % 2 == 0
-                                smoothLookAtAlternate(player.Character.HumanoidRootPart, mob.HumanoidRootPart.Position, _G.RotateSpeed, invert)
-                                if player.Character:FindFirstChild("Attack") then
-                                    player.Character.Attack:FireServer(mob)
-                                end
-                                InfoLabel.Text = "Quái: "..i.." | Xoay: "..r
-                                task.wait(_G.Fast_Delay)
+            pcall(function()
+                CheckLevel()
+                local player = game.Players.LocalPlayer
+                local plrPos = player.Character.HumanoidRootPart.Position
+                local questGui = player.PlayerGui.Main.Quest
+
+                if not string.find(questGui.Container.QuestTitle.Title.Text, NameMon) or not questGui.Visible then
+                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
+                    Tween(CFrameQ)
+                    if (CFrameQ.Position - plrPos).Magnitude <= 5 then
+                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    end
+                else
+                    local mobs = {}
+                    for i,v in pairs(workspace.Enemies:GetChildren()) do
+                        if v.Name == Ms and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") then
+                            table.insert(mobs, v)
+                        end
+                    end
+
+                    table.sort(mobs, function(a,b)
+                        return (a.HumanoidRootPart.Position - plrPos).Magnitude < (b.HumanoidRootPart.Position - plrPos).Magnitude
+                    end)
+
+                    local brought = 0
+                    for _, mob in pairs(mobs) do
+                        if brought >= _G.BringCount then break end
+                        if mob and mob.Parent and mob:FindFirstChild("Humanoid") and mob:FindFirstChild("HumanoidRootPart") then
+                            bringmob = true
+                            repeat
+                                wait(_G.Fast_Delay)
+                                AttackNoCoolDown()
+                                AutoHaki()
+                                EquipTool(SelectWeapon)
+
+                                local targetCFrame = player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                                mob.HumanoidRootPart.CFrame = targetCFrame
+
+                                mob.HumanoidRootPart.Size = Vector3.new(60,60,60)
+                                mob.HumanoidRootPart.Transparency = 1
+                                mob.Humanoid.JumpPower = 0
+                                mob.Humanoid.WalkSpeed = 0
+                                mob.HumanoidRootPart.CanCollide = false
+
+                            until mob.Humanoid.Health <= 0 or not _G.AutoLevel or not mob.Parent
+                            brought = brought + 1
+                            bringmob = false
+                        end
+                    end
+
+                    if #mobs == 0 then
+                        for i,v in pairs(workspace["_WorldOrigin"].EnemySpawns:GetChildren()) do
+                            if string.find(v.Name, NameMon) then
+                                Tween(CFrame.new(v.Position) * PosOffset)
                             end
                         end
                     end
-                else
-                    local movePoint = getRandomMovePoint()
-                    smoothMove(player.Character.HumanoidRootPart, movePoint + Vector3.new(0,_G.FlyHeight,0), _G.MoveSpeed)
-                    InfoLabel.Text = "Quái: 0 | Xoay: 0"
                 end
-            end
+            end)
         end
     end
-end)        
+end)
     local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {
         Title="Auto Mob Aura",
         Description="",
@@ -6441,7 +6422,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6452,7 +6433,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
