@@ -2411,7 +2411,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0001
+                    _G.Fast_Delay=0.00005
                 end
             end)
         end
@@ -2473,8 +2473,8 @@ end)
 Options.ToggleLevel:SetValue(false)
 
 local Pos = CFrame.new(0,0,0)
-_G.Fast_Delay = 0.01
-local bringmob = false
+_G.Fast_Delay =0.00005
+local bringmob = true
 
 spawn(function()
     while task.wait() do
@@ -6398,6 +6398,46 @@ Tabs.Setting:AddButton({
         end
     end
 })
+local ToggleFastAttackDropdown = Tabs.Setting
+AddTogglAddDropdown("FastAttackMode", {
+    Title = "Fast Attack Mode",
+    Values = {"Normal", "Fast Attack", "Super Fast Attack"},
+    Default = "Normal",
+    Multi = false,
+})
+
+FastAttackDropdown:OnChanged(function(Value)
+    _G.FastAttackVxeze_Mode = Value
+end)
+
+_G.FastAttackVxeze_Mode = "Normal"
+_G.Fast_Delay = 0.2
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                _G.Fast_Delay = 0.00005
+            elseif _G.FastAttackVxeze_Mode == "Fast Attack" then
+                _G.Fast_Delay = 0.05
+            else
+                _G.Fast_Delay = 0.2
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoLevel then
+            pcall(function()
+                AutoHaki()
+                EquipTool(SelectWeapon)
+                AttackNoCoolDown()
+            end)
+        end
+    end
+end)
 local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
 ToggleBringMob:OnChanged(function(Value)
     _G.BringMob = Value
