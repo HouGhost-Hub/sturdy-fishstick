@@ -175,7 +175,7 @@ hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = "Van-Nguyen Hub",
+    Title = "Van-Nguyen Hub + 2 Ngày Updete Tên khác",
     SubTitle="Blox Fruits", 
     TabWidth=180, 
     Theme="Darker",
@@ -185,23 +185,70 @@ Window = Fluent:CreateWindow({
 })
 local Tabs = {
 
-Info=Window:AddTab({ Title="Tab Info" }),
-    Main=Window:AddTab({ Title="Tab Fram" }),
-
-Main1=Window:AddTab({ Title="Tab Fram Other" }),
-    Sea=Window:AddTab({ Title="Tab Sea Event" }),
-    Item=Window:AddTab({ Title="Tab Stack Fram" }),
-    Setting=Window:AddTab({ Title="Tab Setting" }),
-    Status=Window:AddTab({ Title="Tab Status" }),
-    Stats=Window:AddTab({ Title="Tab Stats" }),
-    Player=Window:AddTab({ Title="Tab Player" }),
-    Teleport=Window:AddTab({ Title="Tab Teleport" }),
-    Visual=Window:AddTab({ Title="Tab Visual" }),
-    Fruit=Window:AddTab({ Title="Tab Fruit" }),
-    Raid=Window:AddTab({ Title="Tab Raid" }),
-    Race=Window:AddTab({ Title="Tab Race" }),
-    Shop=Window:AddTab({ Title="Tab Shop" }),
-    Misc=Window:AddTab({ Title="Tab Misc" }),
+    Info = Window:AddTab({
+        Title = "Info",
+        Icon = "rbxassetid://6031071053"
+    }),
+    Main = Window:AddTab({
+        Title = "Main Farm",
+        Icon = "rbxassetid://6034989555"
+    }),
+    Main1 = Window:AddTab({
+        Title = "Other Farm",
+        Icon = "rbxassetid://6034509993"
+    }),
+    Sea = Window:AddTab({
+        Title = "Sea Event",
+        Icon = "rbxassetid://6034996695"
+    }),
+    Item = Window:AddTab({
+        Title = "Item Farm",
+        Icon = "rbxassetid://6031265976"
+    }),
+    Setting = Window:AddTab({
+        Title = "Settings",
+        Icon = "rbxassetid://6034509985"
+    }),
+    Status = Window:AddTab({
+        Title = "Status",
+        Icon = "rbxassetid://6034509952"
+    }),
+    Stats = Window:AddTab({
+        Title = "Stats",
+        Icon = "rbxassetid://6031260808"
+    }),
+    Player = Window:AddTab({
+        Title = "Player",
+        Icon = "rbxassetid://6034509982"
+    }),
+    Teleport = Window:AddTab({
+        Title = "Teleport",
+        Icon = "rbxassetid://6034219198"
+    }),
+    Visual = Window:AddTab({
+        Title = "Visuals",
+        Icon = "rbxassetid://6034509992"
+    }),
+    Fruit = Window:AddTab({
+        Title = "Devil Fruit",
+        Icon = "rbxassetid://6034887074"
+    }),
+    Raid = Window:AddTab({
+        Title = "Raid",
+        Icon = "rbxassetid://6035067836"
+    }),
+    Race = Window:AddTab({
+        Title = "Race",
+        Icon = "rbxassetid://6031291420"
+    }),
+    Shop = Window:AddTab({
+        Title = "Shop",
+        Icon = "rbxassetid://6031094678"
+    }),
+    Misc = Window:AddTab({
+        Title = "Misc",
+        Icon = "rbxassetid://6034509991"
+    }),
 }
 local Options = Fluent.Options
 local id = game.PlaceId
@@ -2405,16 +2452,19 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode="Super Fast Attack"
+_G.FastAttackVxeze_Mode = "Super Fast" -- "Normal", "Fast", "Super Fast"
+
 spawn(function()
-    while wait() do
-        if _G.FastAttackVxeze_Mode then
-            pcall(function()
-                if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00005
-                end
-            end)
-        end
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Normal" then
+                _G.Fast_Delay = 0.5
+            elseif _G.FastAttackVxeze_Mode == "Fast" then
+                _G.Fast_Delay = 0.05
+            elseif _G.FastAttackVxeze_Mode == "Super Fast" then
+                _G.Fast_Delay = 0.00001
+            end
+        end)
     end
 end)
 local AutoFram = Tabs.Main:AddSection("Auto Fram")
@@ -2461,9 +2511,8 @@ task.spawn(function()
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-    Title="Auto Farm Level",
-    Description="",
-    Default=false
+    Title = "Auto Farm Level",
+    Default = false
 })
 
 ToggleLevel:OnChanged(function(Value)
@@ -2472,55 +2521,56 @@ end)
 
 Options.ToggleLevel:SetValue(false)
 
-local Pos = CFrame.new(0,0,0)
-_G.Fast_Delay =0.00005
-local bringmob = true
+local SliderFast = Tabs.Main:AddSlider("FastAttack", {
+    Title = "Fast Attack Speed",
+    Default = 0.0001,
+    Min = 0.0001,
+    Max = 0.1,
+    Rounding = 4,
+    Callback = function(Value)
+        _G.Fast_Delay = Value
+    end
+})
+
+local function BringMob(v)
+    v.HumanoidRootPart.Size = Vector3.new(40,40,40)
+    v.HumanoidRootPart.CanCollide = false
+    v.HumanoidRootPart.Transparency = 1
+    v.Humanoid.WalkSpeed = 0
+    v.Humanoid.JumpPower = 0
+    v.HumanoidRootPart.CFrame = FarmPos
+end
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
             pcall(function()
                 CheckLevel()
-                local player = game:GetService("Players").LocalPlayer
-                local gui = player.PlayerGui.Main
+                local QuestGui = game.Players.LocalPlayer.PlayerGui.Main.Quest
+                local HasQuest = QuestGui.Visible and string.find(QuestGui.Container.QuestTitle.Title.Text, NameMon)
 
-                if not string.find(gui.Quest.Container.QuestTitle.Title.Text, NameMon) or not gui.Quest.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                if not HasQuest then
+                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
                     Tween(CFrameQ)
-                    if (CFrameQ.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 5 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    if (CFrameQ.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
                 else
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            if v.Name == Ms then
-                                repeat
-                                    wait(_G.Fast_Delay)
-                                    AttackNoCoolDown()
-                                    AutoHaki()
-                                    EquipTool(SelectWeapon)
-                                    
-                                    bringmob = true
-                                    Tween(v.HumanoidRootPart.CFrame * Pos)
-                                    v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                    v.HumanoidRootPart.Transparency = 1
-                                    v.Humanoid.JumpPower = 0
-                                    v.Humanoid.WalkSpeed = 0
-                                    v.HumanoidRootPart.CanCollide = false
-
-                                    FarmPos = v.HumanoidRootPart.CFrame
-                                    MonFarm = v.Name
-                                until not _G.AutoLevel or not v.Parent or v.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or not gui.Quest.Visible
-                                bringmob = false
-                            end
-                        end
-                    end
-
-                    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                        if string.find(v.Name, NameMon) then
-                            if (player.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
-                                Tween(v.HumanoidRootPart.CFrame * Pos)
-                            end
+                    for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if v.Name == Ms and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            FarmPos = v.HumanoidRootPart.CFrame
+                            repeat task.wait(_G.Fast_Delay)
+                                AttackNoCoolDown()
+                                AutoHaki()
+                                EquipTool(SelectWeapon)
+                                Tween(FarmPos * Pos)
+                                BringMob(v)
+                                for _,m in pairs(game.Workspace.Enemies:GetChildren()) do
+                                    if m.Name == Ms and m:FindFirstChild("HumanoidRootPart") and m.Humanoid.Health > 0 and m ~= v then
+                                        BringMob(m)
+                                    end
+                                end
+                            until not _G.AutoLevel or v.Humanoid.Health <= 0 or not v.Parent
                         end
                     end
                 end
@@ -2528,50 +2578,6 @@ spawn(function()
         end
     end
 end)
-    local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {
-        Title="Auto Mob Aura",
-        Description="",
-        Default=false })
-    ToggleMobAura:OnChanged(function(Value)
-        _G.AutoNear=Value
-        if Value==false then
-            wait()
-            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-            wait()
-        end
-    end)
-    Options.ToggleMobAura:SetValue(false)
-    spawn(function()
-        while wait() do
-        if _G.AutoNear then
-        pcall(function()
-          for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-          if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-          if v.Name then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v:FindFirstChild("HumanoidRootPart").Position).Magnitude<=5000 then
-            repeat wait(_G.Fast_Delay)
-                AttackNoCoolDown()
-                bringmob=true
-          AutoHaki()
-          EquipTool(SelectWeapon)
-          Tween(v.HumanoidRootPart.CFrame*Pos)
-          v.HumanoidRootPart.Size=Vector3.new(60, 60, 60)
-          v.HumanoidRootPart.Transparency=1
-          v.Humanoid.JumpPower=0
-          v.Humanoid.WalkSpeed=0
-          v.HumanoidRootPart.CanCollide=false
-          FarmPos=v.HumanoidRootPart.CFrame
-          MonFarm=v.Name
-          until not _G.AutoNear or not v.Parent or v.Humanoid.Health<=0 or not game.Workspace.Enemies:FindFirstChild(v.Name)
-          bringmob=false
-        end
-          end
-          end
-          end
-          end)
-        end
-        end
-      end)
 local AutoFram = Tabs.Main1:AddSection("CastleRaid")
     local ToggleCastleRaid = Tabs.Main1:AddToggle("ToggleCastleRaid", {
         Title="Auto Castle Raid",
@@ -6398,46 +6404,6 @@ Tabs.Setting:AddButton({
         end
     end
 })
-local ToggleFastAttackDropdown = Tabs.Setting
-AddTogglAddDropdown("FastAttackMode", {
-    Title = "Fast Attack Mode",
-    Values = {"Normal", "Fast Attack", "Super Fast Attack"},
-    Default = "Normal",
-    Multi = false,
-})
-
-FastAttackDropdown:OnChanged(function(Value)
-    _G.FastAttackVxeze_Mode = Value
-end)
-
-_G.FastAttackVxeze_Mode = "Normal"
-_G.Fast_Delay = 0.2
-
-spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                _G.Fast_Delay = 0.00005
-            elseif _G.FastAttackVxeze_Mode == "Fast Attack" then
-                _G.Fast_Delay = 0.05
-            else
-                _G.Fast_Delay = 0.2
-            end
-        end)
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoLevel then
-            pcall(function()
-                AutoHaki()
-                EquipTool(SelectWeapon)
-                AttackNoCoolDown()
-            end)
-        end
-    end
-end)
 local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Bring Mob",Description="", Default=true})
 ToggleBringMob:OnChanged(function(Value)
     _G.BringMob = Value
@@ -6450,7 +6416,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6461,7 +6427,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
@@ -9374,14 +9340,29 @@ spawn(function()
         end
     end
 end)
-local lastNotificationTime = 0
 local notificationCooldown = 10
-local currentTime = tick()
-if currentTime - lastNotificationTime >= notificationCooldown then
+
+local function sendNotify()
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Van-Nguyen Hub",
+        Title = "Van Nguyen Hub",
         Text = "Successfully",
-        Duration = 1
+        Duration = 3
     })
-    lastNotificationTime = currentTime
 end
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Van Nguyen Hub",
+    Text = "Do you want to repeat the notification?",
+    Button2 = "No",
+    Duration = 5,
+    Button1 = "Yes",
+    Callback = function(choice)
+        if choice == "Có" then
+            while task.wait(notificationCooldown) do
+                sendNotify()
+            end
+        elseif choice == "Không" then
+            sendNotify()
+        end
+    end
+})
