@@ -2452,94 +2452,99 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.AutoFarm = true
-_G.FastAttack_Mode = "Super Fast"
-local function GetFastDelay()
-    if _G.FastAttack_Mode == "Normal" then
-        return 0.5
-    elseif _G.FastAttack_Mode == "Fast" then
-        return 0.05
-    elseif _G.FastAttack_Mode == "Super Fast" then
-        return 0.00001
+_G.AutoClick = false
+_G.ClickDelay = 0.03
+_G.ToggleKey = Enum.KeyCode.T
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local VirtualUser = game:GetService("VirtualUser")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local player = Players.LocalPlayer
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == _G.ToggleKey then
+        _G.AutoClick = not _G.AutoClick
     end
-end
+end)
 
-local AttackEvent = game:GetService("ReplicatedStorage"):WaitForChild("CombatEvent")
-
-local function Attack(target)
+local function doClick()
+    local char = player.Character
+    if not char then return end
+    local humanoid = char:FindFirstChildWhichIsA("Humanoid")
+    local tool
+    if humanoid then tool = char:FindFirstChildOfClass("Tool") end
+    if tool and typeof(tool.Activate) == "function" then
+        pcall(function() tool:Activate() end)
+        return
+    end
     pcall(function()
-        if target and target:FindFirstChild("Humanoid") and target.Humanoid.Health > 0 then
-            AttackEvent:FireServer(target, "Melee")
-        end
+        VirtualUser:Button1Down(Vector2.new(0,0))
+        task.wait(0.01)
+        VirtualUser:Button1Up(Vector2.new(0,0))
     end)
 end
 
-local function BringMobs()
-    for _, mob in pairs(game.Workspace.Enemies:GetChildren()) do
-        if mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-            mob.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-5)
-            mob.HumanoidRootPart.CanCollide = false
-            mob.Humanoid.WalkSpeed = 0
+local function getAllMobs()
+    local mobs = {}
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return mobs end
+    for _, mob in pairs(Workspace:GetChildren()) do
+        if mob:FindFirstChildWhichIsA("Humanoid") and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+            table.insert(mobs, mob)
         end
+    end
+    return mobs
+end
+
+local function getPriorityMob()
+    local mobs = getAllMobs()
+    for _, mob in pairs(mobs) do
+        if mob.Name:find("Boss") or mob.Name:find("Rare") then
+            return mob
+        end
+    end
+    return nil
+end
+
+local function moveToMob(mob)
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+    if mob and mob:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = CFrame.new(mob.HumanoidRootPart.Position + Vector3.new(0,0,3))
     end
 end
 
-spawn(function()
-    while task.wait(GetFastDelay()) do
-        if _G.AutoFarm then
-            BringMobs()
-            for _, mob in pairs(game.Workspace.Enemies:GetChildren()) do
-                Attack(mob)
-            end
-            for _, plr in pairs(game.Players:GetPlayers()) do
-                if plr ~= game.Players.LocalPlayer and plr.Character then
-                    Attack(plr.Character)
-                end
-            end
-        end
+local function useSkill()
+    local char = player.Character
+    if not char then return end
+    local tool = char:FindFirstChildOfClass("Tool")
+    if tool and typeof(tool.Activate) == "function" then
+        pcall(function() tool:Activate() end)
     end
-end)
-local AutoFram = Tabs.Main:AddSection("Auto Fram")
-local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
-    Title = "Select Weapon",
-    Description = "",
-    Values = {'Melee', 'Sword', 'Blox Fruit'},
-    Multi = false,
-    Default = 1,
-})
-DropdownSelectWeapon:SetValue('Melee')
-DropdownSelectWeapon:OnChanged(function(Value)
-    ChooseWeapon = Value
-end)
-task.spawn(function()
-    while wait() do
-        pcall(function()
-            if ChooseWeapon == "Melee" then
-                for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if v.ToolTip == "Melee" then
-                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-                            SelectWeapon = v.Name
-                        end
-                    end
-                end
-            elseif ChooseWeapon == "Sword" then
-                for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if v.ToolTip == "Sword" then
-                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-                            SelectWeapon = v.Name
-                        end
-                    end
-                end
-            elseif ChooseWeapon == "Blox Fruit" then
-                for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if v.ToolTip == "Blox Fruit" then
-                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-                            SelectWeapon = v.Name
-                        end
-                    end
-                end
-            end
-        end)
+end
+
+local function rotateMap()
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+    char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(120), 0)
+end
+
+RunService.Heartbeat:Connect(function()
+    if _G.AutoClick then
+        local mob = getPriorityMob() or getAllMobs()[1]
+        if mob then
+            moveToMob(mob)
+            doClick()
+            useSkill()
+        else
+            rotateMap()
+        end
+        local delayTime = (_G.ClickDelay or 0.03) * (0.9 + math.random()*0.2)
+        delayTime = math.max(delayTime, 0.001)
+        task.wait(delayTime)
     end
 end)
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
