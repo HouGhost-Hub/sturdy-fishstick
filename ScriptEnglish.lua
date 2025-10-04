@@ -2452,19 +2452,51 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode = "Super Fast" -- "Normal", "Fast", "Super Fast"
+_G.AutoFarm = true
+_G.FastAttack_Mode = "Super Fast"
+local function GetFastDelay()
+    if _G.FastAttack_Mode == "Normal" then
+        return 0.5
+    elseif _G.FastAttack_Mode == "Fast" then
+        return 0.05
+    elseif _G.FastAttack_Mode == "Super Fast" then
+        return 0.00001
+    end
+end
+
+local AttackEvent = game:GetService("ReplicatedStorage"):WaitForChild("CombatEvent")
+
+local function Attack(target)
+    pcall(function()
+        if target and target:FindFirstChild("Humanoid") and target.Humanoid.Health > 0 then
+            AttackEvent:FireServer(target, "Melee")
+        end
+    end)
+end
+
+local function BringMobs()
+    for _, mob in pairs(game.Workspace.Enemies:GetChildren()) do
+        if mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+            mob.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-5)
+            mob.HumanoidRootPart.CanCollide = false
+            mob.Humanoid.WalkSpeed = 0
+        end
+    end
+end
 
 spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.FastAttackVxeze_Mode == "Normal" then
-                _G.Fast_Delay = 0.5
-            elseif _G.FastAttackVxeze_Mode == "Fast" then
-                _G.Fast_Delay = 0.05
-            elseif _G.FastAttackVxeze_Mode == "Super Fast" then
-                _G.Fast_Delay = 0.00001
+    while task.wait(GetFastDelay()) do
+        if _G.AutoFarm then
+            BringMobs()
+            for _, mob in pairs(game.Workspace.Enemies:GetChildren()) do
+                Attack(mob)
             end
-        end)
+            for _, plr in pairs(game.Players:GetPlayers()) do
+                if plr ~= game.Players.LocalPlayer and plr.Character then
+                    Attack(plr.Character)
+                end
+            end
+        end
     end
 end)
 local AutoFram = Tabs.Main:AddSection("Auto Fram")
