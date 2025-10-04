@@ -9357,117 +9357,14 @@ spawn(function()
         end
     end
 end)
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "NotificationGui"
-screenGui.Parent = playerGui
-
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 400, 0, 300)
-frame.Position = UDim2.new(0.5, -200, 0.5, -150)
-frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-frame.BorderSizePixel = 2
-frame.Parent = screenGui
-
-local uicorner = Instance.new("UICorner")
-uicorner.CornerRadius = UDim.new(0,15)
-uicorner.Parent = frame
-
-local uistroke = Instance.new("UIStroke")
-uistroke.Thickness = 2
-uistroke.Color = Color3.fromRGB(255,255,255)
-uistroke.Parent = frame
-
-local image = Instance.new("ImageLabel")
-image.Size = UDim2.new(1, 0, 0.7, 0)
-image.Position = UDim2.new(0, 0, 0, 0)
-image.Image = "rbxassetid://91347148253026"
-image.ScaleType = Enum.ScaleType.Fit
-image.BackgroundTransparency = 1
-image.ImageTransparency = 1
-image.Parent = frame
-
-local yesButton = Instance.new("TextButton")
-yesButton.Size = UDim2.new(0.4, 0, 0.2, 0)
-yesButton.Position = UDim2.new(0.05, 0, 0.75, 0)
-yesButton.Text = "Có"
-yesButton.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
-yesButton.TextScaled = true
-yesButton.Parent = frame
-
-local noButton = Instance.new("TextButton")
-noButton.Size = UDim2.new(0.4, 0, 0.2, 0)
-noButton.Position = UDim2.new(0.55, 0, 0.75, 0)
-noButton.Text = "Không"
-noButton.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
-noButton.TextScaled = true
-noButton.Parent = frame
-
 local lastNotificationTime = 0
 local notificationCooldown = 10
-local choiceMade = false
-
-local function sendNotification()
-    local currentTime = tick()
-    if currentTime - lastNotificationTime >= notificationCooldown then
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Van Nguyen Hub",
-            Text = "Successfully",
-            Duration = 1
-        })
-        lastNotificationTime = currentTime
-    end
+local currentTime = tick()
+if currentTime - lastNotificationTime >= notificationCooldown then
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Van Nguyen Hub",
+        Text = "Successfully",
+        Duration = 1
+    })
+    lastNotificationTime = currentTime
 end
-
-yesButton.MouseButton1Click:Connect(function()
-    sendNotification()
-    choiceMade = true
-    screenGui:Destroy()
-end)
-
-noButton.MouseButton1Click:Connect(function()
-    choiceMade = true
-    screenGui:Destroy()
-end)
-
-delay(33*60*60, function()
-    if not choiceMade then
-        screenGui:Destroy()
-    end
-end)
-
--- Fade-in hình ảnh
-for i = 0, 1, 0.02 do
-    image.ImageTransparency = 1 - i
-    wait(0.02)
-end
-
--- Hover và click effect cho nút
-local function hoverEffect(button)
-    button.MouseEnter:Connect(function()
-        button:TweenSize(UDim2.new(0.45,0,0.22,0), "Out", "Quad", 0.2, true)
-    end)
-    button.MouseLeave:Connect(function()
-        button:TweenSize(UDim2.new(0.4,0,0.2,0), "Out", "Quad", 0.2, true)
-    end)
-    button.MouseButton1Click:Connect(function()
-        button:TweenSize(button.Size + UDim2.new(0.05,0,0.05,0), "Out", "Quad", 0.1, true)
-        wait(0.1)
-        button:TweenSize(UDim2.new(0.4,0,0.2,0), "Out", "Quad", 0.1, true)
-    end)
-end
-
-hoverEffect(yesButton)
-hoverEffect(noButton)
-
--- Nhấp nháy nhẹ frame
-spawn(function()
-    while frame.Parent do
-        frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        wait(0.5)
-        frame.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-        wait(0.5)
-    end
-end)
