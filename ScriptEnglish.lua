@@ -2501,33 +2501,44 @@ spawn(function()
         if _G.AutoLevel then
             pcall(function()
                 CheckLevel()
-                local playerGui = game.Players.LocalPlayer.PlayerGui.Main
-                local questTitle = playerGui.Quest.Container.QuestTitle.Title
-                local questVisible = playerGui.Quest.Visible
-                if not string.find(questTitle.Text, NameMon) or not questVisible then
+                local player = game.Players.LocalPlayer
+                local char = player.Character
+                if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+                local playerGui = player.PlayerGui.Main
+                local questGui = playerGui:FindFirstChild("Quest")
+                if not questGui or not questGui.Visible then return end
+
+                local questTitle = questGui.Container.QuestTitle.Title.Text
+                if not string.find(questTitle, NameMon) then
                     game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
                     if CFrameQ then Tween(CFrameQ) end
-                    if CFrameQ and (CFrameQ.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                    if CFrameQ and (CFrameQ.Position - char.HumanoidRootPart.Position).Magnitude <= 5 then
                         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
-                else
-                    local mobs = {}
-                    for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
-                            table.insert(mobs, v)
-                        end
+                    return
+                end
+
+                -- Lấy mob hiện tại
+                local mobs = {}
+                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
+                        table.insert(mobs, v)
                     end
-                    table.sort(mobs, function(a,b)
-                        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-                        return (a.HumanoidRootPart.Position - playerPos).Magnitude < (b.HumanoidRootPart.Position - playerPos).Magnitude
-                    end)
-                    for _, mob in ipairs(mobs) do
-                        repeat
-                            wait(_G.FastAttack and (_G.Fast_Delay or 0.1) or 0.5)
+                end
+
+                table.sort(mobs, function(a,b)
+                    return (a.HumanoidRootPart.Position - char.HumanoidRootPart.Position).Magnitude < (b.HumanoidRootPart.Position - char.HumanoidRootPart.Position).Magnitude
+                end)
+
+                for _, mob in ipairs(mobs) do
+                    repeat
+                        wait(_G.FastAttack and (_G.Fast_Delay or 0.1) or 0.5)
+                        if mob.Parent then
                             if _G.FastAttack then AttackNoCoolDown() end
                             if _G.AutoHaki then AutoHaki() end
-                            if _G.AutoWeapon then SelectBestWeapon() end
-                            if _G.BringMob and mob:FindFirstChild("HumanoidRootPart") then
+                            EquipTool(SelectWeapon)
+                            if _G.BringMob then
                                 Tween(mob.HumanoidRootPart.CFrame * Pos)
                                 mob.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                 mob.HumanoidRootPart.Transparency = 1
@@ -2536,17 +2547,10 @@ spawn(function()
                             end
                             mob.Humanoid.JumpPower = 0
                             mob.Humanoid.WalkSpeed = 0
-                            MonFarm = mob.Name
-                        until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(mob.Name) or not questVisible
-                    end
-                    for _, v in pairs(game.Workspace["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                        if string.find(v.Name, NameMon) and v:FindFirstChild("HumanoidRootPart") then
-                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
-                                Tween(v.HumanoidRootPart.CFrame * Pos)
-                            end
                         end
-                    end
+                    until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0
                 end
+
             end)
         end
     end
