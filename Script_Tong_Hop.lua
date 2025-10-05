@@ -3,9 +3,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
        local Window = MakeWindow({
          Hub = {
          Title = "Văn Nguyên Hub",
-         Animation = "TikTok: Văn Nguyên"
          Animation = "Youtube: Văn Nguyên"
-         Animation = "Facebook: Văn Nguyên"
          },
         Key = {
         KeySystem = true,
@@ -24,8 +22,8 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        MinimizeButton({
        Image = "http://www.roblox.com/asset/?id=91347148253026",
-       Size = {100, 100},
-       Color = Color3.fromRGB(20, 20, 20),
+       Size = {60, 60},
+       Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
        Stroke = false,
        StrokeColor = Color3.fromRGB(255, 0, 0)
@@ -80,6 +78,7 @@ spawn(function()
             end)
         end
     end
+end)
 end)
   end
   })
