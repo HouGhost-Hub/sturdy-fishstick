@@ -186,11 +186,11 @@ Window = Fluent:CreateWindow({
 local Tabs = {
 
 Info=Window:AddTab({ Title="Tab Info" }),
-    Main=Window:AddTab({ Title="Tab Farming" }),
+    Main=Window:AddTab({ Title="Tab Fram" }),
 
 Main1=Window:AddTab({ Title="Tab Fram Other" }),
     Sea=Window:AddTab({ Title="Tab Sea Event" }),
-    Item=Window:AddTab({ Title="Tab Stack Farming" }),
+    Item=Window:AddTab({ Title="Tab Stack Fram" }),
     Setting=Window:AddTab({ Title="Tab Setting" }),
     Status=Window:AddTab({ Title="Tab Status" }),
     Stats=Window:AddTab({ Title="Tab Stats" }),
@@ -2405,13 +2405,46 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode="Super Fast Attack"
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
+_G.Fast_Delay = 0.1
+
 spawn(function()
-    while wait() do
-        if _G.FastAttackVxeze_Mode then
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                _G.Fast_Delay = 0.00005
+            elseif _G.FastAttackVxeze_Mode == "Normal" then
+                _G.Fast_Delay = 0.2
+            else
+                _G.Fast_Delay = 0.5
+            end
+        end)
+    end
+end)
+
+local function SafeTweenMob(v)
+    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if HRP and v and v:FindFirstChild("HumanoidRootPart") then
+        v.HumanoidRootPart.CanCollide = false
+        v.HumanoidRootPart.Anchored = false
+        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+        v.HumanoidRootPart.Transparency = 1
+        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
+        v.Humanoid:ChangeState(11)
+    end
+end
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoLevel then
             pcall(function()
-                if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.0001 
+                for _, v in pairs(workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid")
+                    and v:FindFirstChild("HumanoidRootPart")
+                    and v.Humanoid.Health > 0
+                    and v.Name == Ms then
+                        SafeTweenMob(v)
+                    end
                 end
             end)
         end
@@ -2460,97 +2493,93 @@ task.spawn(function()
         end)
     end
 end)
-    local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {Title="Auto Farm Level", Description="", Default=false})
-local ToggleFastAttack = Tabs.Main:AddToggle("FastAttack", {Title="Fast Attack", Description="Tấn công nhanh", Default=true})
-local ToggleAutoHaki = Tabs.Main:AddToggle("AutoHaki", {Title="Auto Haki", Description="Tự động bật haki", Default=true})
-local ToggleBringMob = Tabs.Main:AddToggle("BringMob", {Title="Bring Mob", Description="Kéo mob gần", Default=true})
-local ToggleAutoWeapon = Tabs.Main:AddToggle("AutoWeapon", {Title="Auto Weapon", Description="Chọn weapon mạnh nhất", Default=true})
+    local TweenService = game:GetService("TweenService")
+local Player = game.Players.LocalPlayer
+local HRP = Player.Character:WaitForChild("HumanoidRootPart")
 
+function Tween(POS)
+    if HRP and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+        local tween = TweenService:Create(HRP, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = POS})
+        tween:Play()
+        tween.Completed:Wait()
+    end
+end
+
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
 _G.Fast_Delay = 0.1
 
-ToggleLevel:OnChanged(function(Value) _G.AutoLevel = Value if not Value then if FarmPos then Tween(FarmPos) else Tween(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame) end wait(0.5) end end)
-ToggleFastAttack:OnChanged(function(Value) _G.FastAttack = Value end)
-ToggleAutoHaki:OnChanged(function(Value) _G.AutoHaki = Value end)
-ToggleBringMob:OnChanged(function(Value) _G.BringMob = Value end)
-ToggleAutoWeapon:OnChanged(function(Value) _G.AutoWeapon = Value end)
-
-Options.ToggleLevel:SetValue(false)
-Options.ToggleFastAttack:SetValue(true)
-Options.ToggleAutoHaki:SetValue(true)
-Options.ToggleBringMob:SetValue(true)
-Options.ToggleAutoWeapon:SetValue(true)
-
-local function SelectBestWeapon()
-    if not _G.AutoWeapon then return end
-    local player = game.Players.LocalPlayer
-    local bestWeapon = nil
-    local highestDmg = 0
-    for _, tool in pairs(player.Backpack:GetChildren()) do
-        if tool:IsA("Tool") and tool:FindFirstChild("Damage") then
-            if tool.Damage.Value > highestDmg then
-                highestDmg = tool.Damage.Value
-                bestWeapon = tool
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                _G.Fast_Delay = 0.00005
+            elseif _G.FastAttackVxeze_Mode == "Normal" then
+                _G.Fast_Delay = 0.2
+            else
+                _G.Fast_Delay = 0.5
             end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoLevel then
+            pcall(function()
+                for _, v in pairs(workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
+                        v.HumanoidRootPart.CanCollide = false
+                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                        v.HumanoidRootPart.Transparency = 1
+                        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
+                        v.Humanoid:ChangeState(11)
+                    end
+                end
+            end)
         end
     end
-    if bestWeapon then EquipTool(bestWeapon) end
-end
+end)
+
+local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
+    Title = "Auto Farm Level",
+    Description = "",
+    Default = false
+})
+
+ToggleLevel:OnChanged(function(Value)
+    _G.AutoLevel = Value
+end)
+
+Options.ToggleLevel:SetValue(false)
 
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
             pcall(function()
                 CheckLevel()
-                local player = game.Players.LocalPlayer
-                local char = player.Character
-                if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-
-                local playerGui = player.PlayerGui.Main
-                local questGui = playerGui:FindFirstChild("Quest")
-                if not questGui or not questGui.Visible then return end
-
-                local questTitle = questGui.Container.QuestTitle.Title.Text
-                if not string.find(questTitle, NameMon) then
+                local gui = Player.PlayerGui.Main.Quest
+                local questTitle = gui.Container.QuestTitle.Title.Text
+                if not string.find(questTitle, NameMon) or not gui.Visible then
                     game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
-                    if CFrameQ then Tween(CFrameQ) end
-                    if CFrameQ and (CFrameQ.Position - char.HumanoidRootPart.Position).Magnitude <= 5 then
+                    task.wait(0.5)
+                    Tween(CFrameQ)
+                    if (CFrameQ.Position - HRP.Position).Magnitude <= 5 then
                         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                     end
-                    return
-                end
-
-                -- Lấy mob hiện tại
-                local mobs = {}
-                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
-                        table.insert(mobs, v)
+                else
+                    for _, v in pairs(workspace.Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
+                            repeat
+                                task.wait(_G.Fast_Delay)
+                                AutoHaki()
+                                EquipTool(SelectWeapon)
+                                AttackNoCoolDown()
+                                Tween(v.HumanoidRootPart.CFrame * Pos)
+                                v.HumanoidRootPart.CanCollide = false
+                            until not _G.AutoLevel or v.Humanoid.Health <= 0 or not v.Parent or not gui.Visible
+                        end
                     end
                 end
-
-                table.sort(mobs, function(a,b)
-                    return (a.HumanoidRootPart.Position - char.HumanoidRootPart.Position).Magnitude < (b.HumanoidRootPart.Position - char.HumanoidRootPart.Position).Magnitude
-                end)
-
-                for _, mob in ipairs(mobs) do
-                    repeat
-                        wait(_G.FastAttack and (_G.Fast_Delay or 0.1) or 0.5)
-                        if mob.Parent then
-                            if _G.FastAttack then AttackNoCoolDown() end
-                            if _G.AutoHaki then AutoHaki() end
-                            EquipTool(SelectWeapon)
-                            if _G.BringMob then
-                                Tween(mob.HumanoidRootPart.CFrame * Pos)
-                                mob.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                mob.HumanoidRootPart.Transparency = 1
-                                mob.HumanoidRootPart.CanCollide = false
-                                FarmPos = mob.HumanoidRootPart.CFrame
-                            end
-                            mob.Humanoid.JumpPower = 0
-                            mob.Humanoid.WalkSpeed = 0
-                        end
-                    until not _G.AutoLevel or not mob.Parent or mob.Humanoid.Health <= 0
-                end
-
             end)
         end
     end
