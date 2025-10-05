@@ -1,141 +1,35 @@
 loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
 
-       local HttpService = game:GetService("HttpService")
-
-local VALID_KEYS = {"Premium-Van-Nguyen-J64-K97"}
-local KEY_VALIDITY_DAYS = 5
-local DATA_FILE = "key_data.json"
-
-local function LoadKeyData()
-    if isfile and isfile(DATA_FILE) then
-        local data = readfile(DATA_FILE)
-        return HttpService:JSONDecode(data)
-    end
-    return nil
-end
-
-local function SaveKeyData(key)
-    local data = {
-        Key = key,
-        Time = os.time()
+       local Window = MakeWindow({
+         Hub = {
+         Title = "Văn Nguyên Hub",
+         Animation = "TikTok: Văn Nguyên"
+         Animation = "Youtube: Văn Nguyên"
+         Animation = "Facebook: Văn Nguyên"
+         },
+        Key = {
+        KeySystem = true,
+        Title = "Nhập Keys",
+        Description = "hãy nhập keys vào để mở Menu nhé",
+        KeyLink = "https://discord.gg/nX3dEDXQ",
+        Keys = {"Premium-Van-Nguyen-J64-K97"},
+        Notifi = {
+        Notifications = true,
+        CorrectKey = "Nhập Key Đúng 🟢",
+       Incorrectkey = "Nhập Key Không Đúng 🟡",
+       CopyKeyLink = "https://discord.gg/nX3dEDXQ"
+      }
     }
-    if writefile then
-        writefile(DATA_FILE, HttpService:JSONEncode(data))
-    end
-end
+  })
 
-local function IsKeyStillValid(savedData)
-    if not savedData or not savedData.Time then
-        return false
-    end
-    local diff = os.difftime(os.time(), savedData.Time)
-    return diff <= (KEY_VALIDITY_DAYS * 24 * 60 * 60)
-end
-
-local keyData = LoadKeyData()
-local hasValidKey = false
-
-if keyData and IsKeyStillValid(keyData) then
-    for _, validKey in pairs(VALID_KEYS) do
-        if keyData.Key == validKey then
-            hasValidKey = true
-            break
-        end
-    end
-end
-
-if not hasValidKey then
-    print("Nhập key của bạn:")
-    local userInput = io.read()
-    local isCorrect = false
-    for _, validKey in pairs(VALID_KEYS) do
-        if userInput == validKey then
-            isCorrect = true
-            break
-        end
-    end
-    if isCorrect then
-        print("Key hợp lệ ✅")
-        SaveKeyData(userInput)
-    else
-        print("Key không đúng ❌")
-    end
-else
-    print("Key vẫn còn hạn ✅")
-end
-
-       local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "AvatarUI"
-screenGui.Parent = player:WaitForChild("PlayerGui")
-
-local avatarFrame = Instance.new("Frame")
-avatarFrame.Size = UDim2.new(0, 300, 0, 350)
-avatarFrame.Position = UDim2.new(0.5, -150, 0.5, -175)
-avatarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-avatarFrame.BorderSizePixel = 0
-avatarFrame.Parent = screenGui
-
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 10)
-corner.Parent = avatarFrame
-
-local stroke = Instance.new("UIStroke")
-stroke.Color = Color3.fromRGB(255, 255, 255)
-stroke.Thickness = 1.2
-stroke.Parent = avatarFrame
-
-local viewport = Instance.new("ViewportFrame")
-viewport.Size = UDim2.new(1, 0, 1, -60)
-viewport.Position = UDim2.new(0, 0, 0, 0)
-viewport.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-viewport.BorderSizePixel = 0
-viewport.Parent = avatarFrame
-
-local clonedChar = character:Clone()
-for _, part in ipairs(clonedChar:GetDescendants()) do
-	if part:IsA("BasePart") then
-		part.Anchored = true
-	end
-end
-clonedChar.Parent = viewport
-
-local camera = Instance.new("Camera")
-camera.CFrame = CFrame.new(Vector3.new(0, 3, 8), Vector3.new(0, 3, 0))
-viewport.CurrentCamera = camera
-
-local minimizeBtn = Instance.new("ImageButton")
-minimizeBtn.Image = "rbxassetid://91347148253026"
-minimizeBtn.Size = UDim2.new(0, 50, 0, 50)
-minimizeBtn.Position = UDim2.new(0.5, -25, 1, -55)
-minimizeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-minimizeBtn.BorderSizePixel = 0
-minimizeBtn.Parent = avatarFrame
-
-local btnCorner = Instance.new("UICorner")
-btnCorner.CornerRadius = UDim.new(1, 0)
-btnCorner.Parent = minimizeBtn
-
-local isMinimized = false
-minimizeBtn.MouseButton1Click:Connect(function()
-	if isMinimized then
-		TweenService:Create(avatarFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
-			Size = UDim2.new(0, 300, 0, 350),
-			BackgroundTransparency = 0
-		}):Play()
-	else
-		TweenService:Create(avatarFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
-			Size = UDim2.new(0, 80, 0, 80),
-			BackgroundTransparency = 0.7
-		}):Play()
-	end
-	isMinimized = not isMinimized
-end)
+       MinimizeButton({
+       Image = "http://www.roblox.com/asset/?id=91347148253026",
+       Size = {100, 100},
+       Color = Color3.fromRGB(20, 20, 20),
+       Corner = true,
+       Stroke = false,
+       StrokeColor = Color3.fromRGB(255, 0, 0)
+      })
       
 ------ Tab
      local Tab1o = MakeTab({Name = "Script Farm"})
@@ -160,5 +54,32 @@ end)
 }
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"))(Settings)
+  end
+  })
+
+AddButton(Tab4o, {
+     Name = "Kill Aura All",
+    Callback = function()local ToggleKillAura = Tabs.Sea:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
+ToggleKillAura:OnChanged(function(Value)
+    KillAura=Value
+end)
+Options.ToggleKillAura:SetValue(false)
+spawn(function()
+    while wait() do
+        if KillAura then
+            pcall(function()
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
+                        repeat task.wait()
+                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
+                            v.Humanoid.Health=0
+                            v.HumanoidRootPart.CanCollide=false
+                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
+                    end
+                end
+            end)
+        end
+    end
+end)
   end
   })
