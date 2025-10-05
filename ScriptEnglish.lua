@@ -1,3 +1,96 @@
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Yes Or No";
+    Text = "Văn-Nguyên có đẹp trai không";
+    Icon = "rbxassetid://91347148253026";
+    Duration = 1e5;
+	Button1 = "Yes";
+	Button0 = "Or";
+	Button2 = "No";
+})
+
+-- Toogle Ui
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ImageLabel = Instance.new("ImageLabel")
+local UICorner = Instance.new("UICorner")
+local TextButton = Instance.new("TextButton")
+
+ScreenGui.Parent = game:GetService("CoreGui")  
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.AnchorPoint = Vector2.new(0.1, 0.1)
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 0
+Frame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Frame.BorderSizePixel = 1
+Frame.Position = UDim2.new(0, 20, 0.1, -6)  
+Frame.Size = UDim2.new(0, 50, 0, 50)
+Frame.Name = "dut dit"
+
+ImageLabel.Parent = Frame
+ImageLabel.Name = "Banana Test"
+ImageLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+ImageLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+ImageLabel.Size = UDim2.new(0, 40, 0, 40)
+ImageLabel.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
+ImageLabel.BackgroundTransparency = 1
+ImageLabel.BorderSizePixel = 1
+ImageLabel.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ImageLabel.ImageColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.Image = "http://www.roblox.com/asset/?id=91347148253026"
+
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = Frame
+
+TextButton.Name = "TextButton"
+TextButton.Parent = Frame
+TextButton.AnchorPoint = Vector2.new(0, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
+TextButton.BackgroundTransparency = 1
+TextButton.BorderSizePixel = 1
+TextButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TextButton.TextColor3 = Color3.fromRGB(27, 42, 53)
+TextButton.Text = ""
+TextButton.Font = Enum.Font.SourceSans
+TextButton.TextSize = 8
+TextButton.TextTransparency = 0
+
+local TweenService = game:GetService("TweenService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+local zoomedIn = false
+local originalSize = UDim2.new(0, 40, 0, 40)
+local zoomedSize = UDim2.new(0, 30, 0, 30)
+local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+local faded = false
+local fadeInTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0.25})
+local fadeOutTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0})
+
+TextButton.MouseButton1Down:Connect(function()
+
+    if zoomedIn then
+        TweenService:Create(ImageLabel, tweenInfo, {Size = originalSize}):Play()
+    else
+        TweenService:Create(ImageLabel, tweenInfo, {Size = zoomedSize}):Play()
+    end
+    zoomedIn = not zoomedIn
+
+    if faded then
+        fadeOutTween:Play()
+    else
+        fadeInTween:Play()
+    end
+    faded = not faded
+VirtualInputManager:SendKeyEvent(false, "LeftControl", false, game)
+
+    VirtualInputManager:SendKeyEvent(true, "LeftControl", false, game)
+   
+end)
+
 _G.FastAttack = true
 
 if _G.FastAttack then
@@ -185,23 +278,23 @@ Window = Fluent:CreateWindow({
 })
 local Tabs = {
 
-Info=Window:AddTab({ Title="Tab Info" }),
-    Main=Window:AddTab({ Title="Tab Fram" }),
-
-Main1=Window:AddTab({ Title="Tab Fram Other" }),
-    Sea=Window:AddTab({ Title="Tab Sea Event" }),
-    Item=Window:AddTab({ Title="Tab Stack Fram" }),
-    Setting=Window:AddTab({ Title="Tab Setting" }),
-    Status=Window:AddTab({ Title="Tab Status" }),
-    Stats=Window:AddTab({ Title="Tab Stats" }),
-    Player=Window:AddTab({ Title="Tab Player" }),
-    Teleport=Window:AddTab({ Title="Tab Teleport" }),
-    Visual=Window:AddTab({ Title="Tab Visual" }),
-    Fruit=Window:AddTab({ Title="Tab Fruit" }),
-    Raid=Window:AddTab({ Title="Tab Raid" }),
-    Race=Window:AddTab({ Title="Tab Race" }),
-    Shop=Window:AddTab({ Title="Tab Shop" }),
-    Misc=Window:AddTab({ Title="Tab Misc" }),
+Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
+    Main     = Window:AddTab({ Title = "Tab Fram", Icon = "⚡" }),
+    
+Main1    = Window:AddTab({ Title = "Tab Farm Other",       Icon = "🌱" }),
+    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "⚓" }),
+    Item     = Window:AddTab({ Title = "Tab Stack Fram", Icon = "🎒" }),
+    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "⚙️" }),
+    Status   = Window:AddTab({ Title = "Tab Status", Icon = "📊" }),
+    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "📈" }),
+    Player   = Window:AddTab({ Title = "Tab Player", Icon = "👤" }),
+    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "🌀" }),
+    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "🎨" }),
+    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "🍏" }),
+    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "⚔️" }),
+    Race     = Window:AddTab({ Title = "Tab Race", Icon = "🏁" }),
+    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "🛒" }),
+    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "✨" })
 }
 local Options = Fluent.Options
 local id = game.PlaceId
@@ -2320,7 +2413,6 @@ Button.Parent = ScreenGui
 Button.Size = UDim2.new(0, 50, 0, 50)
 Button.Position = UDim2.new(0.015, 0, 0.02, 20)
 Button.BackgroundTransparency = 1
-Button.Image = "rbxassetid://91347148253026"
 local UICorner = Instance.new("UICorner")
 
 UICorner.CornerRadius = UDim.new(1, 0)
