@@ -31,15 +31,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       
 ------ Tab
      local Tab1o = MakeTab({Name = "Script Farm"})
-     local Tab2o = MakeTab({Name = "Server Hop"})
-     local Tab3o = MakeTab({Name = "Hop Server Blox Fruit""})
      local Tab4o = MakeTab({Name = "Kill Aura"})
-     local Tab5o = MakeTab({Name = "Script Blox Fruit"})
-     local Tab6o = MakeTab({Name = "Script Dead Rails"})
-     local Tab7o = MakeTab({Name = "Script 99 Night In The Forest"})
-     local Tab8o = MakeTab({Name = "Script Blade Ball"})
-     local Tab9o = MakeTab({Name = "Script Steal A Brainrot"})
-     local Tab10o = MakeTab({Name = "Script Grow A Garden"})
      
 ------- BUTTON
     
@@ -55,9 +47,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/r
   end
   })
 
-AddButton(Tab4o, {
+------- BUTTON
+
+AddButton(Tab2o, {
      Name = "Kill Aura All",
-    Callback = function()local ToggleKillAura = Tabs.Sea:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
+    Callback = function()
+      local ToggleKillAura = Tabs.Sea:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
 ToggleKillAura:OnChanged(function(Value)
     KillAura=Value
 end)
