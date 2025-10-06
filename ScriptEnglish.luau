@@ -9329,15 +9329,10 @@ local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Yes Or No",
+        Title = "Van-Nguyen Hub",
         Text = "Van-Nguyen Hub UI Library
 The UI automatically hides once executed.
 Press the button at the bottom-left of the screen to show the GUI.,
-        Icon = "rbxassetid://126051232176474";
-        Duration = 1
-        Duration = 1e5;
-	Button1 = "Yes";
-	Button2 = "No";
     })
     lastNotificationTime = currentTime
 end
