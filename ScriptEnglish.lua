@@ -1,96 +1,3 @@
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Yes Or No";
-    Text = "Văn-Nguyên có đẹp trai không";
-    Icon = "rbxassetid://91347148253026";
-    Duration = 1e5;
-	Button1 = "Yes";
-	Button0 = "Or";
-	Button2 = "No";
-})
-
--- Toogle Ui
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local ImageLabel = Instance.new("ImageLabel")
-local UICorner = Instance.new("UICorner")
-local TextButton = Instance.new("TextButton")
-
-ScreenGui.Parent = game:GetService("CoreGui")  
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-Frame.Parent = ScreenGui
-Frame.AnchorPoint = Vector2.new(0.1, 0.1)
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Frame.BackgroundTransparency = 0
-Frame.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Frame.BorderSizePixel = 1
-Frame.Position = UDim2.new(0, 20, 0.1, -6)  
-Frame.Size = UDim2.new(0, 50, 0, 50)
-Frame.Name = "dut dit"
-
-ImageLabel.Parent = Frame
-ImageLabel.Name = "Banana Test"
-ImageLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-ImageLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
-ImageLabel.Size = UDim2.new(0, 40, 0, 40)
-ImageLabel.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
-ImageLabel.BackgroundTransparency = 1
-ImageLabel.BorderSizePixel = 1
-ImageLabel.BorderColor3 = Color3.fromRGB(27, 42, 53)
-ImageLabel.ImageColor3 = Color3.fromRGB(255, 255, 255)
-ImageLabel.Image = "http://www.roblox.com/asset/?id=91347148253026"
-
-UICorner.CornerRadius = UDim.new(1, 0)
-UICorner.Parent = Frame
-
-TextButton.Name = "TextButton"
-TextButton.Parent = Frame
-TextButton.AnchorPoint = Vector2.new(0, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.Size = UDim2.new(1, 0, 1, 0)
-TextButton.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
-TextButton.BackgroundTransparency = 1
-TextButton.BorderSizePixel = 1
-TextButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
-TextButton.TextColor3 = Color3.fromRGB(27, 42, 53)
-TextButton.Text = ""
-TextButton.Font = Enum.Font.SourceSans
-TextButton.TextSize = 8
-TextButton.TextTransparency = 0
-
-local TweenService = game:GetService("TweenService")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-
-local zoomedIn = false
-local originalSize = UDim2.new(0, 40, 0, 40)
-local zoomedSize = UDim2.new(0, 30, 0, 30)
-local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-local faded = false
-local fadeInTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0.25})
-local fadeOutTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0})
-
-TextButton.MouseButton1Down:Connect(function()
-
-    if zoomedIn then
-        TweenService:Create(ImageLabel, tweenInfo, {Size = originalSize}):Play()
-    else
-        TweenService:Create(ImageLabel, tweenInfo, {Size = zoomedSize}):Play()
-    end
-    zoomedIn = not zoomedIn
-
-    if faded then
-        fadeOutTween:Play()
-    else
-        fadeInTween:Play()
-    end
-    faded = not faded
-VirtualInputManager:SendKeyEvent(false, "LeftControl", false, game)
-
-    VirtualInputManager:SendKeyEvent(true, "LeftControl", false, game)
-   
-end)
-
 _G.FastAttack = true
 
 if _G.FastAttack then
@@ -262,22 +169,34 @@ repeat
                 end)
             end
         end
-    end
-until player.Team
+    endlocal player = game.Players.LocalPlayer
+repeat task.wait() until player.Team
+
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
+
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-Window = Fluent:CreateWindow({
-    Title = "Van-Nguyen Hub",
-    SubTitle="Blox Fruits", 
-    TabWidth=180, 
-    Theme="Darker",
-    Acrylic=false,
-    Size=UDim2.fromOffset(555, 420), 
+
+local DarkBloodTheme = {
+    PrimaryColor = Color3.fromRGB(120, 0, 0),
+    SecondaryColor = Color3.fromRGB(40, 0, 0),
+    BackgroundColor = Color3.fromRGB(15, 0, 0),
+    TopbarColor = Color3.fromRGB(90, 0, 0),
+    TextColor = Color3.fromRGB(255, 220, 220),
+    AccentColor = Color3.fromRGB(180, 0, 0),
+}
+
+local Window = Fluent:CreateWindow({
+    Title = "Văn Nguyên Hub",
+    SubTitle = "Blox Fruits",
+    TabWidth = 180,
+    Theme = DarkBloodTheme,
+    Acrylic = false,
+    Size = UDim2.fromOffset(555, 420),
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
-
+  
 Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
     Main     = Window:AddTab({ Title = "Tab Fram", Icon = "⚡" }),
     
@@ -2413,6 +2332,7 @@ Button.Parent = ScreenGui
 Button.Size = UDim2.new(0, 50, 0, 50)
 Button.Position = UDim2.new(0.015, 0, 0.02, 20)
 Button.BackgroundTransparency = 1
+Button.Image = "rbxassetid://91347148253026"
 local UICorner = Instance.new("UICorner")
 
 UICorner.CornerRadius = UDim.new(1, 0)
@@ -2449,28 +2369,28 @@ task.defer(function()
 end)
 wait(1.0)
 Tabs.Info:AddButton({
-        Title="Ten Hub",
+        Title="Nhóm Discord Van Nguyen Community Hub",
         Description="Discord",
         Callback=function()
             setclipboard(tostring("https://discord.gg/tenhub")) 
         end
 })
 Tabs.Info:AddButton({
-    Title="Ten Nguoi Lam",
+    Title="Youtube Tên Văn Nguyên Nhớ đăng Ký cho mình",
     Description="Youtube",
     Callback=function()
         setclipboard(tostring("https://www.youtube.com/"))
     end
 })
 Tabs.Info:AddButton({
-    Title="Fb Nguoi Lam",
+    Title="Fb Văn Nguyên",
     Description="Facebook",
     Callback=function()
         setclipboard(tostring("https://www.facebook.com/"))
     end
 })
 Tabs.Info:AddParagraph({
-    Title="Nguoi Lam",
+    Title="Ah Văn Nguyên Tạo",
     Content="Credits"
 })
 local executorName
@@ -2481,12 +2401,12 @@ elseif getexecutorname then
 end
 if executorName then
     Tabs.Info:AddParagraph({
-        Title="Client in use",
+        Title="Client Hack Các Bạn Đang Sự dụng",
         Content=executorName
     })
 end
 Tabs.Info:AddParagraph({
-    Title="Update",
+    Title="Update nên chưa hỗ trợ",
     Content="Script supports pc and pe"
 })
 Tabs.Info:AddParagraph({
@@ -2497,46 +2417,13 @@ Tabs.Info:AddParagraph({
     Title="All Clients PC Supported",
     Content=""
 })
-_G.FastAttackVxeze_Mode = "Super Fast Attack"
-_G.Fast_Delay = 0.1
-
+_G.FastAttackVxeze_Mode="Super Fast Attack"
 spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                _G.Fast_Delay = 0.00005
-            elseif _G.FastAttackVxeze_Mode == "Normal" then
-                _G.Fast_Delay = 0.2
-            else
-                _G.Fast_Delay = 0.5
-            end
-        end)
-    end
-end)
-
-local function SafeTweenMob(v)
-    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if HRP and v and v:FindFirstChild("HumanoidRootPart") then
-        v.HumanoidRootPart.CanCollide = false
-        v.HumanoidRootPart.Anchored = false
-        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-        v.HumanoidRootPart.Transparency = 1
-        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
-        v.Humanoid:ChangeState(11)
-    end
-end
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoLevel then
+    while wait() do
+        if _G.FastAttackVxeze_Mode then
             pcall(function()
-                for _, v in pairs(workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid")
-                    and v:FindFirstChild("HumanoidRootPart")
-                    and v.Humanoid.Health > 0
-                    and v.Name == Ms then
-                        SafeTweenMob(v)
-                    end
+                if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
+                    _G.Fast_Delay=0.00001 
                 end
             end)
         end
@@ -2585,97 +2472,64 @@ task.spawn(function()
         end)
     end
 end)
-    local TweenService = game:GetService("TweenService")
-local Player = game.Players.LocalPlayer
-local HRP = Player.Character:WaitForChild("HumanoidRootPart")
-
-function Tween(POS)
-    if HRP and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-        local tween = TweenService:Create(HRP, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = POS})
-        tween:Play()
-        tween.Completed:Wait()
-    end
-end
-
-_G.FastAttackVxeze_Mode = "Super Fast Attack"
-_G.Fast_Delay = 0.1
-
-spawn(function()
-    while task.wait() do
+    local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
+        Title="Auto Fram Level",
+        Description="",
+        Default=false })
+    ToggleLevel:OnChanged(function(Value)
+        _G.AutoLevel=Value
+        if Value==false then
+            wait()
+            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+            wait()
+        end
+    end)
+    Options.ToggleLevel:SetValue(false)
+    spawn(function()
+        while task.wait() do
+        if _G.AutoLevel then
         pcall(function()
-            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                _G.Fast_Delay = 0.00005
-            elseif _G.FastAttackVxeze_Mode == "Normal" then
-                _G.Fast_Delay = 0.2
-            else
-                _G.Fast_Delay = 0.5
-            end
-        end)
-    end
-end)
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoLevel then
-            pcall(function()
-                for _, v in pairs(workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
-                        v.HumanoidRootPart.CanCollide = false
-                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                        v.HumanoidRootPart.Transparency = 1
-                        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
-                        v.Humanoid:ChangeState(11)
-                    end
-                end
-            end)
+          CheckLevel()
+          if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==false then
+          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+          Tween(CFrameQ)
+          if (CFrameQ.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude<=5 then
+          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
+          end
+          elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==true then
+          for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+          if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
+          if v.Name==Ms then
+          repeat wait(_G.Fast_Delay)
+          AttackNoCoolDown()
+          bringmob=true
+          AutoHaki()
+          EquipTool(SelectWeapon)
+          Tween(v.HumanoidRootPart.CFrame*Pos)
+          v.HumanoidRootPart.Size=Vector3.new(60, 60, 60)
+          v.HumanoidRootPart.Transparency=1
+          v.Humanoid.JumpPower=0
+          v.Humanoid.WalkSpeed=0
+          v.HumanoidRootPart.CanCollide=false
+          FarmPos=v.HumanoidRootPart.CFrame
+          MonFarm=v.Name
+          until not _G.AutoLevel or not v.Parent or v.Humanoid.Health<=0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible==false
+          bringmob=false
+        end   
+          end
+          end
+          for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+          if string.find(v.Name,NameMon) then
+          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v.Position).Magnitude>=10 then
+            Tween(v.HumanoidRootPart.CFrame*Pos)
+          end
+          end
+          end
+          end
+          end)
         end
-    end
-end)
-
-local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
-    Title = "Auto Farm Level",
-    Description = "",
-    Default = false
-})
-
-ToggleLevel:OnChanged(function(Value)
-    _G.AutoLevel = Value
-end)
-
-Options.ToggleLevel:SetValue(false)
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoLevel then
-            pcall(function()
-                CheckLevel()
-                local gui = Player.PlayerGui.Main.Quest
-                local questTitle = gui.Container.QuestTitle.Title.Text
-                if not string.find(questTitle, NameMon) or not gui.Visible then
-                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
-                    task.wait(0.5)
-                    Tween(CFrameQ)
-                    if (CFrameQ.Position - HRP.Position).Magnitude <= 5 then
-                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
-                    end
-                else
-                    for _, v in pairs(workspace.Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
-                            repeat
-                                task.wait(_G.Fast_Delay)
-                                AutoHaki()
-                                EquipTool(SelectWeapon)
-                                AttackNoCoolDown()
-                                Tween(v.HumanoidRootPart.CFrame * Pos)
-                                v.HumanoidRootPart.CanCollide = false
-                            until not _G.AutoLevel or v.Humanoid.Health <= 0 or not v.Parent or not gui.Visible
-                        end
-                    end
-                end
-            end)
         end
-    end
-end)        
+        end)        
     local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {
         Title="Auto Mob Aura",
         Description="",
@@ -6558,7 +6412,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6569,7 +6423,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
@@ -9488,7 +9342,7 @@ local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
         Title = "Van Nguyen Hub",
-        Text = "Successfully",
+        Text = "Successfully ✅",
         Duration = 1
     })
     lastNotificationTime = currentTime
