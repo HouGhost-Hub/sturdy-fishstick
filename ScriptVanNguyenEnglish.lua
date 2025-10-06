@@ -168,31 +168,47 @@ repeat
                     end
                 end)
             end
-        end
-    endlocal player = game.Players.LocalPlayer
-repeat task.wait() until player.Team
+        endlocal ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
 
+if getgenv().Team == "Marines" then
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+elseif getgenv().Team == "Pirates" then
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+end
+
+repeat
+    task.wait(1)
+    local chooseTeam = playerGui:FindFirstChild("ChooseTeam", true)
+    local uiController = playerGui:FindFirstChild("UIController", true)
+
+    if chooseTeam and chooseTeam.Visible and uiController then
+        for _, v in pairs(getgc(true)) do
+            if type(v) == "function" and getfenv(v).script == uiController then
+                local constant = getconstants(v)
+                pcall(function()
+                    if (constant[1] == "Pirates" or constant[1] == "Marines") and #constant == 1 then
+                        if constant[1] == getgenv().Team then
+                            v(getgenv().Team)
+                        end
+                    end
+                end)
+            end
+        end
+    end
+until player.Team
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
-
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-
-local DarkBloodTheme = {
-    PrimaryColor = Color3.fromRGB(120, 0, 0),
-    SecondaryColor = Color3.fromRGB(40, 0, 0),
-    BackgroundColor = Color3.fromRGB(15, 0, 0),
-    TopbarColor = Color3.fromRGB(90, 0, 0),
-    TextColor = Color3.fromRGB(255, 220, 220),
-    AccentColor = Color3.fromRGB(180, 0, 0),
-}
-
-local Window = Fluent:CreateWindow({
+Window = Fluent:CreateWindow({
     Title = "Văn Nguyên Hub",
-    SubTitle = "Blox Fruits",
-    TabWidth = 180,
-    Theme = Darker,
-    Acrylic = false,
-    Size = UDim2.fromOffset(555, 420),
+    SubTitle="Blox Fruits", 
+    TabWidth=180, 
+    Theme="Darker",
+    Acrylic=false,
+    Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
