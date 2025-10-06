@@ -7659,7 +7659,7 @@ function UpdateIslandMirageEsp()
         end)
     end
 end
-local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Rumble","Magma","Buddha","Sand","Phoenix","Dough"}
+local Chips = {"Flame","Ice","Quake","Light","Dark","Spider","Magma","Buddha","Sand","Phoenix","Dough"}
 local DropdownRaid = Tabs.Raid:AddDropdown("DropdownRaid", {
     Title="Select Chip",
     Description="",
@@ -9347,7 +9347,7 @@ spawn(function()
     end
 end)
 local lastNotificationTime = 0
-local notificationCooldown = 10
+local notificationCooldown = 0.5
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
