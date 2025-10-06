@@ -180,7 +180,7 @@ Window = Fluent:CreateWindow({
     TabWidth=180, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(420, 420), 
+    Size=UDim2.fromOffset(555, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
@@ -6400,7 +6400,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6411,7 +6411,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
