@@ -169,51 +169,39 @@ repeat
                 end)
             end
         end
-    endlocal player = game.Players.LocalPlayer
-repeat task.wait() until player.Team
-
+    end
+until player.Team
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
-
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-
-local DarkBloodTheme = {
-    PrimaryColor = Color3.fromRGB(120, 0, 0),
-    SecondaryColor = Color3.fromRGB(40, 0, 0),
-    BackgroundColor = Color3.fromRGB(15, 0, 0),
-    TopbarColor = Color3.fromRGB(90, 0, 0),
-    TextColor = Color3.fromRGB(255, 220, 220),
-    AccentColor = Color3.fromRGB(180, 0, 0),
-}
-
-local Window = Fluent:CreateWindow({
-    Title = "Văn Nguyên Hub",
-    SubTitle = "Blox Fruits",
-    TabWidth = 180,
-    Theme = DarkBloodTheme,
-    Acrylic = false,
-    Size = UDim2.fromOffset(555, 420),
+Window = Fluent:CreateWindow({
+    Title = "Ten Hub",
+    SubTitle="Blox Fruits", 
+    TabWidth=155, 
+    Theme="Darker",
+    Acrylic=false,
+    Size=UDim2.fromOffset(555, 320), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
-  
-Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
-    Main     = Window:AddTab({ Title = "Tab Fram", Icon = "⚡" }),
-    
-Main1    = Window:AddTab({ Title = "Tab Farm Other",       Icon = "🌱" }),
-    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "⚓" }),
-    Item     = Window:AddTab({ Title = "Tab Stack Fram", Icon = "🎒" }),
-    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "⚙️" }),
-    Status   = Window:AddTab({ Title = "Tab Status", Icon = "📊" }),
-    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "📈" }),
-    Player   = Window:AddTab({ Title = "Tab Player", Icon = "👤" }),
-    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "🌀" }),
-    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "🎨" }),
-    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "🍏" }),
-    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "⚔️" }),
-    Race     = Window:AddTab({ Title = "Tab Race", Icon = "🏁" }),
-    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "🛒" }),
-    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "✨" })
+
+Info=Window:AddTab({ Title="Tab Info" }),
+    Main=Window:AddTab({ Title="Tab Fram" }),
+
+Main1=Window:AddTab({ Title="Tab Fram Other" }),
+    Sea=Window:AddTab({ Title="Tab Sea Event" }),
+    Item=Window:AddTab({ Title="Tab Stack Fram" }),
+    Setting=Window:AddTab({ Title="Tab Setting" }),
+    Status=Window:AddTab({ Title="Tab Status" }),
+    Stats=Window:AddTab({ Title="Tab Stats" }),
+    Player=Window:AddTab({ Title="Tab Player" }),
+    Teleport=Window:AddTab({ Title="Tab Teleport" }),
+    Visual=Window:AddTab({ Title="Tab Visual" }),
+    Fruit=Window:AddTab({ Title="Tab Fruit" }),
+    Raid=Window:AddTab({ Title="Tab Raid" }),
+    Race=Window:AddTab({ Title="Tab Race" }),
+    Shop=Window:AddTab({ Title="Tab Shop" }),
+    Misc=Window:AddTab({ Title="Tab Misc" }),
 }
 local Options = Fluent.Options
 local id = game.PlaceId
@@ -6412,7 +6400,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6423,7 +6411,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
