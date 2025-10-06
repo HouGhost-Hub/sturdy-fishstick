@@ -7725,6 +7725,28 @@ spawn(function()
         end)
     end
 end)
+local ToggleKillAura = Tabs.Raid:AddToggle("ToggleKillAura", {Title="Kill Aura Raid",Description="", Default=false })
+ToggleKillAura:OnChanged(function(Value)
+    KillAura=Value
+end)
+Options.ToggleKillAura:SetValue(false)
+spawn(function()
+    while wait() do
+        if KillAura then
+            pcall(function()
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
+                        repeat task.wait()
+                            sethiddenproperty(game:GetService('Players').LocalPlayer,"SimulationRadius",math.huge)
+                            v.Humanoid.Health=0
+                            v.HumanoidRootPart.CanCollide=false
+                        until not KillAura or not v.Parent or v.Humanoid.Health<=0
+                    end
+                end
+            end)
+        end
+    end
+end)
 local ToggleNextIsland = Tabs.Raid:AddToggle("ToggleNextIsland", {
     Title="Auto Fram Raid",
     Description="",
@@ -7783,7 +7805,7 @@ spawn(function()
         end
     end
 end)
-local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thá»©c Tá»‰nh",Description="", Default=false })
+local ToggleAwake = Tabs.Raid:AddToggle("ToggleAwake", {Title="Thức Tỉnh",Description="", Default=false })
 ToggleAwake:OnChanged(function(Value)
     AutoAwakenAbilities=Value
 end)
@@ -7817,7 +7839,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Chop-Chop"
+    [2]="Blade-Blade"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
@@ -7847,7 +7869,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Falcon-Falcon"
+    [2]="Eagle-Eagle"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
@@ -7887,7 +7909,7 @@ local args = {
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 local args = {
     [1]="LoadFruit",
-    [2]="Barrier-Barrier"
+    [2]="Creation-Creation"
 }
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 end
