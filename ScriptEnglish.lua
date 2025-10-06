@@ -175,12 +175,12 @@ hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = "Ten Hub",
+    Title = "Van-Nguyen Hub [Premium] Buy xibasexh6",
     SubTitle="Blox Fruits", 
-    TabWidth=155, 
+    TabWidth=180, 
     Theme="Darker",
     Acrylic=false,
-    Size=UDim2.fromOffset(555, 320), 
+    Size=UDim2.fromOffset(420, 420), 
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
@@ -2411,7 +2411,7 @@ spawn(function()
         if _G.FastAttackVxeze_Mode then
             pcall(function()
                 if _G.FastAttackVxeze_Mode=="Super Fast Attack" then
-                    _G.Fast_Delay=0.00001 
+                    _G.Fast_Delay=0.00005
                 end
             end)
         end
@@ -6400,7 +6400,7 @@ spawn(function()
                 if _G.BringMob and bringmob then
                     if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if v.Name == "Factory Staff" then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 1000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000 then
                                 v.Head.CanCollide = false
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -6411,7 +6411,7 @@ spawn(function()
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             end
                         elseif v.Name == MonFarm then
-                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 10000000000 then
+                            if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 100000 then
                                 v.HumanoidRootPart.CFrame = FarmPos
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                 v.HumanoidRootPart.Transparency = 1
@@ -9329,9 +9329,15 @@ local notificationCooldown = 10
 local currentTime = tick()
 if currentTime - lastNotificationTime >= notificationCooldown then
     game.StarterGui:SetCore("SendNotification", {
-        Title = "Van Nguyen Hub",
-        Text = "Successfully ✅",
+        Title = "Yes Or No",
+        Text = "Van-Nguyen Hub UI Library
+The UI automatically hides once executed.
+Press the button at the bottom-left of the screen to show the GUI.,
+        Icon = "rbxassetid://126051232176474";
         Duration = 1
+        Duration = 1e5;
+	Button1 = "Yes";
+	Button2 = "No";
     })
     lastNotificationTime = currentTime
 end
