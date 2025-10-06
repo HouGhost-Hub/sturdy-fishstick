@@ -190,30 +190,30 @@ local Window = Fluent:CreateWindow({
     Title = "Văn Nguyên Hub",
     SubTitle = "Blox Fruits",
     TabWidth = 180,
-    Theme = DarkBloodTheme,
+    Theme = Darker,
     Acrylic = false,
     Size = UDim2.fromOffset(555, 420),
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 local Tabs = {
   
-Info     = Window:AddTab({ Title = "Tab Info", Icon = "📘" }),
-    Main     = Window:AddTab({ Title = "Tab Fram", Icon = "⚡" }),
-    
-Main1    = Window:AddTab({ Title = "Tab Farm Other",       Icon = "🌱" }),
-    Sea      = Window:AddTab({ Title = "Tab Sea Event", Icon = "⚓" }),
-    Item     = Window:AddTab({ Title = "Tab Stack Fram", Icon = "🎒" }),
-    Setting  = Window:AddTab({ Title = "Tab Setting", Icon = "⚙️" }),
-    Status   = Window:AddTab({ Title = "Tab Status", Icon = "📊" }),
-    Stats    = Window:AddTab({ Title = "Tab Stats", Icon = "📈" }),
-    Player   = Window:AddTab({ Title = "Tab Player", Icon = "👤" }),
-    Teleport = Window:AddTab({ Title = "Tab Teleport", Icon = "🌀" }),
-    Visual   = Window:AddTab({ Title = "Tab Visual", Icon = "🎨" }),
-    Fruit    = Window:AddTab({ Title = "Tab Fruit", Icon = "🍏" }),
-    Raid     = Window:AddTab({ Title = "Tab Raid", Icon = "⚔️" }),
-    Race     = Window:AddTab({ Title = "Tab Race", Icon = "🏁" }),
-    Shop     = Window:AddTab({ Title = "Tab Shop", Icon = "🛒" }),
-    Misc     = Window:AddTab({ Title = "Tab Misc", Icon = "✨" })
+Info=Window:AddTab({ Title="Tab Info" }),
+    Main=Window:AddTab({ Title="Tab Fram" }),
+
+Main1=Window:AddTab({ Title="Tab Fram Other" }),
+    Sea=Window:AddTab({ Title="Tab Sea Event" }),
+    Item=Window:AddTab({ Title="Tab Stack Fram" }),
+    Setting=Window:AddTab({ Title="Tab Setting" }),
+    Status=Window:AddTab({ Title="Tab Status" }),
+    Stats=Window:AddTab({ Title="Tab Stats" }),
+    Player=Window:AddTab({ Title="Tab Player" }),
+    Teleport=Window:AddTab({ Title="Tab Teleport" }),
+    Visual=Window:AddTab({ Title="Tab Visual" }),
+    Fruit=Window:AddTab({ Title="Tab Fruit" }),
+    Raid=Window:AddTab({ Title="Tab Raid" }),
+    Race=Window:AddTab({ Title="Tab Race" }),
+    Shop=Window:AddTab({ Title="Tab Shop" }),
+    Misc=Window:AddTab({ Title="Tab Misc" }),
 }
 local Options = Fluent.Options
 local id = game.PlaceId
