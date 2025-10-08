@@ -1,3 +1,175 @@
+_G.FastAttack = true
+
+if _G.FastAttack then
+    local _ENV = (getgenv or getrenv or getfenv)()
+
+    local function SafeWaitForChild(parent, childName)
+        local success, result = pcall(function()
+            return parent:WaitForChild(childName)
+        end)
+        if not success or not result then
+            warn("noooooo: " .. childName)
+        end
+        return result
+    end
+
+    local function WaitChilds(path, ...)
+        local last = path
+        for _, child in {...} do
+            last = last:FindFirstChild(child) or SafeWaitForChild(last, child)
+            if not last then break end
+        end
+        return last
+    end
+
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    local CollectionService = game:GetService("CollectionService")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local TeleportService = game:GetService("TeleportService")
+    local RunService = game:GetService("RunService")
+    local Players = game:GetService("Players")
+    local Player = Players.LocalPlayer
+
+    if not Player then
+        warn("KhĂƒÂƒĂ‚Â´ng tĂƒÂƒĂ‚Â¬m thĂƒÂ¡Ă‚ÂºĂ‚Â¥y ngĂƒÂ†Ă‚Â°ĂƒÂ¡Ă‚Â»Ă‚Âi chĂƒÂ†Ă‚Â¡i cĂƒÂ¡Ă‚Â»Ă‚Â¥c bĂƒÂ¡Ă‚Â»Ă‚Â™.")
+        return
+    end
+
+    local Remotes = SafeWaitForChild(ReplicatedStorage, "Remotes")
+    if not Remotes then return end
+
+    local Validator = SafeWaitForChild(Remotes, "Validator")
+    local CommF = SafeWaitForChild(Remotes, "CommF_")
+    local CommE = SafeWaitForChild(Remotes, "CommE")
+
+    local ChestModels = SafeWaitForChild(workspace, "ChestModels")
+    local WorldOrigin = SafeWaitForChild(workspace, "_WorldOrigin")
+    local Characters = SafeWaitForChild(workspace, "Characters")
+    local Enemies = SafeWaitForChild(workspace, "Enemies")
+    local Map = SafeWaitForChild(workspace, "Map")
+
+    local EnemySpawns = SafeWaitForChild(WorldOrigin, "EnemySpawns")
+    local Locations = SafeWaitForChild(WorldOrigin, "Locations")
+
+    local RenderStepped = RunService.RenderStepped
+    local Heartbeat = RunService.Heartbeat
+    local Stepped = RunService.Stepped
+
+    local Modules = SafeWaitForChild(ReplicatedStorage, "Modules")
+    local Net = SafeWaitForChild(Modules, "Net")
+
+    local sethiddenproperty = sethiddenproperty or function(...) return ... end
+    local setupvalue = setupvalue or (debug and debug.setupvalue)
+    local getupvalue = getupvalue or (debug and debug.getupvalue)
+
+    local Settings = {
+        AutoClick = true,
+        ClickDelay = 0,
+    }
+
+    local Module = {}
+
+    Module.FastAttack = (function()
+        if _ENV.rz_FastAttack then
+            return _ENV.rz_FastAttack
+        end
+
+        local FastAttack = {
+            Distance = 100,
+            attackMobs = true,
+            attackPlayers = true,
+            Equipped = nil
+        }
+
+        local RegisterAttack = SafeWaitForChild(Net, "RE/RegisterAttack")
+        local RegisterHit = SafeWaitForChild(Net, "RE/RegisterHit")
+
+        local function IsAlive(character)
+        return character and character:FindFirstChild("Humanoid") and character.Humanoid.Health > 0
+        end
+
+        local function ProcessEnemies(OthersEnemies, Folder)
+            local BasePart = nil
+            for _, Enemy in Folder:GetChildren() do
+                local Head = Enemy:FindFirstChild("Head")
+                if Head and IsAlive(Enemy) and Player:DistanceFromCharacter(Head.Position) < FastAttack.Distance then
+                    if Enemy ~= Player.Character then
+                        table.insert(OthersEnemies, { Enemy, Head })
+                        BasePart = Head
+                    end
+                end
+            end
+            return BasePart
+        end
+
+        function FastAttack:Attack(BasePart, OthersEnemies)
+            if not BasePart or #OthersEnemies == 0 then return end
+            RegisterAttack:FireServer(Settings.ClickDelay or 0)
+            RegisterHit:FireServer(BasePart, OthersEnemies)
+        end
+
+        function FastAttack:AttackNearest()
+            local OthersEnemies = {}
+            local Part1 = ProcessEnemies(OthersEnemies, Enemies)
+            local Part2 = ProcessEnemies(OthersEnemies, Characters)
+            if #OthersEnemies > 0 then
+                self:Attack(Part1 or Part2, OthersEnemies)
+            else
+                task.wait(0)
+            end
+        end
+
+        function FastAttack:BladeHits()
+            local Equipped = IsAlive(Player.Character) and Player.Character:FindFirstChildOfClass("Tool")
+            if Equipped and Equipped.ToolTip ~= "Gun" then
+                self:AttackNearest()
+            else
+                task.wait(0)
+            end
+        end
+
+        task.spawn(function()
+            while task.wait(Settings.ClickDelay) do
+                if Settings.AutoClick then
+                    FastAttack:BladeHits()
+                end
+            end
+        end)
+
+        _ENV.rz_FastAttack = FastAttack
+        return FastAttack
+    end)()
+end
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+if getgenv().Team == "Marines" then
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+elseif getgenv().Team == "Pirates" then
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+end
+
+repeat
+    task.wait(1)
+    local chooseTeam = playerGui:FindFirstChild("ChooseTeam", true)
+    local uiController = playerGui:FindFirstChild("UIController", true)
+
+    if chooseTeam and chooseTeam.Visible and uiController then
+        for _, v in pairs(getgc(true)) do
+            if type(v) == "function" and getfenv(v).script == uiController then
+                local constant = getconstants(v)
+                pcall(function()
+                    if (constant[1] == "Pirates" or constant[1] == "Marines") and #constant == 1 then
+                        if constant[1] == getgenv().Team then
+                            v(getgenv().Team)
+                        end
+                    end
+                end)
+            end
+        end
+    end
 local v14 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))();
 local v15 = v14:CreateWindow({
     Title = "Van-Nguyen Hub Blox Fruit [ FREE ]",-- thay tên bạn muốn đặt
@@ -2408,15 +2580,48 @@ v16.Home:AddButton({
         setclipboard("https://www.tiktok.com/@hnc_roblox?_t=ZS-8ywjDgNQ1ah&_r=1");
     end
 });
-_G.FastAttackStrix_Mode = "Super Fast Attack";
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
+_G.Fast_Delay = 0.1
+
 spawn(function()
-    while wait() do
-        if _G.FastAttackStrix_Mode then
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                _G.Fast_Delay = 0.00005
+            elseif _G.FastAttackVxeze_Mode == "Normal" then
+                _G.Fast_Delay = 0.2
+            else
+                _G.Fast_Delay = 0.5
+            end
+        end)
+    end
+end)
+
+local function SafeTweenMob(v)
+    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if HRP and v and v:FindFirstChild("HumanoidRootPart") then
+        v.HumanoidRootPart.CanCollide = false
+        v.HumanoidRootPart.Anchored = false
+        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+        v.HumanoidRootPart.Transparency = 1
+        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
+        v.Humanoid:ChangeState(11)
+    end
+end
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoLevel then
             pcall(function()
-                if (_G.FastAttackStrix_Mode == "Super Fast Attack") then
-                    _G.Fast_Delay = 1e-9;
+                for _, v in pairs(workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid")
+                    and v:FindFirstChild("HumanoidRootPart")
+                    and v.Humanoid.Health > 0
+                    and v.Name == Ms then
+                        SafeTweenMob(v)
+                    end
                 end
-            end);
+            end)
         end
     end
 end);
@@ -2466,101 +2671,63 @@ task.spawn(function()
         end);
     end
 end);
-    _G.AutoLevel = false
-_G.Fast_Delay = 0.15
-_G.StopTween = false
-
---// Hàm Tween an toàn
-function Tween(CF)
-    if _G.StopTween then return end
-    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if not HRP then return end
-    local ts = game:GetService("TweenService")
-    local t = ts:Create(HRP, TweenInfo.new((HRP.Position - CF.Position).Magnitude/300, Enum.EasingStyle.Linear), {CFrame = CF})
-    t:Play()
-    t.Completed:Wait()
-end
-
---// Auto Haki
-function AutoHaki()
-    local p = game.Players.LocalPlayer
-    if not p.Character:FindFirstChild("HasBuso") then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-    end
-end
-
---// Equip vũ khí
-function EquipTool(Name)
-    local p = game.Players.LocalPlayer
-    if p.Backpack:FindFirstChild(Name) then
-        p.Character.Humanoid:EquipTool(p.Backpack[Name])
-    end
-end
-
---// Check cấp, chọn nhiệm vụ phù hợp (tùy code riêng bạn chỉnh)
-function CheckLevel()
-    -- Ví dụ:
-    -- NameQuest, QuestLv, NameMon, CFrameQ, Ms = "BanditQuest1", 1, "Bandit", CFrame.new(1060,16,1549), "Bandit"
-end
-
---// Toggle
-local v49 = v16.Main:AddToggle("ToggleLevel", {
+    local v49 = v16.Main:AddToggle("ToggleLevel", {
     Title = "Auto Farm Level",
-    Description = "Farm level an toàn, ngồi im",
+    Description = "Auto Farm Level, Farm Ổn",
     Default = false
-})
-
-ToggleLevel:OnChanged(function(Value)
-    _G.AutoLevel = Value
-    _G.StopTween = not Value
-end)
-
-ToggleLevel:SetValue(false)
-
---// Main Farm Loop
+});
+v49:OnChanged(function(v237)
+    _G.AutoLevel = v237;
+    if (v237 == false) then
+        wait();
+        Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame);
+        wait();
+    end
+end);
+v17.ToggleLevel:SetValue(false);
 spawn(function()
     while task.wait() do
         if _G.AutoLevel then
             pcall(function()
-                CheckLevel()
-                local Player = game.Players.LocalPlayer
-                local Char = Player.Character
-                local HRP = Char and Char:FindFirstChild("HumanoidRootPart")
-                if not HRP then return end
-                local QuestGui = Player.PlayerGui.Main.Quest
-
-                if not QuestGui.Visible or not string.find(QuestGui.Container.QuestTitle.Title.Text, NameMon) then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    Tween(CFrameQ)
-                    if (CFrameQ.Position - HRP.Position).Magnitude <= 5 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                CheckLevel();
+                if (not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or (game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false)) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest");
+                    Tween(CFrameQ);
+                    if ((CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5) then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv);
                     end
-                else
-                    for _,v in pairs(workspace.Enemies:GetChildren()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
-                            repeat
-                                task.wait(_G.Fast_Delay)
-                                AutoHaki()
-                                EquipTool(SelectWeapon)
-                                AttackNoCoolDown()
-                                Tween(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
-                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Transparency = 1
-                            until not _G.AutoLevel or v.Humanoid.Health <= 0 or not v.Parent or not QuestGui.Visible
+                elseif (string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or (game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true)) then
+                    for v1432, v1433 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if (v1433:FindFirstChild("Humanoid") and v1433:FindFirstChild("HumanoidRootPart") and (v1433.Humanoid.Health > 0)) then
+                            if (v1433.Name == Ms) then
+                                repeat
+                                    wait(_G.Fast_Delay);
+                                    AttackNoCoolDown();
+                                    bringmob = true;
+                                    AutoHaki();
+                                    EquipTool(SelectWeapon);
+                                    Tween(v1433.HumanoidRootPart.CFrame * Pos);
+                                    v1433.HumanoidRootPart.Size = Vector3.new(60, 60, 60);
+                                    v1433.HumanoidRootPart.Transparency = 1;
+                                    v1433.Humanoid.JumpPower = 0;
+                                    v1433.Humanoid.WalkSpeed = 0;
+                                    v1433.HumanoidRootPart.CanCollide = false;
+                                    FarmPos = v1433.HumanoidRootPart.CFrame;
+                                    MonFarm = v1433.Name;
+                                until not _G.AutoLevel or not v1433.Parent or (v1433.Humanoid.Health <= 0) or not game:GetService("Workspace").Enemies:FindFirstChild(v1433.Name) or (game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false)
+                                bringmob = false;
+                            end
                         end
                     end
-
-                    -- Nếu không có quái thì di chuyển đến khu spawn
-                    for _,spawnPoint in pairs(workspace["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                        if string.find(spawnPoint.Name, NameMon) then
-                            if (HRP.Position - spawnPoint.Position).Magnitude >= 10 then
-                                Tween(CFrame.new(spawnPoint.Position) * CFrame.new(0,20,0))
+                    for v1434, v1435 in pairs(game:GetService("Workspace")['_WorldOrigin'].EnemySpawns:GetChildren()) do
+                        if string.find(v1435.Name, NameMon) then
+                            if ((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v1435.Position).Magnitude >= 10) then
+                                Tween(v1435.HumanoidRootPart.CFrame * Pos);
                             end
                         end
                     end
                 end
-            end)
+            end);
         end
     end
 end);
