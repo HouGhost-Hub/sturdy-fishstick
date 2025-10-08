@@ -1,5 +1,4 @@
 local v14 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))();
-local v14 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))();
 local v15 = v14:CreateWindow({
     Title = "Van-Nguyen Hub Blox Fruit [ FREE ]",-- thay tên bạn muốn đặt
     SubTitle = "By xibasexh6",-- tên bạn
@@ -2409,15 +2408,48 @@ v16.Home:AddButton({
         setclipboard("https://www.tiktok.com/@hnc_roblox?_t=ZS-8ywjDgNQ1ah&_r=1");
     end
 });
-_G.FastAttackStrix_Mode = "Super Fast Attack";
+_G.FastAttackVxeze_Mode = "Super Fast Attack"
+_G.Fast_Delay = 0.1
+
 spawn(function()
-    while wait() do
-        if _G.FastAttackStrix_Mode then
+    while task.wait() do
+        pcall(function()
+            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
+                _G.Fast_Delay = 0.00005
+            elseif _G.FastAttackVxeze_Mode == "Normal" then
+                _G.Fast_Delay = 0.2
+            else
+                _G.Fast_Delay = 0.5
+            end
+        end)
+    end
+end)
+
+local function SafeTweenMob(v)
+    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if HRP and v and v:FindFirstChild("HumanoidRootPart") then
+        v.HumanoidRootPart.CanCollide = false
+        v.HumanoidRootPart.Anchored = false
+        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+        v.HumanoidRootPart.Transparency = 1
+        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
+        v.Humanoid:ChangeState(11)
+    end
+end
+
+spawn(function()
+    while task.wait() do
+        if _G.AutoLevel then
             pcall(function()
-                if (_G.FastAttackStrix_Mode == "Super Fast Attack") then
-                    _G.Fast_Delay = 1e-9;
+                for _, v in pairs(workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid")
+                    and v:FindFirstChild("HumanoidRootPart")
+                    and v.Humanoid.Health > 0
+                    and v.Name == Ms then
+                        SafeTweenMob(v)
+                    end
                 end
-            end);
+            end)
         end
     end
 end);
