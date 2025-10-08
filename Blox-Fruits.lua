@@ -2466,64 +2466,104 @@ task.spawn(function()
         end);
     end
 end);
+    _G.AutoLevel = false
+_G.Fast_Delay = 0.15
+_G.StopTween = false
+
+--// Hàm Tween an toàn
+function Tween(CF)
+    if _G.StopTween then return end
+    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not HRP then return end
+    local ts = game:GetService("TweenService")
+    local t = ts:Create(HRP, TweenInfo.new((HRP.Position - CF.Position).Magnitude/300, Enum.EasingStyle.Linear), {CFrame = CF})
+    t:Play()
+    t.Completed:Wait()
+end
+
+--// Auto Haki
+function AutoHaki()
+    local p = game.Players.LocalPlayer
+    if not p.Character:FindFirstChild("HasBuso") then
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+    end
+end
+
+--// Equip vũ khí
+function EquipTool(Name)
+    local p = game.Players.LocalPlayer
+    if p.Backpack:FindFirstChild(Name) then
+        p.Character.Humanoid:EquipTool(p.Backpack[Name])
+    end
+end
+
+--// Check cấp, chọn nhiệm vụ phù hợp (tùy code riêng bạn chỉnh)
+function CheckLevel()
+    -- Ví dụ:
+    -- NameQuest, QuestLv, NameMon, CFrameQ, Ms = "BanditQuest1", 1, "Bandit", CFrame.new(1060,16,1549), "Bandit"
+end
+
+--// Toggle
 local v49 = v16.Main:AddToggle("ToggleLevel", {
-    Title="Auto Farm Level",
-        Description="",
-        Default=false })
-    ToggleLevel:OnChanged(function(Value)
-        _G.AutoLevel=Value
-        if Value==false then
-            wait()
-            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-            wait()
-        end
-    end)
-    Options.ToggleLevel:SetValue(false)
-    spawn(function()
-        while task.wait() do
+    Title = "Auto Farm Level",
+    Description = "Farm level an toàn, ngồi im",
+    Default = false
+})
+
+ToggleLevel:OnChanged(function(Value)
+    _G.AutoLevel = Value
+    _G.StopTween = not Value
+end)
+
+ToggleLevel:SetValue(false)
+
+--// Main Farm Loop
+spawn(function()
+    while task.wait() do
         if _G.AutoLevel then
-        pcall(function()
-          CheckLevel()
-          if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==false then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-          Tween(CFrameQ)
-          if (CFrameQ.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude<=5 then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
-          end
-          elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible==true then
-          for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-          if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health>0 then
-          if v.Name==Ms then
-          repeat wait(_G.Fast_Delay)
-          AttackNoCoolDown()
-          bringmob=true
-          AutoHaki()
-          EquipTool(SelectWeapon)
-          Tween(v.HumanoidRootPart.CFrame*Pos)
-          v.HumanoidRootPart.Size=Vector3.new(60, 60, 60)
-          v.HumanoidRootPart.Transparency=1
-          v.Humanoid.JumpPower=0
-          v.Humanoid.WalkSpeed=0
-          v.HumanoidRootPart.CanCollide=false
-          FarmPos=v.HumanoidRootPart.CFrame
-          MonFarm=v.Name
-          until not _G.AutoLevel or not v.Parent or v.Humanoid.Health<=0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible==false
-          bringmob=false
-        end   
-          end
-          end
-          for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-          if string.find(v.Name,NameMon) then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v.Position).Magnitude>=10 then
-            Tween(v.HumanoidRootPart.CFrame*Pos)
-          end
-          end
-          end
-          end
-          end)
+            pcall(function()
+                CheckLevel()
+                local Player = game.Players.LocalPlayer
+                local Char = Player.Character
+                local HRP = Char and Char:FindFirstChild("HumanoidRootPart")
+                if not HRP then return end
+                local QuestGui = Player.PlayerGui.Main.Quest
+
+                if not QuestGui.Visible or not string.find(QuestGui.Container.QuestTitle.Title.Text, NameMon) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    Tween(CFrameQ)
+                    if (CFrameQ.Position - HRP.Position).Magnitude <= 5 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
+                    end
+                else
+                    for _,v in pairs(workspace.Enemies:GetChildren()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == Ms then
+                            repeat
+                                task.wait(_G.Fast_Delay)
+                                AutoHaki()
+                                EquipTool(SelectWeapon)
+                                AttackNoCoolDown()
+                                Tween(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
+                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Transparency = 1
+                            until not _G.AutoLevel or v.Humanoid.Health <= 0 or not v.Parent or not QuestGui.Visible
+                        end
+                    end
+
+                    -- Nếu không có quái thì di chuyển đến khu spawn
+                    for _,spawnPoint in pairs(workspace["_WorldOrigin"].EnemySpawns:GetChildren()) do
+                        if string.find(spawnPoint.Name, NameMon) then
+                            if (HRP.Position - spawnPoint.Position).Magnitude >= 10 then
+                                Tween(CFrame.new(spawnPoint.Position) * CFrame.new(0,20,0))
+                            end
+                        end
+                    end
+                end
+            end)
         end
-        end
-        end);
+    end
+end);
 local v50 = v16.Main:AddToggle("ToggleMobAura", {
     Title = "Auto Farm Nearest",
     Description = "",
