@@ -1,11 +1,11 @@
 local v14 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))();
 local v15 = v14:CreateWindow({
-    Title = "Van-Nguyen Hub Blox Fruit [ Freemium ]",-- thay tên bạn muốn đặt
+    Title = "Van-Nguyen Hub Blox Fruit [ FREE ]",-- thay tên bạn muốn đặt
     SubTitle = "By xibasexh6",-- tên bạn
-    TabWidth = 160,
+    TabWidth = 180,
     Theme = "Dark",--màu
     Acrylic = false,
-    Size = UDim2.fromOffset(500, 320),
+    Size = UDim2.fromOffset(500, 420),
     MinimizeKey = Enum.KeyCode.End
 });
 local v16 = {
@@ -2323,7 +2323,7 @@ v23.BorderSizePixel = 0;
 v23.Position = UDim2.new(0.120833337 - 0.1, 0, 0.0952890813 + 0.01, 0);
 v23.Size = UDim2.new(0, 50, 0, 50);
 v23.Draggable = true;
-v23.Image = "http://www.roblox.com/asset/?id=913471482530";
+v23.Image = "http://www.roblox.com/asset/?id=91347148253026";
 
 v24.Parent = v23;
 v24.CornerRadius = UDim.new(1, 0);
@@ -2467,8 +2467,7 @@ task.spawn(function()
     end
 end);
 local v49 = v16.Main:AddToggle("ToggleLevel", {
-    ("ToggleLevel", {
-        Title="Auto Farm Level",
+    Title="Auto Farm Level",
         Description="",
         Default=false })
     ToggleLevel:OnChanged(function(Value)
@@ -4389,7 +4388,7 @@ if Sea3 then
         end
         for v728, v729 in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
             if v729:IsA("MeshPart") then
-                if (v729.MeshId == "rbxassetid://913471482530") then --thay id ảnh vào
+                if (v729.MeshId == "rbxassetid://91347148253026") then --thay id ảnh vào
                     return v729;
                 end
             end
