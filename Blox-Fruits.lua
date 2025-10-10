@@ -1,11 +1,11 @@
 local v14 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))();
 local v15 = v14:CreateWindow({
-    Title = "Van-Nguyen Hub Blox Fruit [ FREE ]",-- thay tên bạn muốn đặt
+    Title = "Van-Nguyen Hub Blox Fruit [ Freemium ]",-- thay tên bạn muốn đặt
     SubTitle = "By xibasexh6",-- tên bạn
-    TabWidth = 180,
+    TabWidth = 160,
     Theme = "Dark",--màu
     Acrylic = false,
-    Size = UDim2.fromOffset(500, 420),
+    Size = UDim2.fromOffset(500, 320),
     MinimizeKey = Enum.KeyCode.End
 });
 local v16 = {
@@ -2323,7 +2323,7 @@ v23.BorderSizePixel = 0;
 v23.Position = UDim2.new(0.120833337 - 0.1, 0, 0.0952890813 + 0.01, 0);
 v23.Size = UDim2.new(0, 50, 0, 50);
 v23.Draggable = true;
-v23.Image = "http://www.roblox.com/asset/?id=91347148253026";
+v23.Image = "http://www.roblox.com/asset/?id=913471482530";
 
 v24.Parent = v23;
 v24.CornerRadius = UDim.new(1, 0);
@@ -2391,64 +2391,32 @@ v16.Home:AddButton({
     Title = "Tik Tok",
     Description = "Click(Copy)",
     Callback = function()
-        setclipboard("https://www.tiktok.com/@hnc_roblox?_t=ZS-8ywjDgNQ1ah&_r=1");
+        setclipboard("Xin Link Không có link sorry");
     end
 });
 v16.Home:AddButton({
     Title = "Zalo Group",
     Description = "Click(Copy)",
     Callback = function()
-        setclipboard("https://zalo.me/g/tvdpop639");
+        setclipboard("Xin Link Không có link sorry");
     end
 });
 v16.Home:AddButton({
     Title = "Remember:",
-    Description = "This is not the real Banana Cat Hub, but a fake version made by HNC Roblox.",
+    Description = "This is not the real Van Nguyen Hub, but a fake version made by xibasexh6.",
     Callback = function()
-        setclipboard("https://www.tiktok.com/@hnc_roblox?_t=ZS-8ywjDgNQ1ah&_r=1");
+        setclipboard("Xin Link Không có link sorry");
     end
 });
-_G.FastAttackVxeze_Mode = "Super Fast Attack"
-_G.Fast_Delay = 0.1
+_G.FastAttack = true
 
 spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.FastAttackVxeze_Mode == "Super Fast Attack" then
-                _G.Fast_Delay = 0.00005
-            elseif _G.FastAttackVxeze_Mode == "Normal" then
-                _G.Fast_Delay = 0.2
-            else
-                _G.Fast_Delay = 0.5
-            end
-        end)
-    end
-end)
-
-local function SafeTweenMob(v)
-    local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if HRP and v and v:FindFirstChild("HumanoidRootPart") then
-        v.HumanoidRootPart.CanCollide = false
-        v.HumanoidRootPart.Anchored = false
-        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-        v.HumanoidRootPart.Transparency = 1
-        v.HumanoidRootPart.CFrame = HRP.CFrame * CFrame.new(0, 0, -2)
-        v.Humanoid:ChangeState(11)
-    end
-end
-
-spawn(function()
-    while task.wait() do
-        if _G.AutoLevel then
+    while wait(.1) do
+        if _G.FastAttack then
             pcall(function()
-                for _, v in pairs(workspace.Enemies:GetChildren()) do
-                    if v:FindFirstChild("Humanoid")
-                    and v:FindFirstChild("HumanoidRootPart")
-                    and v.Humanoid.Health > 0
-                    and v.Name == Ms then
-                        SafeTweenMob(v)
-                    end
-                end
+                repeat task.wait(000.1)
+                    AttackNoCoolDown()
+                until not _G.FastAttack
             end)
         end
     end
@@ -2499,9 +2467,9 @@ task.spawn(function()
         end);
     end
 end);
-    local v49 = v16.Main:AddToggle("ToggleLevel", {
+local v49 = v16.Main:AddToggle("ToggleLevel", {
     Title = "Auto Farm Level",
-    Description = "Auto Farm Level, Farm Ổn",
+    Description = "",
     Default = false
 });
 v49:OnChanged(function(v237)
@@ -4423,7 +4391,7 @@ if Sea3 then
         end
         for v728, v729 in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
             if v729:IsA("MeshPart") then
-                if (v729.MeshId == "rbxassetid://91347148253026") then --thay id ảnh vào
+                if (v729.MeshId == "rbxassetid://913471482530") then --thay id ảnh vào
                     return v729;
                 end
             end
