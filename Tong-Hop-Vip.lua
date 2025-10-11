@@ -1,25 +1,57 @@
 
-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------- GUI Toggle Button by Văn Nguyên
 local ScreenGui = Instance.new("ScreenGui")
 local ImageButton = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
+local Tooltip = Instance.new("TextLabel")
+local Sound = Instance.new("Sound")
 
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+-- Nút chính
 ImageButton.Parent = ScreenGui
-ImageButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
+ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton.BorderSizePixel = 0
-ImageButton.Position = UDim2.new(0.10615778, 0, 0.16217947, 0)
+ImageButton.Position = UDim2.new(0.106, 0, 0.162, 0)
 ImageButton.Size = UDim2.new(0, 50, 0, 50)
 ImageButton.Draggable = true
 ImageButton.Image = "http://www.roblox.com/asset/?id=91347148253026"
 
-UICorner.CornerRadius = UDim.new(1, 10) 
+UICorner.CornerRadius = UDim.new(1, 10)
 UICorner.Parent = ImageButton
 
+-- Tooltip
+Tooltip.Parent = ImageButton
+Tooltip.BackgroundTransparency = 1
+Tooltip.Text = "Toggle Menu"
+Tooltip.TextColor3 = Color3.fromRGB(255, 255, 255)
+Tooltip.TextSize = 14
+Tooltip.Position = UDim2.new(0, 0, 1, 5)
+Tooltip.Visible = false
+
+-- Âm thanh click
+Sound.Parent = ImageButton
+Sound.SoundId = "rbxassetid://9118823106"
+Sound.Volume = 1
+
+-- Hiệu ứng hover và click
+ImageButton.MouseEnter:Connect(function()
+    ImageButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    Tooltip.Visible = true
+end)
+
+ImageButton.MouseLeave:Connect(function()
+    ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Tooltip.Visible = false
+end)
+
 ImageButton.MouseButton1Down:Connect(function()
+    Sound:Play()
+    ImageButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.End, false, game)
+    task.wait(0.1)
+    ImageButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 end)
 ------------------------------------------------------------------------------------------------------------------------------------
 function topos(Pos) -- Tween
@@ -259,8 +291,8 @@ repeat wait() until game:IsLoaded()
 local Window = Fluent:CreateWindow({
     Title = "Van-Nguyen Hub [Beta] ",
     SubTitle = "| by xibasexh6 [Freemium]",
-    TabWidth = 180,
-    Size = UDim2.fromOffset(555, 420),
+    TabWidth = 200,
+    Size = UDim2.fromOffset(555, 450),
     Acrylic = true,
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.End
@@ -271,8 +303,8 @@ local Tabs = {
     Info = Window:AddTab({ Title = "Thông Tin" }),
     Status = Window:AddTab({ Title = "Chạy Id Game" }),
     Main = Window:AddTab({ Title = "Tự Động Hop" }),
-    Auto = Window:AddTab({ Title = "Tự Động Đánh" }),
-    Pull = Window:AddTab({ Title = "Tự Động Gạt Cần" }),
+    Auto = Window:AddTab({ Title = "Tự Động Đánh Chưa Xong Updete Tiếp" }),
+    Pull = Window:AddTab({ Title = "Tự Động Gạt Cần " }),
     Server = Window:AddTab({ Title = "Check Sever", Icon = "" }),
     Settings = Window:AddTab({ Title = "Setting Player", Icon = "" }),
     Shop = Window:AddTab({ Title = " Shop", Icon = "" }),
@@ -292,7 +324,13 @@ Tabs.Servers:AddButton({
 local Credits = Tabs.Servers:AddSection("Credits")
 Tabs.Servers:AddParagraph({
     Title="Van-Nguyen On Top",
-    Description="",
+    Description="Tên Administrator",
+    Callback=function()
+    end
+})
+Tabs.Servers:AddParagraph({
+    Title="Xin Chào.Minh là [Van-Nguyen] Đây Có gì tôi Hỗ trợ Thêm nhé? Xin Cảm Ơn!",
+    Description="Mô Tả",
     Callback=function()
     end
 })
@@ -308,7 +346,7 @@ elseif getexecutorname then
 end
 if executorName then
     Tabs.Info:AddParagraph({
-        Title="Client Đang Dùng",
+        Title="Client Đang Dùng - Các Bạn Đang Dùng",
         Content=executorName
     })
 end
@@ -510,7 +548,7 @@ Tabs.Shop:AddButton({
         function RedeemCode(Value)
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Value)
         end
-        local delayBetweenRequests = 0.5
+        local delayBetweenRequests = 0.1
         for i, v in pairs(sex) do
             spawn(function()
                 RedeemCode(v)
@@ -1797,7 +1835,7 @@ spawn(function()
         end
     end
 end)
-local ToggleKillAura = Tabs.Sea:AddToggle("ToggleKillAura", {Title="Auto Kill Golems",Description="", Default=false })
+local ToggleKillAura = Tabs.Sea:AddToggle("ToggleKillAura", {Title="Auto Kill",Description="", Default=false })
 ToggleKillAura:OnChanged(function(Value)
     KillAura=Value
 end)
