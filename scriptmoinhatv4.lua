@@ -1949,7 +1949,7 @@ QuestNeta = function()
     }
 end
 
-local Fluent = loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
       
        local Window = MakeWindow({
