@@ -1086,7 +1086,7 @@ while true do
 task.spawn(function()
 	local updatedInfo = getServerInfo()
 	local updatedContent = string.format(
-		"📌 PlaceId: %s\n🔑 JobId: %s\n🧪 IsStudio: %s\n👥 Players: %d/%d",
+		"📌 PlaceId: %s\n🔑 JobId: %s\n🧪 IsStudio: %s\n👥 Players: %d/%d - 👋Hello everyone, today everyone comes to orenzoiun's script. Wish everyone a happy script.",
 		updatedInfo.PlaceId,
 		updatedInfo.JobId,
 		
@@ -1096,27 +1096,7 @@ updatedInfo.MaxPlayers
 	)
 
 	ParagraphInfoServer:Set({
-		Title = "Info",
-		Content = updatedContent
-	})
-	Rayfield:LoadConfiguration()
-task.spawn(function()
-while true do
-	task.wait(1) 
-task.spawn(function()
-	local updatedInfo = getServerInfo()
-	local updatedContent = string.format(
-		"👋 Hello everyone, today everyone comes to orenzoiun's script. Wish everyone a happy script.",
-		updatedInfo.PlaceId,
-		updatedInfo.JobId,
-		
-		tostring(updatedInfo.IsStudio),
-		updatedInfo.CurrentPlayers,
-updatedInfo.MaxPlayers
-	)
-
-	ParagraphInfoServer:Set({
-		Title = "Welcome",
+		Title = "Info - Welcome",
 		Content = updatedContent
 	})
 end)
