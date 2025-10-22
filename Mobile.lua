@@ -14,7 +14,7 @@ if MAPBF then
         elseif getgenv().Script_Mode == "Kaitun_Script"then 
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/vannguyenkaitun/refs/heads/main/vannguyenkaitun.lua",true))()
         else 
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/Mobile.v4.lua",true))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/special-journey/refs/heads/main/Mobile.lua",true))()
         end
     end)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/FIXING/main/ABC.lua"))()
@@ -26,7 +26,7 @@ if MAPBF then
         elseif getgenv().Script_Mode == "Kaitun_Script"then 
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/vannguyenkaitun/refs/heads/main/vannguyenkaitun.lua",true))()
         else 
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/Mobile.v4.lua",true))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/special-journey/refs/heads/main/Mobile.lua",true))()
         end
     end)
     if not ABC then
@@ -34,11 +34,9 @@ if MAPBF then
     end
     print("Loaded Main Load")
 elseif MAPBF then 
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/Mobile.v4.lua",true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/special-journey/refs/heads/main/Mobile.lua",true))()
 elseif days99 then 
     loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/99NightsInTheForest.lua",true))()
-elseif (MAPBF or days99) then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/CreamSoScute/main/LoadAm.lua",true))()
 else game.Players.LocalPlayer:Kick("\224\185\132\224\184\161\224\185\136\224\184\158\224\184\154\224\185\129\224\184\161\224\184\158")
     wait(3)
     game:Shutdown()
