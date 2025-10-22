@@ -10,7 +10,7 @@ if MAPBF then
         repeat task.wait() until StatusCheckIsBad
         wait()
         if _G.Script_Mode == "PVP"then 
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/GsiPeh/refs/heads/main/VANNGUYEN-T%E1%BA%A1o-Scripts.lua",true))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/HouGhost-Hub/special-journey/refs/heads/main/sus.lua",true))()
         elseif getgenv().Script_Mode == "Kaitun_Script"then 
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/vannguyenkaitun/refs/heads/main/vannguyenkaitun.lua",true))()
         else 
@@ -22,7 +22,7 @@ if MAPBF then
     print("Loaded Backup Load")
     local ABC, CBA = pcall(function()
         if _G.Script_Mode == "PVP"then 
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/GsiPeh/refs/heads/main/VANNGUYEN-T%E1%BA%A1o-Scripts.lua",true))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/HouGhost-Hub/special-journey/refs/heads/main/sus.lua",true))()
         elseif getgenv().Script_Mode == "Kaitun_Script"then 
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vannguyen740/vannguyenkaitun/refs/heads/main/vannguyenkaitun.lua",true))()
         else 
