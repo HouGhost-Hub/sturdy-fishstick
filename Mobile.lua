@@ -1,7 +1,6 @@
-local Arsenal = game.GameId == 994732206 -- Arsenal
-local days99 = game.GameId == 7326934954 -- 99 Nights In The Forest
-local BloxFruits = game.GameId == 2753915549 -- Blox Fruits
-local GymShowdown = game.GameId == 1234567890 -- Thay bằng GameId thực tế của Gym Showdown Simulator
+local days99 = game.GameId == 7326934954
+local BloxFruits = game.GameId == 2753915549
+local GymShowdown = game.GameId == 1234567890
 repeat task.wait() until game:IsLoaded()
 
 local function loadScript(url)
@@ -45,13 +44,8 @@ if Arsenal then
     print("Loaded Main Load for Arsenal")
 elseif days99 then
     loadScript("https://raw.githubusercontent.com/vannguyen740/sturdy-fishstick/refs/heads/main/99NightsInTheForest.lua")
-    print("Loaded script for 99 Nights In The Forest")
 elseif GymShowdown then
-    loadScript("https://raw.githubusercontent.com/vannguyen740/gymshowdown-script/main/gymshowdown.lua")
-    print("Loaded script for Gym Showdown Simulator")
-elseif Arsenal then
-    loadScript("https://raw.githubusercontent.com/HouGhost-Hub/special-journey/refs/heads/main/Arsenal%20v5.3.lua")
-    print("Loaded script for Gym Showdown Simulator")
+    loadScript("https://raw.githubusercontent.com/HouGhost-Hub/sturdy-fishstick/refs/heads/main/GSS.lua")
 elseif
     game.Players.LocalPlayer:Kick("Filter failed. Game not supported. Please try again or contact support.")
     task.wait(3)
